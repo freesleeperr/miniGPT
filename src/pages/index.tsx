@@ -133,8 +133,9 @@ export default function Home() {
     }
   }, [chatlog]);
   useEffect(() => {
-    setKey(localStorage.getItem("apiKey"));
-    console.log(localStorage.getItem("apiKey"));
+    if (localStorage.getItem("apiKey") != "" || null) {
+      setKey(localStorage.getItem("apiKey"));
+    }
   }, []);
   return (
     <Box>
