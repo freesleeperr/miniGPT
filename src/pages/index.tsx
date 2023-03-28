@@ -107,7 +107,7 @@ export default function Home() {
                 answer: res.data,
               },
             ]);
-            console
+   
             setLoading(false);
           },
           (err) => {
