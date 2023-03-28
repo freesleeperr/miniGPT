@@ -50,6 +50,7 @@ export default function Home() {
       const data = JSON.stringify({
         sessionId,
         content: input,
+        
       });
       const options = {
         method: "POST",
