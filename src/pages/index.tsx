@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import {
   Box,
   Button,
+  Center,
   Fade,
   Flex,
   HStack,
@@ -47,14 +48,29 @@ export default function Home() {
     event.preventDefault();
     localStorage.setItem("apiKey", key);
     if (input == "") {
-      toast({ title: "问题为空", position: "top" });
+      toast({
+        title: "问题为空",
+        position: "top",
+        status: "warning",
+        isClosable: true,
+      });
       return;
     } else if (key == "") {
-      toast({ title: "请输入API KEY", position: "top" });
+      toast({
+        title: "请输入API KEY",
+        position: "top",
+        status: "warning",
+        isClosable: true,
+      });
     } else {
       setLoading(true);
       setQuestion(input);
-      toast({ title: `已发送,请等待`, status: "success", position: "top" });
+      toast({
+        title: `已发送,请等待`,
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
       const sessionId = uuidv4();
       const data = JSON.stringify({
         sessionId,
@@ -68,34 +84,44 @@ export default function Home() {
           "Content-Type": "application/json",
         },
       };
-      const response = await fetch(
-        "https://mini-gpt-snowy.vercel.app/api/gptProxy",
-        options
-      );
+      try {
+        const response = await fetch(
+          "https://mini-gpt-snowy.vercel.app/api/gptProxy",
+          options
+        );
 
-      // const response = await fetch("http://localhost:3000/api/hello", options);
-      const reply = response.json();
-      reply.then(
-        (res) => {
-          if (res.status == 400) {
-            toast(res.message);
-            return;
+        // const response = await fetch("http://localhost:3000/api/hello", options);
+        const reply = response.json();
+        reply.then(
+          (res) => {
+            if (res.status == 400) {
+              toast(res.message);
+              return;
+            }
+            setAnsewer(res.data);
+            setChatlog([
+              ...chatlog,
+              {
+                question: input,
+                answer: res.data,
+              },
+            ]);
+            setLoading(false);
+          },
+          (err) => {
+            setLoading(false);
+            throw err;
           }
-          setAnsewer(res.data);
-          setChatlog([
-            ...chatlog,
-            {
-              question: input,
-              answer: res.data,
-            },
-          ]);
-          setLoading(false);
-        },
-        (err) => {
-          toast({ title: `${err.message}`, position: "bottom" });
-          setLoading(false);
-        }
-      );
+        );
+      } catch (err) {
+        toast({
+          title: `${err}`,
+          position: "bottom",
+          status: "error",
+          isClosable: true,
+        });
+      }
+
       setLoading(false);
       setInput("");
     }
@@ -111,23 +137,31 @@ export default function Home() {
   }, []);
   return (
     <Box>
-      <HStack px={"115px"} position={"sticky"} bgColor={"gray.300"}>
-        <Text fontSize={50}>你好,我是ChatGPT🤗</Text>
+      <HStack
+        background={"fixed"}
+        bgColor={"gray.300"}
+        height={{ base: "60px", md: "100px", lg: "100px" }}
+        padding={4}
+      >
+        <Text fontSize={{ base: "16px", md: "20px", lg: "30px" }}>
+          你好,我是ChatGPT🤗
+        </Text>
         {loding ? <Spinner mx={50}></Spinner> : ""}
         <Spacer></Spacer>
         <Flex direction={"column"}>
-          <Button mr={30} onClick={onToggle}>
+          <Button
+            onClick={onToggle}
+            fontSize={{ base: "15px", md: "20px", lg: "30px" }}
+          >
             API_KEY设置
           </Button>
           <Fade in={isOpen}>
             <Input
-              pos={"relative"}
-              right={200}
+              left={0}
               value={key}
               onChange={handleKChange}
-              maxW={500}
               position={"absolute"}
-              color="black"
+              color="green"
               mt="4"
               rounded="md"
               shadow="md"
@@ -139,7 +173,9 @@ export default function Home() {
           </Fade>
         </Flex>
         <Link href={"https://github.com/freesleeperr?tab=repositories"}>
-          <Text fontSize={20}>GitHub↗😺</Text>
+          <Text fontSize={{ base: "10px", md: "20px", lg: "30px" }}>
+            GitHub↗😺
+          </Text>
         </Link>
       </HStack>
 
@@ -168,8 +204,10 @@ export default function Home() {
         bg="white"
         borderTop="1px solid gray"
         bgColor="yellow.200"
+        align={"c"}
       >
         <Input
+          height={{ base: "50px", md: "70px", lg: "100px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
