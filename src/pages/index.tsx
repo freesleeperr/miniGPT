@@ -35,7 +35,6 @@ export default function Home() {
   const handleChange = (event: any) => {
     setInput(event.target.value);
     setQuestion(event.target.input);
-    console.log(input);
   };
 
   async function get(event: any) {
@@ -95,7 +94,6 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    console.log(chatlog);
   }, [chatlog]);
   return (
     <Box>
