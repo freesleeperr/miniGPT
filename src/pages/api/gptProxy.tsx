@@ -5,22 +5,17 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const APIKey = "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";
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
   // another common pattern
   // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,OPTIONS,PATCH,DELETE,POST,PUT"
-  );
   res.setHeader(
     "Access-Control-Allow-Headers",
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
   );
   if (req.method === "POST") {
     var data = JSON.stringify({
-      apiKey: APIKey,
+      apiKey: req.body.key,
       sessionId: req.body.sessionId,
       content: req.body.content,
     });
@@ -29,9 +24,9 @@ export default function handler(
       maxBodyLength: Infinity,
       headers: { "Content-Type": "application/json" },
       url: "https://api.openai-proxy.com/pro/chat/completions",
-
       data: data,
     };
+    console.log(data);
     axios(config)
       .then(function (response) {
         res.status(200).json(response.data);

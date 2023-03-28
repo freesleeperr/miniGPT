@@ -5,6 +5,8 @@ import {
   Box,
   Button,
   Center,
+  cookieStorageManager,
+  Fade,
   Flex,
   HStack,
   Input,
@@ -12,6 +14,7 @@ import {
   Spinner,
   Text,
   Toast,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import MyCard from "@/componts/CardAnswer";
@@ -30,18 +33,24 @@ export default function Home() {
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
+  const [key, setKey] = useState("");
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const { isOpen, onToggle } = useDisclosure();
   const handleChange = (event: any) => {
     setInput(event.target.value);
     setQuestion(event.target.input);
   };
-
+  const handleKChange = (event: any) => {
+    setKey(event.target.value);
+  };
   async function get(event: any) {
     event.preventDefault();
     if (input == "") {
       toast({ title: "问题为空", position: "top" });
       return;
+    } else if (key == "") {
+      toast({ title: "请输入API KEY", position: "top" });
     } else {
       setLoading(true);
       setQuestion(input);
@@ -50,7 +59,7 @@ export default function Home() {
       const data = JSON.stringify({
         sessionId,
         content: input,
-        
+        key,
       });
       const options = {
         method: "POST",
@@ -102,6 +111,29 @@ export default function Home() {
         <Text fontSize={50}>你好,我是ChatGPT🤗</Text>
         {loding ? <Spinner mx={50}></Spinner> : ""}
         <Spacer></Spacer>
+        <Flex direction={"column"}>
+          <Button mr={30} onClick={onToggle}>
+            API_KEY设置
+          </Button>
+          <Fade in={isOpen}>
+            <Input
+              pos={"relative"}
+              right={200}
+              value={key}
+              onChange={handleKChange}
+              maxW={500}
+              position={"absolute"}
+              color="black"
+              mt="4"
+              rounded="md"
+              shadow="md"
+              placeholder={
+                "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
+              }
+              bgColor={"gray.200"}
+            ></Input>
+          </Fade>
+        </Flex>
         <Link href={"https://github.com/freesleeperr?tab=repositories"}>
           <Text fontSize={20}>GitHub↗😺</Text>
         </Link>
