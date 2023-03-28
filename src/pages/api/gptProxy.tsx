@@ -5,6 +5,7 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  const APIKey = "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";
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Origin", "*");
   // another common pattern
@@ -19,7 +20,7 @@ export default function handler(
   );
   if (req.method === "POST") {
     var data = JSON.stringify({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: APIKey,
       sessionId: req.body.sessionId,
       content: req.body.content,
     });
