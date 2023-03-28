@@ -25,7 +25,6 @@ interface IChat {
 }
 
 export default function Home() {
-  const apiKey = "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";
   const [question, setQuestion] = useState<any>("");
   const [answer, setAnsewer] = useState<any>("");
   const [loding, setLoading] = useState<boolean>(false);
@@ -50,7 +49,6 @@ export default function Home() {
       toast({ title: `已发送,请等待`, status: "success", position: "top" });
       const sessionId = uuidv4();
       const data = JSON.stringify({
-        apiKey,
         sessionId,
         content: input,
       });

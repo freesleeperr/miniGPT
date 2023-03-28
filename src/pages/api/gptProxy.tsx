@@ -7,7 +7,7 @@ export default function handler(
 ) {
   if (req.method === "POST") {
     var data = JSON.stringify({
-      apiKey: req.body.apiKey,
+      apiKey: process.env.OPENAI_API_KEY,
       sessionId: req.body.sessionId,
       content: req.body.content,
     });
