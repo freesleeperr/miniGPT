@@ -55,13 +55,14 @@ export default function Home() {
         isClosable: true,
       });
       return;
-    } else if (key == "") {
+    } else if (key == "" || null) {
       toast({
         title: "请输入API KEY",
         position: "top",
         status: "warning",
         isClosable: true,
       });
+      return;
     } else {
       setLoading(true);
       setQuestion(input);
@@ -204,7 +205,7 @@ export default function Home() {
         bg="white"
         borderTop="1px solid gray"
         bgColor="yellow.200"
-        align={"c"}
+        align={"center"}
       >
         <Input
           height={{ base: "50px", md: "70px", lg: "100px" }}
