@@ -86,15 +86,15 @@ export default function Home() {
         },
       };
       try {
-        const response = await fetch(
-          "https://mini-gpt-snowy.vercel.app/api/gptProxy",
-          options
-        );
-
         // const response = await fetch(
-        //   "http://localhost:3000/api/gptProxy",
+        //   "https://mini-gpt-snowy.vercel.app/api/gptProxy",
         //   options
         // );
+
+        const response = await fetch(
+          "http://localhost:3000/api/gptProxy",
+          options
+        );
         const reply = response.json();
         reply.then(
           (res) => {
@@ -119,15 +119,15 @@ export default function Home() {
           }
         );
       } catch (err) {
+        console.log(err);
         toast({
           title: `${err}`,
           position: "bottom",
           status: "error",
           isClosable: true,
         });
+        setLoading(false);
       }
-
-      setLoading(false);
       setInput("");
     }
   }
@@ -135,6 +135,7 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
+    console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
     const keyMe =
@@ -177,6 +178,7 @@ export default function Home() {
                 "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
               }
               bgColor={"gray.200"}
+              zIndex="999"
             ></Input>
           </Fade>
         </Flex>
@@ -213,10 +215,12 @@ export default function Home() {
         borderTop="1px solid gray"
         bgColor="yellow.200"
         align={"center"}
+        height={{ base: "50px", md: "50px", lg: "50px" }}
       >
+        <Box height={{ base: "50px", md: "70px", lg: "40px" }}></Box>
         <Input
           position={"sticky"}
-          height={{ base: "50px", md: "70px", lg: "40px" }}
+          height={{ base: "30px", md: "30px", lg: "30px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
