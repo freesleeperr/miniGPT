@@ -91,7 +91,10 @@ export default function Home() {
           options
         );
 
-        // const response = await fetch("http://localhost:3000/api/hello", options);
+        // const response = await fetch(
+        //   "http://localhost:3000/api/gptProxy",
+        //   options
+        // );
         const reply = response.json();
         reply.then(
           (res) => {
@@ -107,7 +110,7 @@ export default function Home() {
                 answer: res.data,
               },
             ]);
-   
+            console.log(chatlog);
             setLoading(false);
           },
           (err) => {

@@ -21,7 +21,7 @@ export default function MyCard(props: IProps) {
     p: (props: any) => {
       const { children } = props;
       return (
-        <Text mb={2} fontSize={"15px"} color="gray.700">
+        <Text fontSize={"15px"} color="gray.700">
           {children}
         </Text>
       );
