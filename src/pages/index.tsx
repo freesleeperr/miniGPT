@@ -60,7 +60,7 @@ export default function Home() {
         },
       };
       const response = await fetch(
-        "http://localhost:3000/api/gptProxy",
+        "https://mini-gpt-snowy.vercel.app/api/gptProxy",
         options
       );
 
