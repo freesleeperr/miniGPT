@@ -101,8 +101,8 @@ export default function Home() {
   }, [chatlog]);
   return (
     <Box>
-      <HStack  px={"115px"} position={"sticky"} bgColor={"gray.300"}>
-        <Text  fontSize={50}>你好,我是ChatGPT🤗</Text>
+      <HStack px={"115px"} position={"sticky"} bgColor={"gray.300"}>
+        <Text fontSize={50}>你好,我是ChatGPT🤗</Text>
         {loding ? <Spinner mx={50}></Spinner> : ""}
         <Spacer></Spacer>
         <Link href={"https://github.com/freesleeperr?tab=repositories"}>

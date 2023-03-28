@@ -9,7 +9,7 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import { useRef } from "react";
+
 import ReactMarkdown from "react-markdown";
 interface IProps {
   scrollRef?: any;
