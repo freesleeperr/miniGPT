@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from "uuid";
 import {
   Box,
   Button,
-  Center,
-  cookieStorageManager,
   Fade,
   Flex,
   HStack,
@@ -19,8 +17,8 @@ import {
 } from "@chakra-ui/react";
 import MyCard from "@/componts/CardAnswer";
 import { useEffect, useRef, useState } from "react";
-import Header from "@/componts/Header";
 import Link from "next/link";
+
 interface IChat {
   question: string;
   answer: string;
@@ -33,7 +31,7 @@ export default function Home() {
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState<any>("");
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, onToggle } = useDisclosure();
@@ -44,8 +42,10 @@ export default function Home() {
   const handleKChange = (event: any) => {
     setKey(event.target.value);
   };
+
   async function get(event: any) {
     event.preventDefault();
+    localStorage.setItem("apiKey", key);
     if (input == "") {
       toast({ title: "问题为空", position: "top" });
       return;
@@ -92,7 +92,7 @@ export default function Home() {
           setLoading(false);
         },
         (err) => {
-          toast({ title: `${err}`, position: "bottom" });
+          toast({ title: `${err.message}`, position: "bottom" });
           setLoading(false);
         }
       );
@@ -105,6 +105,10 @@ export default function Home() {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [chatlog]);
+  useEffect(() => {
+    setKey(localStorage.getItem("apiKey"));
+    console.log(localStorage.getItem("apiKey"));
+  }, []);
   return (
     <Box>
       <HStack px={"115px"} position={"sticky"} bgColor={"gray.300"}>
