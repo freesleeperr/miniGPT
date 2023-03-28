@@ -133,7 +133,7 @@ export default function Home() {
     }
   }, [chatlog]);
   useEffect(() => {
-    if (localStorage.getItem("apiKey") != "" || null) {
+    if (localStorage.getItem("apiKey") !== "" || null) {
       setKey(localStorage.getItem("apiKey"));
     }
   }, []);
