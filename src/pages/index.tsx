@@ -86,15 +86,15 @@ export default function Home() {
         },
       };
       try {
-        // const response = await fetch(
-        //   "https://mini-gpt-snowy.vercel.app/api/gptProxy",
-        //   options
-        // );
-
         const response = await fetch(
-          "http://localhost:3000/api/gptProxy",
+          "https://mini-gpt-snowy.vercel.app/api/gptProxy",
           options
         );
+
+        // const response = await fetch(
+        //   "http://localhost:3000/api/gptProxy",
+        //   options
+        // );
         const reply = response.json();
         reply.then(
           (res) => {
