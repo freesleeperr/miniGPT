@@ -133,19 +133,21 @@ export default function Home() {
     }
   }, [chatlog]);
   useEffect(() => {
-    if (localStorage.getItem("apiKey") !== "" || null) {
-      setKey(localStorage.getItem("apiKey"));
-    }
+    const keyMe =
+      localStorage.getItem("apiKey") === null || ""
+        ? ""
+        : localStorage.getItem("apiKey");
+    setKey(keyMe);
   }, []);
   return (
     <Box>
       <HStack
         background={"fixed"}
         bgColor={"gray.300"}
-        height={{ base: "60px", md: "100px", lg: "100px" }}
+        height={{ base: "60px", md: "100px", lg: "60px" }}
         padding={4}
       >
-        <Text fontSize={{ base: "16px", md: "20px", lg: "30px" }}>
+        <Text fontSize={{ base: "16px", md: "30px", lg: "30px" }}>
           你好,我是ChatGPT🤗
         </Text>
         {loding ? <Spinner mx={50}></Spinner> : ""}
@@ -181,7 +183,7 @@ export default function Home() {
         </Link>
       </HStack>
 
-      <Box>
+      <Flex mt={5} direction={"column"} alignItems={"center"}>
         {chatlog
           ? chatlog.map((item, index) => (
               <div
@@ -196,7 +198,7 @@ export default function Home() {
               </div>
             ))
           : ""}
-      </Box>
+      </Flex>
       <Flex
         position="fixed"
         bottom="0"
@@ -209,7 +211,8 @@ export default function Home() {
         align={"center"}
       >
         <Input
-          height={{ base: "50px", md: "70px", lg: "100px" }}
+          position={"sticky"}
+          height={{ base: "50px", md: "70px", lg: "40px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
