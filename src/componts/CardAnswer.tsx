@@ -21,11 +21,7 @@ export default function MyCard(props: IProps) {
     p: (props: any) => {
       const { children } = props;
       return (
-        <Text
-          mb={2}
-          fontSize={{ base: "15px", md: "20px", lg: "15px" }}
-          color="gray.700"
-        >
+        <Text mb={2} fontSize={"15px"} color="gray.700">
           {children}
         </Text>
       );
@@ -43,10 +39,7 @@ export default function MyCard(props: IProps) {
         minWidth={"380px"}
       >
         <CardHeader>
-          <Heading
-            fontSize={{ base: "20px", md: "20px", lg: "20px" }}
-            color={"blue.400"}
-          >
+          <Heading fontSize={"20px"} color={"blue.400"}>
             {props.question ? props.question : null}
           </Heading>
         </CardHeader>
