@@ -38,7 +38,7 @@ export default function MyCard(props: IProps) {
         boxShadow="md"
         borderRadius={8}
         bgColor={"yellow.300"}
-        mb={3}
+        mb={1}
         marginX={3}
         minWidth={"380px"}
       >
