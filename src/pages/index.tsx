@@ -110,7 +110,7 @@ export default function Home() {
                 answer: res.data,
               },
             ]);
-            console.log(chatlog);
+            // console.log(chatlog);
             setLoading(false);
             setInput("");
           },
@@ -135,7 +135,7 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    console.log(chatlog);
+    // console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
     const keyMe =
@@ -145,15 +145,22 @@ export default function Home() {
     setKey(keyMe);
   }, []);
   return (
-    <Box minWidth={"325px"}>
+    <Box minWidth={"340px"}>
       <HStack
+        px="60px"
         zIndex={999}
         bgColor={"gray.300"}
         height={{ base: "60px", md: "100px", lg: "60px" }}
         padding={2}
+        shadow="lg"
+       
       >
-        <Text fontSize={{ base: "16px", md: "30px", lg: "30px" }}>
-          你好,我是ChatGPT🤗
+        <Text
+          color={"green.500"}
+          fontWeight={"bold"}
+          fontSize={{ base: "16px", md: "30px", lg: "30px" }}
+        >
+          ChatGPT🤗
         </Text>
         {loding ? <Spinner mx={50}></Spinner> : ""}
         <Spacer></Spacer>
@@ -189,7 +196,6 @@ export default function Home() {
         </Link>
       </HStack>
       <Flex
-        bgColor="rgb(200, 189, 212)"
         direction={"column"}
         alignItems={"center"}
         justify="center"
@@ -214,31 +220,29 @@ export default function Home() {
           : ""}
       </Flex>
       <Flex
+        px={3}
         position="fixed"
         bottom="0"
         left="0"
         right="0"
-        p="4"
-        bg="white"
-        borderTop="1px solid gray"
-        bgColor="yellow.200"
+        bgColor="gray.400"
         align={"center"}
-        height={{ base: "65px", md: "50px", lg: "50px" }}
+        height={{ base: "65px", md: "60px", lg: "50px" }}
       >
         <Box height={{ base: "50px", md: "70px", lg: "40px" }}></Box>
         <Input
           position={"sticky"}
-          height={{ base: "40px", md: "40px", lg: "40px" }}
+          height={{ base: "40px", md: "35px", lg: "30px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
           onChange={handleChange}
-          bgColor="white"
+          bgColor="gray.100"
           isDisabled={loding}
         />
         <Button
-          height={{ base: "45px", md: "30px", lg: "30px" }}
-          colorScheme="yellow"
+          height={{ base: "40px", md: "35px", lg: "30px" }}
+          colorScheme="green"
           onClick={get}
           isDisabled={loding}
           isLoading={loding}

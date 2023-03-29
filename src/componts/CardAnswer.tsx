@@ -7,6 +7,7 @@ import {
   Heading,
   Stack,
   StackDivider,
+  Flex,
 } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 
@@ -21,36 +22,56 @@ export default function MyCard(props: IProps) {
     p: (props: any) => {
       const { children } = props;
       return (
-        <Text lineHeight={"22px"} fontSize={"15px"} color="gray.700">
+        <Text lineHeight={"27px"} fontSize={"17px"} color="gray.900">
           {children}
         </Text>
       );
     },
   };
   return (
-    <Card
-      textIndent="px"
-      boxShadow="md"
-      borderRadius={8}
-      bgColor={"yellow.300"}
-      mb={2}
+    <Flex
+      width={{ base: "360px", md: "600px", lg: "1200px" }}
+      justifyItems={"start"}
+      direction={"column"}
+      mb={10}
     >
-      <CardHeader>
-        <Heading fontSize={"20px"} color={"blue.400"}>
-          {props.question ? props.question : null}
-        </Heading>
-      </CardHeader>
-      <CardBody>
-        <Stack divider={<StackDivider />} spacing="4">
-          <Box>
-            <ReactMarkdown
-              components={ChakraUIRenderer(newTheme)}
-              children={props.answer ? `${props.answer}` : ""}
-              skipHtml
-            />
-          </Box>
-        </Stack>
-      </CardBody>
-    </Card>
+      <Flex direction={"row-reverse"}>
+        <Card
+          padding={5}
+          boxShadow="md"
+          borderRadius={8}
+          bgColor={"green.400"}
+          mb={2}
+        >
+          <Heading fontSize={"20px"} color={"white"}>
+            {props.question ? props.question : null}
+          </Heading>
+        </Card>
+      </Flex>
+      {/* <CardHeader>
+       
+      </CardHeader> */}{" "}
+      <Flex direction={"row"}>
+        <Card
+          boxShadow="md"
+          borderRadius={8}
+          bg={"gray.200"}
+          bgSize={"contain"}
+          mb={2}
+        >
+          <CardBody>
+            <Stack divider={<StackDivider />} spacing="4">
+              <Box>
+                <ReactMarkdown
+                  components={ChakraUIRenderer(newTheme)}
+                  children={props.answer ? `${props.answer}` : ""}
+                  skipHtml
+                />
+              </Box>
+            </Stack>
+          </CardBody>
+        </Card>
+      </Flex>
+    </Flex>
   );
 }
