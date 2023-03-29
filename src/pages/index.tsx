@@ -145,13 +145,12 @@ export default function Home() {
     setKey(keyMe);
   }, []);
   return (
-    <Box>
+    <Box minWidth={"325px"}>
       <HStack
-        width={"full"}
-        background={"fixed"}
+        zIndex={999}
         bgColor={"gray.300"}
         height={{ base: "60px", md: "100px", lg: "60px" }}
-        padding={4}
+        padding={2}
       >
         <Text fontSize={{ base: "16px", md: "30px", lg: "30px" }}>
           你好,我是ChatGPT🤗
@@ -193,12 +192,14 @@ export default function Home() {
         bgColor="rgb(200, 189, 212)"
         direction={"column"}
         alignItems={"center"}
-        mb={"40px"}
-        padding={3}
+        justify="center"
+        pb={"70px"}
+        pt="20px"
+        px={{ base: "10px", md: "40px", lg: "300px" }}
       >
         {chatlog
           ? chatlog.map((item, index) => (
-              <div
+              <Box
                 className="card"
                 key={index}
                 ref={index === chatlog.length - 1 ? scrollRef : null}
@@ -208,7 +209,7 @@ export default function Home() {
                   answer={item.answer}
                   key={uuidv4()}
                 />
-              </div>
+              </Box>
             ))
           : ""}
       </Flex>

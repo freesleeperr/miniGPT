@@ -28,32 +28,29 @@ export default function MyCard(props: IProps) {
     },
   };
   return (
-    <>
-      <Card
-        padding={1}
-        boxShadow="md"
-        borderRadius={8}
-        bgColor={"yellow.300"}
-        mb={15}
-        minWidth={"340px"}
-      >
-        <CardHeader>
-          <Heading fontSize={"20px"} color={"blue.400"}>
-            {props.question ? props.question : null}
-          </Heading>
-        </CardHeader>
-        <CardBody>
-          <Stack divider={<StackDivider />} spacing="4">
-            <Box>
-              <ReactMarkdown
-                components={ChakraUIRenderer(newTheme)}
-                children={props.answer ? `${props.answer}` : ""}
-                skipHtml
-              />
-            </Box>
-          </Stack>
-        </CardBody>
-      </Card>
-    </>
+    <Card
+      padding={1}
+      boxShadow="md"
+      borderRadius={8}
+      bgColor={"yellow.300"}
+      mb={2}
+    >
+      <CardHeader>
+        <Heading fontSize={"20px"} color={"blue.400"}>
+          {props.question ? props.question : null}
+        </Heading>
+      </CardHeader>
+      <CardBody>
+        <Stack divider={<StackDivider />} spacing="4">
+          <Box>
+            <ReactMarkdown
+              components={ChakraUIRenderer(newTheme)}
+              children={props.answer ? `${props.answer}` : ""}
+              skipHtml
+            />
+          </Box>
+        </Stack>
+      </CardBody>
+    </Card>
   );
 }
