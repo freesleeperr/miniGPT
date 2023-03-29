@@ -189,7 +189,7 @@ export default function Home() {
         </Link>
       </HStack>
 
-      <Flex mt={5} direction={"column"} alignItems={"center"}>
+      <Flex mt={5} direction={"column"} alignItems={"center"} mb={"40px"}>
         {chatlog
           ? chatlog.map((item, index) => (
               <div
