@@ -87,7 +87,7 @@ export default function Home() {
       };
       try {
         const response = await fetch(
-          "https://mini-gpt-snowy.vercel.app/api/gptProxy",
+          "https://mini-cp61y72jl-freesleeperr-s-team.vercel.app/api/gptProxy",
           options
         );
 
@@ -112,6 +112,7 @@ export default function Home() {
             ]);
             console.log(chatlog);
             setLoading(false);
+            setInput("");
           },
           (err) => {
             setLoading(false);
@@ -128,7 +129,6 @@ export default function Home() {
         });
         setLoading(false);
       }
-      setInput("");
     }
   }
   useEffect(() => {
@@ -147,6 +147,7 @@ export default function Home() {
   return (
     <Box>
       <HStack
+        width={"full"}
         background={"fixed"}
         bgColor={"gray.300"}
         height={{ base: "60px", md: "100px", lg: "60px" }}
@@ -188,11 +189,17 @@ export default function Home() {
           </Text>
         </Link>
       </HStack>
-
-      <Flex mt={5} direction={"column"} alignItems={"center"} mb={"40px"}>
+      <Flex
+        bgColor="rgb(200, 189, 212)"
+        direction={"column"}
+        alignItems={"center"}
+        mb={"40px"}
+        padding={3}
+      >
         {chatlog
           ? chatlog.map((item, index) => (
               <div
+                className="card"
                 key={index}
                 ref={index === chatlog.length - 1 ? scrollRef : null}
               >
@@ -215,12 +222,12 @@ export default function Home() {
         borderTop="1px solid gray"
         bgColor="yellow.200"
         align={"center"}
-        height={{ base: "50px", md: "50px", lg: "50px" }}
+        height={{ base: "65px", md: "50px", lg: "50px" }}
       >
         <Box height={{ base: "50px", md: "70px", lg: "40px" }}></Box>
         <Input
           position={"sticky"}
-          height={{ base: "30px", md: "30px", lg: "30px" }}
+          height={{ base: "40px", md: "40px", lg: "40px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
@@ -229,6 +236,7 @@ export default function Home() {
           isDisabled={loding}
         />
         <Button
+          height={{ base: "45px", md: "30px", lg: "30px" }}
           colorScheme="yellow"
           onClick={get}
           isDisabled={loding}
