@@ -35,8 +35,7 @@ export default function MyCard(props: IProps) {
         borderRadius={8}
         bgColor={"yellow.300"}
         mb={15}
-        marginX={3}
-        minWidth={"380px"}
+        minWidth={"340px"}
       >
         <CardHeader>
           <Heading fontSize={"20px"} color={"blue.400"}>
