@@ -4,4 +4,8 @@ html {
   background-size: "full";
   background-position: "center";
   background-repeat: "no-repeat";
+  
+}
+html,.Card {
+  background-color: #484b72;
 }

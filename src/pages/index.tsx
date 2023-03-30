@@ -6,11 +6,13 @@ import {
   Box,
   Button,
   Center,
+  Collapse,
   extendTheme,
   Fade,
   Flex,
   HStack,
   Input,
+  InputGroup,
   Spacer,
   Spinner,
   Text,
@@ -52,6 +54,10 @@ export default function Home() {
       get(e);
     }
   };
+  function handleKey() {
+    setKey("");
+    localStorage.clear();
+  }
   async function get(event: any) {
     const date = new Date();
     const currentTime = date.toLocaleString();
@@ -76,12 +82,7 @@ export default function Home() {
     } else {
       setLoading(true);
       setQuestion(input);
-      toast({
-        title: `已发送,请等待`,
-        status: "success",
-        position: "top",
-        isClosable: true,
-      });
+
       const sessionId = uuidv4();
       const data = JSON.stringify({
         sessionId,
@@ -158,68 +159,90 @@ export default function Home() {
         : localStorage.getItem("apiKey");
     setKey(keyMe);
   }, []);
+
   return (
-    <Box minWidth={"340px"}>
+    <Box className="Card" minWidth={"340px"}>
       <HStack
         zIndex={999}
-        bgColor={"gray.300"}
+        bgColor={"gray.200"}
         height={{ base: "60px", md: "60px", lg: "60px" }}
         padding={2}
+        px={10}
         shadow="lg"
       >
-        <Text
-          ml={"20px"}
-          color={"green.500"}
-          fontWeight={"bold"}
-          fontSize={{ base: "20px", md: "30px", lg: "30px" }}
-        >
-          ChatGPT🤖
+        <Text fontSize={{ base: "25px", md: "35px", lg: "35px" }}>
+          🤖ChatGPT
         </Text>
-        {loding ? <Spinner mx={50}></Spinner> : ""}
+        {loding ? (
+          <Spinner
+            thickness="4px"
+            emptyColor="gray.300"
+            color="green.400"
+            mx={50}
+          >
+            思考中
+          </Spinner>
+        ) : (
+          ""
+        )}
         <Spacer></Spacer>
+        <Link href={"https://github.com/freesleeperr?tab=repositories"}>
+          <Text
+            fontSize={{ base: "20px", md: "20px", lg: "30px" }}
+            fontWeight={"light"}
+          >
+            😺
+          </Text>
+        </Link>
         <Flex direction={"column"}>
           <Button
+            px={3}
+            variant={"unstyled"}
+            bgColor={"yellow.400"}
             onClick={onToggle}
-            fontSize={{ base: "15px", md: "20px", lg: "30px" }}
           >
             设置
           </Button>
-          <Fade in={isOpen}>
-            <Input
-              left={0}
-              value={key}
+          <Collapse in={isOpen}>
+            <InputGroup
+              right={0}
               onChange={handleKChange}
               position={"absolute"}
-              color="green"
               mt="4"
+              fontSize={6}
               rounded="md"
               shadow="md"
-              placeholder={
-                "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
-              }
               bgColor={"gray.200"}
               zIndex="999"
-            ></Input>
-          </Fade>
+              maxW={"800px"}
+            >
+              <Input
+                type="password"
+                placeholder={
+                  "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
+                }
+                value={key}
+              ></Input>
+              <Button color="red" bgColor={"gray.200"} onClick={handleKey}>
+                清除
+              </Button>
+              <Spacer></Spacer>
+            </InputGroup>
+          </Collapse>
         </Flex>
-        <Link href={"https://github.com/freesleeperr?tab=repositories"}>
-          <Text mr={"20px"} fontSize={{ base: "10px", md: "20px", lg: "30px" }}>
-            GitHub😺↗
-          </Text>
-        </Link>
       </HStack>
       <Flex
         direction={"column"}
         alignItems={"center"}
         justify="center"
         pb={"70px"}
-        pt="20px"
+        pt="60px"
         px={{ base: "20px", md: "30px", lg: "200px" }}
       >
         {chatlog
           ? chatlog.map((item, index) => (
               <Box
-              boxSize={"full"}
+                boxSize={"full"}
                 className="card"
                 key={index}
                 ref={index === chatlog.length - 1 ? scrollRef : null}

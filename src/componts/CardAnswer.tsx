@@ -23,7 +23,7 @@ export default function MyCard(props: IProps) {
     p: (props: any) => {
       const { children } = props;
       return (
-        <Text lineHeight={"27px"} fontSize={"17px"} color="gray.900">
+        <Text lineHeight={"27px"} fontSize={"18px"} color="black">
           {children}
         </Text>
       );
@@ -31,17 +31,18 @@ export default function MyCard(props: IProps) {
   };
 
   return (
-    <Flex w="100" justifyItems={"start"} direction={"column"} mb={10}>
+    <Flex justifyItems={"start"} direction={"column"} mb={10}>
       <Flex direction={"row-reverse"}>
         <Card
-          padding={2}
+          paddingX={4}
+          paddingY={2}
           boxShadow="md"
-          borderRadius={8}
-          bgColor={"green.400"}
-          mb={4}
+          borderRadius={30}
+          bgColor={"green.300"}
           ml={10}
+          mb={1}
         >
-          <Heading fontSize={"20px"} color={"white"}>
+          <Heading fontSize={"20px"} color={"gray.700"}>
             {props.question ? props.question : null}
           </Heading>
         </Card>
@@ -49,17 +50,16 @@ export default function MyCard(props: IProps) {
       {/* <CardHeader>
        
       </CardHeader> */}{" "}
-      <Text color={"gray.200"}>{props.time}</Text>
       <Flex direction={"row"}>
         <Card
           boxShadow="md"
-          borderRadius={8}
-          bg={"gray.200"}
+          borderRadius={5}
+          bg={"gray.300"}
           bgSize={"contain"}
           mb={2}
         >
           <CardBody>
-            <Stack divider={<StackDivider />} spacing="4">
+            <Stack divider={<StackDivider />}>
               <Box>
                 <ReactMarkdown
                   components={ChakraUIRenderer(newTheme)}
@@ -71,6 +71,9 @@ export default function MyCard(props: IProps) {
           </CardBody>
         </Card>
       </Flex>
+      <Text ml={0.5} color={"gray.400"}>
+        {props.time}
+      </Text>
     </Flex>
   );
 }
