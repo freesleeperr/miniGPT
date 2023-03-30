@@ -200,7 +200,7 @@ export default function Home() {
         </Flex>
         <Link href={"https://github.com/freesleeperr?tab=repositories"}>
           <Text mr={"20px"} fontSize={{ base: "10px", md: "20px", lg: "30px" }}>
-            GitHub↗😺
+            GitHub😺
           </Text>
         </Link>
       </HStack>
