@@ -18,7 +18,7 @@ export default function handler(
     } else {
       res.setHeader(
         "Access-Control-Allow-Origin",
-        "https://mini-gpt-snowy.vercel.app"
+        "https://mini-gpt-peach.vercel.app"
       );
     }
   }

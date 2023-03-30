@@ -95,7 +95,8 @@ export default function Home() {
       };
       try {
         const response = await fetch(
-          "https://mini-cp61y72jl-freesleeperr-s-team.vercel.app/api/gptProxy",
+          //my server
+          "https://mini-gpt-peach.vercel.app/api/gptProxy",
           options
         );
 
