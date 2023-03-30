@@ -37,11 +37,12 @@ export default function MyCard(props: IProps) {
     >
       <Flex direction={"row-reverse"}>
         <Card
-          padding={5}
+          padding={2}
           boxShadow="md"
           borderRadius={8}
           bgColor={"green.400"}
           mb={2}
+          ml={10}
         >
           <Heading fontSize={"20px"} color={"white"}>
             {props.question ? props.question : null}

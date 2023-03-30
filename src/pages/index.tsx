@@ -57,7 +57,7 @@ export default function Home() {
       return;
     } else if (key == "" || null) {
       toast({
-        title: "请输入API KEY",
+        title: "请设置API KEY，platform.openai.com/account/api-keys",
         position: "top",
         status: "warning",
         isClosable: true,
@@ -147,20 +147,20 @@ export default function Home() {
   return (
     <Box minWidth={"340px"}>
       <HStack
-        px="60px"
+        px="6000px"
         zIndex={999}
         bgColor={"gray.300"}
         height={{ base: "60px", md: "100px", lg: "60px" }}
         padding={2}
         shadow="lg"
-       
       >
         <Text
+          ml={"20px"}
           color={"green.500"}
           fontWeight={"bold"}
-          fontSize={{ base: "16px", md: "30px", lg: "30px" }}
+          fontSize={{ base: "20px", md: "30px", lg: "30px" }}
         >
-          ChatGPT🤗
+          ChatGPT🤖
         </Text>
         {loding ? <Spinner mx={50}></Spinner> : ""}
         <Spacer></Spacer>
@@ -169,7 +169,7 @@ export default function Home() {
             onClick={onToggle}
             fontSize={{ base: "15px", md: "20px", lg: "30px" }}
           >
-            API_KEY设置
+            设置
           </Button>
           <Fade in={isOpen}>
             <Input
