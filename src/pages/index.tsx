@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
+
 import {
   Box,
   Button,
@@ -43,7 +44,11 @@ export default function Home() {
   const handleKChange = (event: any) => {
     setKey(event.target.value);
   };
-
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      get(e);
+    }
+  };
   async function get(event: any) {
     event.preventDefault();
     localStorage.setItem("apiKey", key);
@@ -229,6 +234,7 @@ export default function Home() {
         height={{ base: "65px", md: "60px", lg: "50px" }}
       >
         <Box height={{ base: "50px", md: "70px", lg: "40px" }}></Box>
+
         <Input
           position={"sticky"}
           height={{ base: "40px", md: "35px", lg: "30px" }}
@@ -238,6 +244,7 @@ export default function Home() {
           onChange={handleChange}
           bgColor="gray.100"
           isDisabled={loding}
+          onKeyDown={handleKeyDown}
         />
         <Button
           height={{ base: "40px", md: "35px", lg: "30px" }}
