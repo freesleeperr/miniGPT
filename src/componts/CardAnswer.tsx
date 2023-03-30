@@ -38,10 +38,6 @@ export default function MyCard(props: IProps) {
       mb={10}
     >
       <Flex direction={"row-reverse"}>
-        {" "}
-        <Text color={"gray.200"}>{props.time}</Text>
-      </Flex>
-      <Flex direction={"row-reverse"}>
         <Card
           padding={2}
           boxShadow="md"
@@ -58,6 +54,7 @@ export default function MyCard(props: IProps) {
       {/* <CardHeader>
        
       </CardHeader> */}{" "}
+      <Text color={"gray.200"}>{props.time}</Text>
       <Flex direction={"row"}>
         <Card
           boxShadow="md"
