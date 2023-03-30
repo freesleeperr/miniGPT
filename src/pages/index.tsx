@@ -108,7 +108,8 @@ export default function Home() {
         reply.then(
           (res) => {
             if (res.status !== 200) {
-              toast(res.message);
+              toast({ title: res.message });
+              setLoading(false);
               return;
             }
             setAnsewer(res.data);
