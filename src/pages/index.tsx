@@ -44,7 +44,7 @@ export default function Home() {
   const handleKChange = (event: any) => {
     setKey(event.target.value);
   };
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
       get(e);
     }
