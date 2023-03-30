@@ -194,7 +194,7 @@ export default function Home() {
                 "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
               }
               bgColor={"gray.200"}
-              zIndex="998"
+              zIndex="999"
             ></Input>
           </Fade>
         </Flex>
