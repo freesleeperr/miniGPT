@@ -1,5 +1,5 @@
-使用第三方 Api 实现的一个简单的 ChatGPT 网站
-API 地址:`https://www.openai-proxy.com/`
+使用代理 API 实现的一个简洁的 ChatGPT 客户端
+API 来源:https://www.openai-proxy.com/
 
 # 运行
 
@@ -16,5 +16,9 @@ API 地址:`https://www.openai-proxy.com/`
 
 # 使用
 
-1. 设置 OpenAI Api Key
+1. 设置 OpenAI API Key
 2. 在输入框中输入问题，点击发送
+
+## 说明
+
+本地使用可以访问 api 中的后端地址
