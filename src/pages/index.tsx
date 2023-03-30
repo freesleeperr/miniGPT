@@ -107,7 +107,7 @@ export default function Home() {
         const reply = response.json();
         reply.then(
           (res) => {
-            if (res.status == 400) {
+            if (res.code !== 200) {
               toast(res.message);
               return;
             }
