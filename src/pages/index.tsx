@@ -125,6 +125,7 @@ export default function Home() {
             setInput("");
           },
           (err) => {
+            toast({ title: "err" });
             setLoading(false);
             throw err;
           }
