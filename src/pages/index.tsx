@@ -163,7 +163,7 @@ export default function Home() {
       <HStack
         zIndex={999}
         bgColor={"gray.300"}
-        height={{ base: "60px", md: "100px", lg: "60px" }}
+        height={{ base: "60px", md: "60px", lg: "60px" }}
         padding={2}
         shadow="lg"
       >
@@ -214,11 +214,12 @@ export default function Home() {
         justify="center"
         pb={"70px"}
         pt="20px"
-        px={{ base: "10px", md: "40px", lg: "300px" }}
+        px={{ base: "20px", md: "30px", lg: "200px" }}
       >
         {chatlog
           ? chatlog.map((item, index) => (
               <Box
+              boxSize={"full"}
                 className="card"
                 key={index}
                 ref={index === chatlog.length - 1 ? scrollRef : null}

@@ -31,20 +31,14 @@ export default function MyCard(props: IProps) {
   };
 
   return (
-    <Flex
-      width={{md: "750px", lg: "1200px" }}
-      minW={"360px"}
-      justifyItems={"start"}
-      direction={"column"}
-      mb={10}
-    >
+    <Flex w="100" justifyItems={"start"} direction={"column"} mb={10}>
       <Flex direction={"row-reverse"}>
         <Card
           padding={2}
           boxShadow="md"
           borderRadius={8}
           bgColor={"green.400"}
-          mb={2}
+          mb={4}
           ml={10}
         >
           <Heading fontSize={"20px"} color={"white"}>
