@@ -25,6 +25,7 @@ interface IChat {
   question: string;
   answer: string;
   scrollRef?: any;
+  time?: string;
 }
 
 export default function Home() {
@@ -50,6 +51,8 @@ export default function Home() {
     }
   };
   async function get(event: any) {
+    const date = new Date();
+    const currentTime = date.toLocaleString();
     event.preventDefault();
     localStorage.setItem("apiKey", key);
     if (input == "") {
@@ -113,6 +116,7 @@ export default function Home() {
               {
                 question: input,
                 answer: res.data,
+                time: currentTime,
               },
             ]);
             // console.log(chatlog);
@@ -217,6 +221,7 @@ export default function Home() {
                 <MyCard
                   question={item.question}
                   answer={item.answer}
+                  time={item.time}
                   key={uuidv4()}
                 />
               </Box>

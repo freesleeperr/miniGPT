@@ -16,6 +16,7 @@ interface IProps {
   scrollRef?: any;
   answer: string;
   question: string;
+  time?: string;
 }
 export default function MyCard(props: IProps) {
   const newTheme = {
@@ -28,13 +29,18 @@ export default function MyCard(props: IProps) {
       );
     },
   };
+
   return (
     <Flex
-      width={{ base: "360px", md: "800px", lg: "1200px" }}
+      width={{ base: "360px", md: "750px", lg: "1200px" }}
       justifyItems={"start"}
       direction={"column"}
       mb={10}
     >
+      <Flex direction={"row-reverse"}>
+        {" "}
+        <Text color={"gray.200"}>{props.time}</Text>
+      </Flex>
       <Flex direction={"row-reverse"}>
         <Card
           padding={2}
