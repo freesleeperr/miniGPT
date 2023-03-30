@@ -31,7 +31,7 @@ export default function MyCard(props: IProps) {
   };
 
   return (
-    <Flex justifyItems={"start"} direction={"column"} mb={10}>
+    <Flex  justifyItems={"start"} direction={"column"} mb={10}>
       <Flex direction={"row-reverse"}>
         <Card
           paddingX={4}
@@ -70,8 +70,8 @@ export default function MyCard(props: IProps) {
             </Stack>
           </CardBody>
         </Card>
-      </Flex>
-      <Text ml={0.5} color={"gray.400"}>
+      </Flex>{" "}
+      <Text fontSize={"15px"} mt={-2}  color={"gray.600"}>
         {props.time}
       </Text>
     </Flex>

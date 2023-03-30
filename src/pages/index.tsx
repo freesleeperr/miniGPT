@@ -10,6 +10,7 @@ import {
   extendTheme,
   Fade,
   Flex,
+  Heading,
   HStack,
   Input,
   InputGroup,
@@ -82,7 +83,12 @@ export default function Home() {
     } else {
       setLoading(true);
       setQuestion(input);
-
+      toast({
+        title: "提交成功",
+        position: "top",
+        duration: 1000,
+        status: "success",
+      });
       const sessionId = uuidv4();
       const data = JSON.stringify({
         sessionId,
@@ -164,24 +170,28 @@ export default function Home() {
     <Box className="Card" minWidth={"340px"}>
       <HStack
         zIndex={999}
-        bgColor={"gray.200"}
+        bgColor={"gray.300"}
         height={{ base: "60px", md: "60px", lg: "60px" }}
         padding={2}
         px={{ base: "20px", md: "30px", lg: "200px" }}
         shadow="lg"
       >
-        <Text fontSize={{ base: "25px", md: "35px", lg: "35px" }}>
+        <Heading
+          px={1}
+          bgColor={"CaptionText"}
+          color={"gray.200"}
+          shadow="lg"
+          fontSize={{ base: "25px", md: "35px", lg: "35px" }}
+        >
           🤖ChatGPT
-        </Text>
+        </Heading>
         {loding ? (
           <Spinner
             thickness="4px"
             emptyColor="gray.300"
             color="green.400"
             mx={50}
-          >
-            思考中
-          </Spinner>
+          ></Spinner>
         ) : (
           ""
         )}
@@ -200,6 +210,7 @@ export default function Home() {
             variant={"unstyled"}
             bgColor={"yellow.400"}
             onClick={onToggle}
+            shadow="md"
           >
             设置
           </Button>
@@ -259,20 +270,19 @@ export default function Home() {
           : ""}
       </Flex>
       <Flex
-        px={3}
+        bgColor={"gray.300"}
+        shadow={"dark-lg"}
         position="fixed"
         bottom="0"
         left="0"
         right="0"
-        bgColor="gray.400"
         align={"center"}
-        height={{ base: "65px", md: "60px", lg: "50px" }}
+        height={{ base: "65px", md: "60px", lg: "60px" }}
+        px={{ base: "20px", md: "30px", lg: "200px" }}
       >
-        <Box height={{ base: "50px", md: "70px", lg: "40px" }}></Box>
-
         <Input
           position={"sticky"}
-          height={{ base: "40px", md: "35px", lg: "30px" }}
+          height={{ base: "40px", md: "40px", lg: "40px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
@@ -282,11 +292,19 @@ export default function Home() {
           onKeyDown={handleKeyDown}
         />
         <Button
-          height={{ base: "40px", md: "35px", lg: "30px" }}
-          colorScheme="green"
+          height={{ base: "40px", md: "40px", lg: "40px" }}
+          colorScheme="yellow"
           onClick={get}
           isDisabled={loding}
           isLoading={loding}
+          spinner={
+            <Spinner
+              thickness="4px"
+              emptyColor="white"
+              color="green.900"
+            ></Spinner>
+          }
+          shadow="md"
         >
           发送
         </Button>
