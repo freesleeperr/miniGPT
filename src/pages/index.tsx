@@ -147,7 +147,6 @@ export default function Home() {
   return (
     <Box minWidth={"340px"}>
       <HStack
-        px="6000px"
         zIndex={999}
         bgColor={"gray.300"}
         height={{ base: "60px", md: "100px", lg: "60px" }}
@@ -190,7 +189,7 @@ export default function Home() {
           </Fade>
         </Flex>
         <Link href={"https://github.com/freesleeperr?tab=repositories"}>
-          <Text fontSize={{ base: "10px", md: "20px", lg: "30px" }}>
+          <Text mr={"20px"} fontSize={{ base: "10px", md: "20px", lg: "30px" }}>
             GitHub↗😺
           </Text>
         </Link>
