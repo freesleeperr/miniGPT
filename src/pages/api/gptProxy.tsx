@@ -1,28 +1,10 @@
 import axios from "axios";
 import { NextApiRequest, NextApiResponse } from "next";
-
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const allowRegins = [
-    "http://localhost:3000/",
-    "https://mini-gpt-peach.vercel.app",
-    "https://mini-gpt-snowy.vercel.app",
-  ];
-  const reqOrigin = req.headers.origin;
-  console.log(reqOrigin);
-
-  for (const value in allowRegins) {
-    if (reqOrigin === value) {
-      res.setHeader("Access-Control-Allow-Origin", value);
-    } else {
-      res.setHeader(
-        "Access-Control-Allow-Origin",
-        "https://mini-gpt-peach.vercel.app"
-      );
-    }
-  }
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader(
     "Access-Control-Allow-Headers",
