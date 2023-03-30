@@ -32,7 +32,8 @@ export default function MyCard(props: IProps) {
 
   return (
     <Flex
-      width={{ base: "360px", md: "750px", lg: "1200px" }}
+      width={{md: "750px", lg: "1200px" }}
+      minW={"360px"}
       justifyItems={"start"}
       direction={"column"}
       mb={10}
