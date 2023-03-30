@@ -6,7 +6,7 @@ export default function handler(
   res: NextApiResponse<any>
 ) {
   const allowRegins = [
-    "http://localhost:3000",
+    "http://localhost:3000/",
     "https://mini-gpt-peach.vercel.app",
     "https://mini-gpt-snowy.vercel.app",
   ];
@@ -15,7 +15,7 @@ export default function handler(
 
   for (const value in allowRegins) {
     if (reqOrigin === value) {
-      res.setHeader("Access-Control-Allow-Origin", reqOrigin);
+      res.setHeader("Access-Control-Allow-Origin", value);
     } else {
       res.setHeader(
         "Access-Control-Allow-Origin",
