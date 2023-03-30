@@ -5,8 +5,24 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
+  const allowRegins = [
+    "localhost:3000",
+    "https://mini-gpt-peach.vercel.app",
+    "https://mini-gpt-snowy.vercel.app",
+  ];
+  const reqOrigin = req.headers.origin;
+
+  for (const value in allowRegins) {
+    if (reqOrigin === value) {
+      res.setHeader("Access-Control-Allow-Origin", reqOrigin);
+    } else {
+      res.setHeader(
+        "Access-Control-Allow-Origin",
+        "https://mini-gpt-snowy.vercel.app"
+      );
+    }
+  }
   res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
@@ -36,7 +52,7 @@ export default function handler(
       });
     // Process a POST request
   } else {
-    res.status(200).json({ name: "Reid" });
+    res.status(200).json({ meg: "connect" });
     // Handle any other HTTP method
   }
 }
