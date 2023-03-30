@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Center,
+  extendTheme,
   Fade,
   Flex,
   HStack,
@@ -30,6 +31,15 @@ interface IChat {
 }
 
 export default function Home() {
+  const breakpoints = {
+    sm: "30em",
+    md: "55em",
+    lg: "62em",
+    xl: "80em",
+    "2xl": "96em",
+  };
+
+  const theme = extendTheme({ breakpoints });
   const [question, setQuestion] = useState<any>("");
   const [answer, setAnsewer] = useState<any>("");
   const [loding, setLoading] = useState<boolean>(false);
