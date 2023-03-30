@@ -167,7 +167,7 @@ export default function Home() {
         bgColor={"gray.200"}
         height={{ base: "60px", md: "60px", lg: "60px" }}
         padding={2}
-        px={10}
+        px={{ base: "20px", md: "30px", lg: "200px" }}
         shadow="lg"
       >
         <Text fontSize={{ base: "25px", md: "35px", lg: "35px" }}>
@@ -221,6 +221,7 @@ export default function Home() {
                 placeholder={
                   "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
                 }
+                onChange={handleKChange}
                 value={key}
               ></Input>
               <Button color="red" bgColor={"gray.200"} onClick={handleKey}>
