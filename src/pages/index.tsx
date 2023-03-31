@@ -181,7 +181,7 @@ export default function Home() {
   }, [chatlog]);
   useEffect(() => {
     if (localStorage.getItem("uuid") !== "" || null) {
-      localStorage.setItem("uuid", localStorage.getItem("uuid"));
+      localStorage.setItem("uuid", localStorage.getItem("uuid")!);
       setId(localStorage.getItem("uuid"));
     }
     setId(localStorage.getItem("uuid"));
@@ -190,7 +190,7 @@ export default function Home() {
     }
 
     if (localStorage.getItem("chatlog") !== null) {
-      const localStorageChat = JSON.parse(localStorage.getItem("chatlog"));
+      const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
       setChatlog(localStorageChat);
     }
   }, []);
