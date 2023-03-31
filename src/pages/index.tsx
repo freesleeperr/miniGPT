@@ -198,11 +198,14 @@ export default function Home() {
   return (
     <Box className="Card" minWidth={"340px"}>
       <HStack
+        as={"nav"}
+        width="full"
+        position={"fixed"}
         zIndex={999}
         bgColor={"gray.300"}
         height={{ base: "60px", md: "60px", lg: "60px" }}
         padding={2}
-        px={{ base: "20px", md: "30px", lg: "200px" }}
+        px={{ base: "20px", md: "30px", lg: "280px" }}
         shadow="lg"
       >
         <Heading
@@ -300,7 +303,7 @@ export default function Home() {
         justify="center"
         pb={"70px"}
         pt="60px"
-        px={{ base: "20px", md: "30px", lg: "200px" }}
+        px={{ base: "20px", md: "30px", lg: "300px" }}
       >
         {chatlog
           ? chatlog.map((item, index) => (
