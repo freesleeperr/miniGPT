@@ -210,23 +210,18 @@ export default function Home() {
       >
         <Heading
           px={1}
-          bgColor={"CaptionText"}
-          color={"gray.200"}
           shadow="dark-lg"
+          bgColor={"black"}
           fontSize={{ base: "25px", md: "30px", lg: "30px" }}
         >
-          🤖ChatGPT
+          <Text
+            textColor={loding ? "green.400" : "gray.200"}
+            className={loding ? "blinking" : ""}
+          >🤖
+            ChatGPT
+          </Text>
         </Heading>
-        {loding ? (
-          <Spinner
-            thickness="4px"
-            emptyColor="gray.300"
-            color="green.400"
-            mx={50}
-          ></Spinner>
-        ) : (
-          ""
-        )}
+
         <Spacer></Spacer>
         <Link href={"https://github.com/freesleeperr?tab=repositories"}>
           <Text

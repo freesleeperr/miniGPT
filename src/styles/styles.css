@@ -4,8 +4,20 @@ html {
   background-size: "full";
   background-position: "center";
   background-repeat: "no-repeat";
-  
 }
-html,.Card {
-  background-color: #caa3f1;
+html,
+.Card {
+  background-color: #c7a6ed;
+}
+@keyframes blinking {
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.6;
+  }
+}
+
+.blinking {
+  animation: blinking 2s ease-out infinite;
 }
