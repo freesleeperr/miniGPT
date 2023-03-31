@@ -24,7 +24,6 @@ export default function handler(
       url: "https://api.openai-proxy.com/pro/chat/completions",
       data: data,
     };
-    console.log(data);
     axios(config)
       .then(function (response) {
         res.status(200).json(response.data);

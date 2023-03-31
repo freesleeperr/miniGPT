@@ -40,6 +40,7 @@ export default function Home() {
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
   const [key, setKey] = useState<any>("");
+  const [id, setId] = useState<any>("");
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, onToggle } = useDisclosure();
@@ -49,6 +50,7 @@ export default function Home() {
   };
   const handleKChange = (event: any) => {
     setKey(event.target.value);
+    setId("");
   };
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
@@ -60,10 +62,17 @@ export default function Home() {
     localStorage.clear();
   }
   async function get(event: any) {
+    if (localStorage.getItem("uuid") === "" || null) {
+      localStorage.setItem("uuid", uuidv4());
+    }
+    setId(localStorage.getItem("uuid"));
+   
+
     const date = new Date();
     const currentTime = date.toLocaleString();
     event.preventDefault();
     localStorage.setItem("apiKey", key);
+    localStorage.setItem("uuid", id);
     if (input == "") {
       toast({
         title: "问题为空",
@@ -86,12 +95,12 @@ export default function Home() {
       toast({
         title: "提交成功",
         position: "top",
-        duration: 1000,
+        duration: 800,
         status: "success",
       });
-      const sessionId = uuidv4();
+
       const data = JSON.stringify({
-        sessionId,
+        sessionId: id,
         content: input,
         key,
       });
@@ -103,16 +112,16 @@ export default function Home() {
         },
       };
       try {
-        const response = await fetch(
-          //my server
-          "https://mini-gpt-peach.vercel.app/api/gptProxy",
-          options
-        );
-
         // const response = await fetch(
-        //   "http://localhost:3000/api/gptProxy",
+        //   //my server
+        //   "https://mini-gpt-peach.vercel.app/api/gptProxy",
         //   options
         // );
+
+        const response = await fetch(
+          "http://localhost:3000/api/gptProxy",
+          options
+        );
         const reply = response.json();
         reply.then(
           (res) => {
@@ -163,6 +172,7 @@ export default function Home() {
       localStorage.getItem("apiKey") === null || ""
         ? ""
         : localStorage.getItem("apiKey");
+
     setKey(keyMe);
   }, []);
 
@@ -263,7 +273,6 @@ export default function Home() {
                   question={item.question}
                   answer={item.answer}
                   time={item.time}
-                  key={uuidv4()}
                 />
               </Box>
             ))
