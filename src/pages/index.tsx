@@ -212,7 +212,7 @@ export default function Home() {
           px={1}
           shadow="dark-lg"
           bgColor={"black"}
-          fontSize={{ base: "25px", md: "30px", lg: "30px" }}
+          fontSize={{ base: "20px", md: "30px", lg: "30px" }}
         >
           <Text
             textColor={loding ? "green.400" : "gray.200"}
