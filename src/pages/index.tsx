@@ -50,6 +50,7 @@ export default function Home() {
   };
   const handleKChange = (event: any) => {
     setKey(event.target.value);
+    localStorage.setItem("uuid", "");
     setId("");
   };
   const handleKeyDown = (e: any) => {
@@ -66,7 +67,6 @@ export default function Home() {
       localStorage.setItem("uuid", uuidv4());
     }
     setId(localStorage.getItem("uuid"));
-   
 
     const date = new Date();
     const currentTime = date.toLocaleString();
