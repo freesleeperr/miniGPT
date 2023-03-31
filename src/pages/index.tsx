@@ -203,17 +203,17 @@ export default function Home() {
         position={"fixed"}
         zIndex={999}
         bgColor={"gray.300"}
-        height={{ base: "60px", md: "60px", lg: "60px" }}
+        height={{ base: "60px", md: "60px", lg: "70px" }}
         padding={2}
-        px={{ base: "20px", md: "30px", lg: "280px" }}
+        px={{ base: "20px", md: "30px", lg: "300px" }}
         shadow="lg"
       >
         <Heading
           px={1}
           bgColor={"CaptionText"}
           color={"gray.200"}
-          shadow="lg"
-          fontSize={{ base: "25px", md: "35px", lg: "35px" }}
+          shadow="dark-lg"
+          fontSize={{ base: "25px", md: "30px", lg: "30px" }}
         >
           🤖ChatGPT
         </Heading>
@@ -302,7 +302,7 @@ export default function Home() {
         alignItems={"center"}
         justify="center"
         pb={"70px"}
-        pt="60px"
+        pt="120px"
         px={{ base: "20px", md: "30px", lg: "300px" }}
       >
         {chatlog
