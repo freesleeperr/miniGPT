@@ -60,6 +60,20 @@ export default function Home() {
     setKey("");
     localStorage.clear();
   }
+  function handleLog() {
+    if (answer !== "") {
+      localStorage.setItem("chatlog", JSON.stringify(chatlog));
+      toast({
+        title: "已保存",
+        status: "success",
+        position: "top",
+        duration: 800,
+      });
+    }
+  }
+  function handleLogClean() {
+    localStorage.removeItem("chatlog");
+  }
   async function get(event: any) {
     const date = new Date();
     const currentTime = date.toLocaleString();
@@ -72,6 +86,7 @@ export default function Home() {
     if (input == "") {
       toast({
         title: "问题为空",
+        duration: 800,
         position: "top",
         status: "warning",
         isClosable: true,
@@ -108,16 +123,16 @@ export default function Home() {
         },
       };
       try {
-        // const response = await fetch(
-        //   //my server
-        //   "https://mini-gpt-peach.vercel.app/api/gptProxy",
-        //   options
-        // );
-
         const response = await fetch(
-          "http://localhost:3000/api/gptProxy",
+          //my server
+          "https://mini-gpt-peach.vercel.app/api/gptProxy",
           options
         );
+
+        // const response = await fetch(
+        //   "http://localhost:3000/api/gptProxy",
+        //   options
+        // );
         const reply = response.json();
         reply.then(
           (res) => {
@@ -127,6 +142,7 @@ export default function Home() {
               return;
             }
             setAnsewer(res.data);
+
             setChatlog([
               ...chatlog,
               {
@@ -135,7 +151,7 @@ export default function Home() {
                 time: currentTime,
               },
             ]);
-            // console.log(chatlog);
+
             setLoading(false);
             setInput("");
           },
@@ -164,15 +180,19 @@ export default function Home() {
     // console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
-    const keyMe =
-      localStorage.getItem("apiKey") === null || ""
-        ? ""
-        : localStorage.getItem("apiKey");
-    if (localStorage.getItem("uuid") === "" || null) {
-      localStorage.setItem("uuid", uuidv4());
+    if (localStorage.getItem("uuid") !== "" || null) {
+      localStorage.setItem("uuid", localStorage.getItem("uuid"));
+      setId(localStorage.getItem("uuid"));
     }
     setId(localStorage.getItem("uuid"));
-    setKey(keyMe);
+    if (localStorage.getItem("apiKey") !== null || "") {
+      setKey(localStorage.getItem("apiKey"));
+    }
+
+    if (localStorage.getItem("chatlog") !== null) {
+      const localStorageChat = JSON.parse(localStorage.getItem("chatlog"));
+      setChatlog(localStorageChat);
+    }
   }, []);
 
   return (
@@ -213,6 +233,16 @@ export default function Home() {
             😺
           </Text>
         </Link>
+        <Button
+          px={3}
+          variant={"unstyled"}
+          bgColor={"green.300"}
+          onClick={handleLog}
+          shadow="md"
+          isDisabled={answer == ""}
+        >
+          保存记录
+        </Button>
         <Flex direction={"column"}>
           <Button
             px={3}
@@ -225,7 +255,6 @@ export default function Home() {
           </Button>
           <Collapse in={isOpen}>
             <InputGroup
-              right={0}
               onChange={handleKChange}
               position={"absolute"}
               mt="4"
@@ -234,7 +263,10 @@ export default function Home() {
               shadow="md"
               bgColor={"gray.200"}
               zIndex="999"
-              maxW={"800px"}
+              maxW={"500px"}
+              width={{ base: "330px", md: "330px", lg: "400px" }}
+              right={{ base: "20px", md: "30px", lg: "200px" }}
+              px={3}
             >
               <Input
                 type="password"
@@ -245,10 +277,20 @@ export default function Home() {
                 value={key}
               ></Input>
               <Button color="red" bgColor={"gray.200"} onClick={handleKey}>
-                清除
+                清除APIKEY
               </Button>
-              <Spacer></Spacer>
             </InputGroup>
+            <Button
+              position={"absolute"}
+              top={"110px"}
+              right={{ base: "20px", md: "30px", lg: "200px" }}
+              color="red"
+              bgColor={"gray.200"}
+              onClick={handleLogClean}
+              zIndex={999}
+            >
+              清除记录
+            </Button>
           </Collapse>
         </Flex>
       </HStack>
