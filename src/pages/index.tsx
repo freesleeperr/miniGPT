@@ -79,7 +79,7 @@ export default function Home() {
     const currentTime = date.toLocaleString();
     event.preventDefault();
     localStorage.setItem("apiKey", key);
-    if (localStorage.getItem("uuid") === "" || null) {
+    if (localStorage.getItem("uuid") === null) {
       localStorage.setItem("uuid", uuidv4());
     }
     setId(localStorage.getItem("uuid"));
@@ -217,8 +217,8 @@ export default function Home() {
           <Text
             textColor={loding ? "green.400" : "gray.200"}
             className={loding ? "blinking" : ""}
-          >🤖
-            ChatGPT
+          >
+            🤖 ChatGPT
           </Text>
         </Heading>
 
@@ -300,22 +300,26 @@ export default function Home() {
         pt="120px"
         px={{ base: "20px", md: "30px", lg: "300px" }}
       >
-        {chatlog
-          ? chatlog.map((item, index) => (
-              <Box
-                boxSize={"full"}
-                className="card"
-                key={index}
-                ref={index === chatlog.length - 1 ? scrollRef : null}
-              >
-                <MyCard
-                  question={item.question}
-                  answer={item.answer}
-                  time={item.time}
-                />
-              </Box>
-            ))
-          : ""}
+        {key ? (
+          chatlog.map((item, index) => (
+            <Box
+              boxSize={"full"}
+              className="card"
+              key={index}
+              ref={index === chatlog.length - 1 ? scrollRef : null}
+            >
+              <MyCard
+                question={item.question}
+                answer={item.answer}
+                time={item.time}
+              />
+            </Box>
+          ))
+        ) : (
+          <Text shadow={"lg"} color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
+            请设置APIKEY
+          </Text>
+        )}
       </Flex>
       <Flex
         bgColor={"gray.300"}
