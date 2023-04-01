@@ -58,7 +58,7 @@ export default function Home() {
   };
   function handleKey() {
     setKey("");
-    localStorage.clear();
+    localStorage.removeItem("apiKey");
   }
   function handleLog() {
     if (answer !== "") {
@@ -316,7 +316,13 @@ export default function Home() {
             </Box>
           ))
         ) : (
-          <Text shadow={"lg"} color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
+          <Text
+            shadow={"lg"}
+            color={"gray.800"}
+            borderRadius={4}
+            p={3}
+            bg={"yellow.400"}
+          >
             请设置APIKEY
           </Text>
         )}
