@@ -124,16 +124,16 @@ export default function Home() {
         },
       };
       try {
-        // const response = await fetch(
-        //   //my server
-        //   "https://mini-gpt-peach.vercel.app/api/gptProxy",
-        //   options
-        // );
-
         const response = await fetch(
-          "http://localhost:3000/api/gptProxy",
+          //my server
+          "https://mini-gpt-peach.vercel.app/api/gptProxy",
           options
         );
+
+        // const response = await fetch(
+        //   "http://localhost:3000/api/gptProxy",
+        //   options
+        // );
         const reply = response.json();
         reply.then(
           (res) => {
