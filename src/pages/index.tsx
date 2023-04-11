@@ -300,7 +300,7 @@ export default function Home() {
         pt="120px"
         px={{ base: "20px", md: "30px", lg: "300px" }}
       >
-        {key ? (
+        {localStorage.getItem("apiKey") ? (
           chatlog.map((item, index) => (
             <Box
               boxSize={"full"}
@@ -316,13 +316,7 @@ export default function Home() {
             </Box>
           ))
         ) : (
-          <Text
-            shadow={"lg"}
-            color={"gray.800"}
-            borderRadius={4}
-            p={3}
-            bg={"yellow.400"}
-          >
+          <Text color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
             请设置APIKEY
           </Text>
         )}
