@@ -17,6 +17,7 @@ import {
   Spacer,
   Spinner,
   Text,
+  Textarea,
   Toast,
   useDisclosure,
   useToast,
@@ -79,7 +80,7 @@ export default function Home() {
     const currentTime = date.toLocaleString();
     event.preventDefault();
     localStorage.setItem("apiKey", key);
-    if (localStorage.getItem("uuid") === null) {
+    if (localStorage.getItem("uuid") === null || "null") {
       localStorage.setItem("uuid", uuidv4());
     }
     setId(localStorage.getItem("uuid"));
@@ -123,16 +124,16 @@ export default function Home() {
         },
       };
       try {
-        const response = await fetch(
-          //my server
-          "https://mini-gpt-peach.vercel.app/api/gptProxy",
-          options
-        );
-
         // const response = await fetch(
-        //   "http://localhost:3000/api/gptProxy",
+        //   //my server
+        //   "https://mini-gpt-peach.vercel.app/api/gptProxy",
         //   options
         // );
+
+        const response = await fetch(
+          "http://localhost:3000/api/gptProxy",
+          options
+        );
         const reply = response.json();
         reply.then(
           (res) => {
@@ -196,7 +197,7 @@ export default function Home() {
   }, []);
 
   return (
-    <Box className="Card" minWidth={"340px"}>
+    <Box minH="100vh" className="Card" minWidth={"340px"} position="relative">
       <HStack
         as={"nav"}
         width="full"
@@ -300,7 +301,11 @@ export default function Home() {
         pt="120px"
         px={{ base: "20px", md: "30px", lg: "300px" }}
       >
-        {localStorage.getItem("apiKey") ? (
+        {!key ? (
+          <Text color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
+            请设置APIKEY
+          </Text>
+        ) : (
           chatlog.map((item, index) => (
             <Box
               boxSize={"full"}
@@ -315,26 +320,21 @@ export default function Home() {
               />
             </Box>
           ))
-        ) : (
-          <Text color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
-            请设置APIKEY
-          </Text>
         )}
       </Flex>
       <Flex
         bgColor={"gray.300"}
         shadow={"dark-lg"}
-        position="fixed"
+        position="absolute"
         bottom="0"
         left="0"
         right="0"
         align={"center"}
-        height={{ base: "65px", md: "60px", lg: "60px" }}
+        py={{ base: "10px", md: "10px", lg: "10px" }}
         px={{ base: "20px", md: "30px", lg: "200px" }}
       >
-        <Input
-          position={"sticky"}
-          height={{ base: "40px", md: "40px", lg: "40px" }}
+        <Textarea
+          maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
           placeholder="在此输入问题..."
           mr="2"
           value={input}
