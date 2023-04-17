@@ -126,7 +126,7 @@ export default function Home() {
       try {
         const response = await fetch(
           //my server
-          "https://mini-gpt-peach.vercel.app/api/gptProxy",
+          "https://www.555913333.xyz/api/gptProxy",
           options
         );
 
