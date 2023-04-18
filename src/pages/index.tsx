@@ -44,6 +44,9 @@ export default function Home() {
   const [chatlogSave, setChatlogSave] = useState(true);
   const [key, setKey] = useState<any>("");
   const [id, setId] = useState<any>("");
+  const [url, setUrl] = useState(
+    "https://gptproxy.555913333.xyz/v1/chat/completions"
+  );
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, onToggle } = useDisclosure();
@@ -53,6 +56,9 @@ export default function Home() {
   };
   const handleKChange = (event: any) => {
     setKey(event.target.value);
+  };
+  const handleUChange = (event: any) => {
+    setUrl(event.target.value);
   };
   const handleKeyDown = (e: any) => {
     if (e.key === "Enter") {
@@ -73,6 +79,11 @@ export default function Home() {
     setKey(key);
     localStorage.setItem("apiKey", key);
   }
+  function handleAPI() {
+    setUrl(url);
+    localStorage.setItem("url", url);
+  }
+
   async function get(event: any) {
     const date = new Date();
     const currentTime = date.toLocaleString();
@@ -108,12 +119,41 @@ export default function Home() {
         duration: 800,
         status: "success",
       });
+      let messages: any = [];
+
+      if (chatlog.length > 2) {
+        for (let i = 1; -1 < i; i--) {
+          messages = [
+            ...messages,
+            {
+              role: "user",
+              content: chatlog[chatlog.length - 1 - i].question,
+            },
+            {
+              role: "assistant",
+              content: chatlog[chatlog.length - 1 - i].answer,
+            },
+          ];
+        }
+      } else if (chatlog.length == 1) {
+        messages = [
+          {
+            role: "user",
+            content: chatlog[chatlog.length - 1].question,
+          },
+          {
+            role: "assistant",
+            content: chatlog[chatlog.length - 1].answer,
+          },
+        ];
+      }
 
       const data = JSON.stringify({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: `${input}` }],
+        messages: [...messages, { role: "user", content: `${input}` }],
         temperature: 0.7,
       });
+
       const options = {
         method: "POST",
         body: data,
@@ -122,10 +162,11 @@ export default function Home() {
           Authorization: `Bearer ${key}`,
         },
       };
+
       try {
         const response = await fetch(
           //my server
-          "https://gptproxy.555913333.xyz/v1/chat/completions",
+          url,
           options
         );
 
@@ -184,6 +225,9 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
+    if (answer !== "" && chatlogSave) {
+      localStorage.setItem("chatlog", JSON.stringify(chatlog));
+    }
     // console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
@@ -195,7 +239,9 @@ export default function Home() {
     if (localStorage.getItem("apiKey") !== null || "") {
       setKey(localStorage.getItem("apiKey"));
     }
-
+    if (localStorage.getItem("url") !== null || "") {
+      setUrl(localStorage.getItem("url")!);
+    }
     if (localStorage.getItem("chatlog") !== null) {
       const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
       setChatlog(localStorageChat);
@@ -261,7 +307,7 @@ export default function Home() {
             <InputGroup
               onChange={handleKChange}
               position={"absolute"}
-              mt="4"
+              mt="16px"
               fontSize={6}
               rounded="md"
               shadow="md"
@@ -273,6 +319,7 @@ export default function Home() {
               px={3}
             >
               <Input
+                type="password"
                 placeholder={
                   "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
                 }
@@ -284,24 +331,38 @@ export default function Home() {
                 bgColor={"gray.200"}
                 onClick={handleKeySave}
               >
-                保存
+                保存APIKEY
+              </Button>
+            </InputGroup>
+            <InputGroup
+              onChange={handleUChange}
+              position={"absolute"}
+              mt="60px"
+              fontSize={6}
+              rounded="md"
+              shadow="md"
+              bgColor={"gray.200"}
+              zIndex="999"
+              maxW={"500px"}
+              width={{ base: "330px", md: "330px", lg: "400px" }}
+              right={{ base: "20px", md: "30px", lg: "200px" }}
+              px={3}
+            >
+              <Input
+                autoComplete="off"
+                placeholder={"例如https://api.openai-proxy.com"}
+                color="blue.500"
+                onChange={handleUChange}
+                value={url}
+              ></Input>
+              <Button color="green" bgColor={"gray.200"} onClick={handleAPI}>
+                保存API
               </Button>
             </InputGroup>
             <Flex>
               <Button
                 position={"absolute"}
-                top={"170px"}
-                right={{ base: "20px", md: "30px", lg: "200px" }}
-                color="red"
-                bgColor={"gray.200"}
-                onClick={handleKey}
-                zIndex={999}
-              >
-                清除APIKEY
-              </Button>
-              <Button
-                position={"absolute"}
-                top={"120px"}
+                mt="148px"
                 right={{ base: "20px", md: "30px", lg: "200px" }}
                 color="red"
                 bgColor={"gray.200"}
@@ -309,6 +370,17 @@ export default function Home() {
                 zIndex={999}
               >
                 清除记录
+              </Button>
+              <Button
+                position={"absolute"}
+                mt="104px"
+                right={{ base: "20px", md: "30px", lg: "200px" }}
+                color="red"
+                bgColor={"gray.200"}
+                onClick={handleKey}
+                zIndex={999}
+              >
+                清除APIKEY
               </Button>
             </Flex>
           </Collapse>
