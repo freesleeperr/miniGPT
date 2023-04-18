@@ -290,7 +290,7 @@ export default function Home() {
             <Flex>
               <Button
                 position={"absolute"}
-                top={"154px"}
+                top={"170px"}
                 right={{ base: "20px", md: "30px", lg: "200px" }}
                 color="red"
                 bgColor={"gray.200"}
@@ -301,7 +301,7 @@ export default function Home() {
               </Button>
               <Button
                 position={"absolute"}
-                top={"110px"}
+                top={"120px"}
                 right={{ base: "20px", md: "30px", lg: "200px" }}
                 color="red"
                 bgColor={"gray.200"}
