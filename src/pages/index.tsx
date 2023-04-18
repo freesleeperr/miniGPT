@@ -74,6 +74,7 @@ export default function Home() {
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
+    setChatlog([]);
   }
   function handleKeySave() {
     setKey(key);
