@@ -32,6 +32,7 @@ interface IChat {
   answer: string;
   scrollRef?: any;
   time?: string;
+  status?: string;
 }
 
 export default function Home() {
@@ -67,6 +68,10 @@ export default function Home() {
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
+  }
+  function handleKeySave() {
+    setKey(key);
+    localStorage.setItem("apiKey", key);
   }
   async function get(event: any) {
     const date = new Date();
@@ -131,12 +136,17 @@ export default function Home() {
         const reply = response.json();
         reply.then(
           (res) => {
-            if (!res) {
-              toast({ title: "No Response", status: "warning" });
+            if (response.status !== 200) {
+              if (response.status == 401) {
+                toast({ title: res.error.message, status: "warning" });
+              }
+              if (response.status == 404) {
+                toast({ title: "无响应", status: "warning" });
+              }
               setLoading(false);
               return;
             }
-            console.log(res);
+
             setAnsewer(res.data);
 
             setChatlog([
@@ -145,6 +155,7 @@ export default function Home() {
                 question: input,
                 answer: res.choices[0].message.content,
                 time: currentTime,
+                status: `${chatlogSave ? "已保存" : ""}`,
               },
             ]);
 
@@ -172,9 +183,6 @@ export default function Home() {
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-    if (answer !== "" && chatlogSave) {
-      localStorage.setItem("chatlog", JSON.stringify(chatlog));
     }
     // console.log(chatlog);
   }, [chatlog]);
@@ -233,7 +241,7 @@ export default function Home() {
         <Button
           px={3}
           variant={"unstyled"}
-          bgColor={chatlogSave ?  "green.300": "pink.300"}
+          bgColor={chatlogSave ? "green.300" : "pink.300"}
           onClick={handleLog}
           shadow="md"
         >
@@ -265,28 +273,44 @@ export default function Home() {
               px={3}
             >
               <Input
-                type="password"
                 placeholder={
                   "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
                 }
                 onChange={handleKChange}
                 value={key}
               ></Input>
-              <Button color="red" bgColor={"gray.200"} onClick={handleKey}>
-                清除APIKEY
+              <Button
+                color="green"
+                bgColor={"gray.200"}
+                onClick={handleKeySave}
+              >
+                保存
               </Button>
             </InputGroup>
-            <Button
-              position={"absolute"}
-              top={"110px"}
-              right={{ base: "20px", md: "30px", lg: "200px" }}
-              color="red"
-              bgColor={"gray.200"}
-              onClick={handleLogClean}
-              zIndex={999}
-            >
-              清除记录
-            </Button>
+            <Flex>
+              <Button
+                position={"absolute"}
+                top={"154px"}
+                right={{ base: "20px", md: "30px", lg: "200px" }}
+                color="red"
+                bgColor={"gray.200"}
+                onClick={handleKey}
+                zIndex={999}
+              >
+                清除APIKEY
+              </Button>
+              <Button
+                position={"absolute"}
+                top={"110px"}
+                right={{ base: "20px", md: "30px", lg: "200px" }}
+                color="red"
+                bgColor={"gray.200"}
+                onClick={handleLogClean}
+                zIndex={999}
+              >
+                清除记录
+              </Button>
+            </Flex>
           </Collapse>
         </Flex>
       </HStack>
@@ -298,26 +322,28 @@ export default function Home() {
         pt="120px"
         px={{ base: "20px", md: "30px", lg: "300px" }}
       >
-        {!key ? (
+        {/* {!key ? (
           <Text color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
             请设置APIKEY
           </Text>
         ) : (
-          chatlog.map((item, index) => (
-            <Box
-              boxSize={"full"}
-              className="card"
-              key={index}
-              ref={index === chatlog.length - 1 ? scrollRef : null}
-            >
-              <MyCard
-                question={item.question}
-                answer={item.answer}
-                time={item.time}
-              />
-            </Box>
-          ))
-        )}
+          <></>
+        )} */}
+        {chatlog.map((item, index) => (
+          <Box
+            boxSize={"full"}
+            className="card"
+            key={index}
+            ref={index === chatlog.length - 1 ? scrollRef : null}
+          >
+            <MyCard
+              question={item.question}
+              answer={item.answer}
+              time={item.time}
+              status={item.status}
+            />
+          </Box>
+        ))}
       </Flex>
       <Flex
         bgColor={"gray.300"}

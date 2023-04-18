@@ -17,6 +17,7 @@ interface IProps {
   answer: string;
   question: string;
   time?: string;
+  status?: string;
 }
 export default function MyCard(props: IProps) {
   const newTheme = {
@@ -71,7 +72,7 @@ export default function MyCard(props: IProps) {
         </Card>
       </Flex>{" "}
       <Text fontSize={"15px"} mt={-2} color={"gray.600"}>
-        {props.time}
+        {props.time} {props.status}
       </Text>
     </Flex>
   );
