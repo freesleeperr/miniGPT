@@ -155,7 +155,7 @@ export default function Home() {
                 question: input,
                 answer: res.choices[0].message.content,
                 time: currentTime,
-                status: `${chatlogSave ? "已保存" : ""}`,
+                status: `${chatlogSave ? "Saved" : ""}`,
               },
             ]);
 
