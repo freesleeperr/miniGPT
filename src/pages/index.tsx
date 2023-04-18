@@ -40,6 +40,7 @@ export default function Home() {
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
+  const [chatlogSave, setChatlogSave] = useState(true);
   const [key, setKey] = useState<any>("");
   const [id, setId] = useState<any>("");
   const toast = useToast();
@@ -62,15 +63,7 @@ export default function Home() {
     localStorage.removeItem("apiKey");
   }
   function handleLog() {
-    if (answer !== "") {
-      localStorage.setItem("chatlog", JSON.stringify(chatlog));
-      toast({
-        title: "已保存",
-        status: "success",
-        position: "top",
-        duration: 800,
-      });
-    }
+    setChatlogSave(chatlogSave ? false : true);
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
@@ -180,6 +173,9 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
+    if (answer !== "" && chatlogSave) {
+      localStorage.setItem("chatlog", JSON.stringify(chatlog));
+    }
     // console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
@@ -237,12 +233,11 @@ export default function Home() {
         <Button
           px={3}
           variant={"unstyled"}
-          bgColor={"green.300"}
+          bgColor={chatlogSave ?  "green.300": "pink.300"}
           onClick={handleLog}
           shadow="md"
-          isDisabled={answer == ""}
         >
-          保存记录
+          {chatlogSave ? "记录对话" : "不记录对话"}
         </Button>
         <Flex direction={"column"}>
           <Button
