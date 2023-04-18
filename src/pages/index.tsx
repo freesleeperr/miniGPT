@@ -112,21 +112,22 @@ export default function Home() {
       });
 
       const data = JSON.stringify({
-        sessionId: id,
-        content: input,
-        key,
+        model: "gpt-3.5-turbo",
+        messages: [{ role: "user", content: `${input}` }],
+        temperature: 0.7,
       });
       const options = {
         method: "POST",
         body: data,
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
         },
       };
       try {
         const response = await fetch(
           //my server
-          "https://www.555913333.xyz/api/gptProxy",
+          "https://gptproxy.555913333.xyz/v1/chat/completions",
           options
         );
 
@@ -137,18 +138,19 @@ export default function Home() {
         const reply = response.json();
         reply.then(
           (res) => {
-            if (res.code !== 200) {
-              toast({ title: res.message, status: "warning" });
+            if (!res) {
+              toast({ title: "No Response", status: "warning" });
               setLoading(false);
               return;
             }
+            console.log(res);
             setAnsewer(res.data);
 
             setChatlog([
               ...chatlog,
               {
                 question: input,
-                answer: res.data,
+                answer: res.choices[0].message.content,
                 time: currentTime,
               },
             ]);
