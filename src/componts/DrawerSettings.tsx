@@ -31,7 +31,10 @@ export default function DrawerSettings(props: any) {
   return (
     <Box className="Card">
       <Button
-        colorScheme="pink"
+        borderRadius={0}
+        border={"4px"}
+        borderColor="black"
+        colorScheme="white"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
         iconSpacing={"0"}
         onClick={onOpen}

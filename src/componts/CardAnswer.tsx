@@ -31,7 +31,7 @@ export default function MyCard(props: IProps) {
         bgColor={"pink.400"}
         direction={"row-reverse"}
       >
-        <Heading px={"4px"} fontSize={"35px"} color={"gray.100"}>
+        <Heading pb={"2px"} px={"2px"} fontSize={"35px"} color={"gray.100"}>
           {props.question ? props.question : null}
         </Heading>
       </Flex>
