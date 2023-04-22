@@ -33,8 +33,8 @@ export default function DrawerSettings(props: any) {
       <Button
         borderRadius={0}
         border={"4px"}
-        borderColor="black"
-        colorScheme="white"
+        borderColor="gray.700"
+        colorScheme="cyan"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
         iconSpacing={"0"}
         onClick={onOpen}
