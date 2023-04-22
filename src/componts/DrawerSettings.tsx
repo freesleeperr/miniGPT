@@ -31,10 +31,10 @@ export default function DrawerSettings(props: any) {
   return (
     <Box className="Card">
       <Button
+        colorScheme="messenger"
         borderRadius={0}
         border={"4px"}
         borderColor="gray.700"
-        colorScheme="cyan"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
         iconSpacing={"0"}
         onClick={onOpen}
@@ -76,7 +76,6 @@ export default function DrawerSettings(props: any) {
                   id="owner"
                   defaultValue="segun"
                   onChange={props.handleMode}
-                  value={props.chatMode}
                 >
                   <option value="0">问答</option>
                   <option value="1">连续</option>

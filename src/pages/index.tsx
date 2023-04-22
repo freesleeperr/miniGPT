@@ -18,11 +18,12 @@ import {
   Toast,
   useDisclosure,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import MyCard from "@/componts/CardAnswer";
 import { useEffect, useRef, useState } from "react";
 import Header from "@/componts/Header";
-import { ArrowUpIcon } from "@chakra-ui/icons";
+import { ArrowUpIcon, ChatIcon, ViewIcon } from "@chakra-ui/icons";
 interface IChat {
   question: string;
   answer: string;
@@ -40,9 +41,7 @@ export default function Home() {
   const [chatMode, setChatMode] = useState(0);
   const [key, setKey] = useState<any>("");
   const [id, setId] = useState<any>("");
-  const [url, setUrl] = useState(
-    "https://gptproxy.555913333.xyz/v1/chat/completions"
-  );
+  const [url, setUrl] = useState("https://gptproxy.555913333.xyz");
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, onToggle } = useDisclosure();
@@ -84,15 +83,11 @@ export default function Home() {
     handleAPI();
     handleKeySave();
   }
+
   async function get(event: any) {
     const date = new Date();
     const currentTime = date.toLocaleString();
     event.preventDefault();
-    localStorage.setItem("apiKey", key);
-    if (localStorage.getItem("uuid") === null || "null") {
-      localStorage.setItem("uuid", uuidv4());
-    }
-    setId(localStorage.getItem("uuid"));
     if (input == "") {
       toast({
         title: "问题为空",
@@ -155,7 +150,7 @@ export default function Home() {
       try {
         const response = await fetch(
           //my server
-          url,
+          `${url}/v1/chat/completions`,
           options
         );
 
@@ -182,8 +177,114 @@ export default function Home() {
             setChatlog([
               ...chatlog,
               {
+                status: "chat",
                 question: input,
                 answer: res.choices[0].message.content,
+                time: currentTime,
+              },
+            ]);
+
+            setLoading(false);
+            setInput("");
+          },
+          (err) => {
+            toast({ title: err });
+            setLoading(false);
+            throw err;
+          }
+        );
+      } catch (err) {
+        console.log(err);
+        toast({
+          title: `${err}`,
+          position: "bottom",
+          status: "error",
+          isClosable: true,
+        });
+        setLoading(false);
+      }
+    }
+  }
+  async function getImg(event: any) {
+    const date = new Date();
+    const currentTime = date.toLocaleString();
+    event.preventDefault();
+    if (input == "") {
+      toast({
+        title: "问题为空",
+        duration: 800,
+        position: "top",
+        status: "warning",
+        isClosable: true,
+      });
+      return;
+    } else if (key == "" || null) {
+      toast({
+        title: "请设置API KEY，platform.openai.com/account/api-keys",
+        position: "top",
+        status: "warning",
+        isClosable: true,
+      });
+      return;
+    } else {
+      setLoading(true);
+      setQuestion(input);
+      toast({
+        title: "提交成功",
+        position: "top",
+        duration: 800,
+        status: "success",
+      });
+      const messages: any = [];
+
+      const data = JSON.stringify({
+        prompt: `${input}`,
+        n: 1,
+        size: "512x512",
+      });
+
+      const options = {
+        method: "POST",
+        body: data,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
+        },
+      };
+
+      try {
+        const response = await fetch(
+          //my server
+          `${url}/v1/images/generations`,
+          options
+        );
+
+        // const response = await fetch(
+        //   "http://localhost:3000/api/gptProxy",
+        //   options
+        // );
+        const reply = response.json();
+        reply.then(
+          (res) => {
+            if (response.status !== 200) {
+              if (response.status == 401) {
+                toast({ title: res.error.message, status: "warning" });
+              }
+              if (response.status == 404) {
+                toast({ title: "无响应", status: "warning" });
+              }
+              setLoading(false);
+              return;
+            }
+
+            setAnsewer(res.data);
+
+            setChatlog([
+              ...chatlog,
+              {
+                status: "image",
+                question: input,
+                answer: res.data[0].url,
                 time: currentTime,
               },
             ]);
@@ -219,11 +320,6 @@ export default function Home() {
     // console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
-    if (localStorage.getItem("uuid") !== "" || null) {
-      localStorage.setItem("uuid", localStorage.getItem("uuid")!);
-      setId(localStorage.getItem("uuid"));
-    }
-    setId(localStorage.getItem("uuid"));
     if (localStorage.getItem("apiKey") !== null || "") {
       setKey(localStorage.getItem("apiKey"));
     }
@@ -273,6 +369,7 @@ export default function Home() {
             ref={index === chatlog.length - 1 ? scrollRef : null}
           >
             <MyCard
+              index={index}
               question={item.question}
               answer={item.answer}
               time={item.time}
@@ -282,8 +379,8 @@ export default function Home() {
         ))}
       </Flex>
       <Flex
-        position="absolute"
-        bottom="0"
+        position={"absolute"}
+        bottom="5px"
         left="0"
         right="0"
         align={"flex-end"}
@@ -302,18 +399,37 @@ export default function Home() {
           isDisabled={loding}
           onKeyDown={handleKeyDown}
         />
-        <Button
-          leftIcon={<ArrowUpIcon />}
-          colorScheme="green"
-          onClick={get}
-          isDisabled={loding}
-          isLoading={loding}
-          spinner={<Spinner emptyColor="white" color="green.900"></Spinner>}
-          border="4px"
-          borderColor={"black"}
-        >
-          发送
-        </Button>
+        <VStack>
+          <Button
+            leftIcon={<ViewIcon />}
+            colorScheme="pink"
+            onClick={getImg}
+            isDisabled={loding}
+            isLoading={loding}
+            spinner={<Spinner emptyColor="white" color="green.900"></Spinner>}
+            border="4px"
+            borderColor={"black"}
+            height="36px"
+            borderRadius={0}
+          >
+            图片
+          </Button>
+
+          <Button
+            leftIcon={<ChatIcon />}
+            colorScheme="whatsapp"
+            onClick={get}
+            isDisabled={loding}
+            isLoading={loding}
+            spinner={<Spinner emptyColor="white" color="green.900"></Spinner>}
+            border="4px"
+            borderColor={"black"}
+            height="36px"
+            borderRadius={0}
+          >
+            对话
+          </Button>
+        </VStack>
       </Flex>
     </Box>
   );
