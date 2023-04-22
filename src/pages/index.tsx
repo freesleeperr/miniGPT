@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -7,7 +5,6 @@ import {
   Button,
   Center,
   Collapse,
-  extendTheme,
   Fade,
   Flex,
   Heading,
@@ -24,9 +21,8 @@ import {
 } from "@chakra-ui/react";
 import MyCard from "@/componts/CardAnswer";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { title } from "process";
-
+import Header from "@/componts/Header";
+import { ArrowUpIcon } from "@chakra-ui/icons";
 interface IChat {
   question: string;
   answer: string;
@@ -41,7 +37,7 @@ export default function Home() {
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
-  const [chatlogSave, setChatlogSave] = useState(true);
+  const [chatMode, setChatMode] = useState(0);
   const [key, setKey] = useState<any>("");
   const [id, setId] = useState<any>("");
   const [url, setUrl] = useState(
@@ -69,8 +65,8 @@ export default function Home() {
     setKey("");
     localStorage.removeItem("apiKey");
   }
-  function handleLog() {
-    setChatlogSave(chatlogSave ? false : true);
+  function handleMode(event: any) {
+    setChatMode(event.target.value);
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
@@ -84,7 +80,10 @@ export default function Home() {
     setUrl(url);
     localStorage.setItem("url", url);
   }
-
+  function submit() {
+    handleAPI();
+    handleKeySave();
+  }
   async function get(event: any) {
     const date = new Date();
     const currentTime = date.toLocaleString();
@@ -121,34 +120,23 @@ export default function Home() {
         status: "success",
       });
       let messages: any = [];
-
-      if (chatlog.length > 2) {
-        for (let i = 1; -1 < i; i--) {
-          messages = [
-            ...messages,
-            {
-              role: "user",
-              content: chatlog[chatlog.length - 1 - i].question,
-            },
-            {
-              role: "assistant",
-              content: chatlog[chatlog.length - 1 - i].answer,
-            },
-          ];
+      if (chatMode == 1) {
+        if (chatlog.length > 2) {
+          for (let i = 1; -1 < i; i--) {
+            messages = [
+              ...messages,
+              {
+                role: "user",
+                content: chatlog[chatlog.length - 1 - i].question,
+              },
+              {
+                role: "assistant",
+                content: chatlog[chatlog.length - 1 - i].answer,
+              },
+            ];
+          }
         }
-      } else if (chatlog.length == 1) {
-        messages = [
-          {
-            role: "user",
-            content: chatlog[chatlog.length - 1].question,
-          },
-          {
-            role: "assistant",
-            content: chatlog[chatlog.length - 1].answer,
-          },
-        ];
       }
-
       const data = JSON.stringify({
         model: "gpt-3.5-turbo",
         messages: [...messages, { role: "user", content: `${input}` }],
@@ -197,7 +185,6 @@ export default function Home() {
                 question: input,
                 answer: res.choices[0].message.content,
                 time: currentTime,
-                status: `${chatlogSave ? "Saved" : ""}`,
               },
             ]);
 
@@ -226,7 +213,7 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    if (answer !== "" && chatlogSave) {
+    if (answer !== "") {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
     }
     // console.log(chatlog);
@@ -251,142 +238,18 @@ export default function Home() {
 
   return (
     <Box minH="100vh" className="Card" minWidth={"340px"} position="relative">
-      <HStack
-        as={"nav"}
-        width="full"
-        position={"fixed"}
-        zIndex={999}
-        bgColor={"gray.300"}
-        height={{ base: "60px", md: "60px", lg: "70px" }}
-        padding={2}
-        px={{ base: "20px", md: "30px", lg: "300px" }}
-        shadow="lg"
-      >
-        <Heading
-          px={1}
-          shadow="dark-lg"
-          bgColor={"black"}
-          fontSize={{ base: "20px", md: "30px", lg: "30px" }}
-        >
-          <Text
-            textColor={loding ? "green.400" : "gray.200"}
-            className={loding ? "blinking" : ""}
-          >
-            🤖 ChatGPT
-          </Text>
-        </Heading>
-
-        <Spacer></Spacer>
-        <Link href={"https://github.com/freesleeperr?tab=repositories"}>
-          <Text
-            fontSize={{ base: "20px", md: "20px", lg: "30px" }}
-            fontWeight={"light"}
-          >
-            😺
-          </Text>
-        </Link>
-        <Button
-          px={3}
-          variant={"unstyled"}
-          bgColor={chatlogSave ? "green.300" : "pink.300"}
-          onClick={handleLog}
-          shadow="md"
-        >
-          {chatlogSave ? "记录对话" : "不记录对话"}
-        </Button>
-        <Flex direction={"column"}>
-          <Button
-            px={3}
-            variant={"unstyled"}
-            bgColor={"yellow.400"}
-            onClick={onToggle}
-            shadow="md"
-          >
-            设置
-          </Button>
-          <Collapse in={isOpen}>
-            <InputGroup
-              onChange={handleKChange}
-              position={"absolute"}
-              mt="16px"
-              fontSize={6}
-              rounded="md"
-              shadow="md"
-              bgColor={"gray.200"}
-              zIndex="999"
-              maxW={"500px"}
-              width={{ base: "330px", md: "330px", lg: "400px" }}
-              right={{ base: "20px", md: "30px", lg: "200px" }}
-              px={3}
-            >
-              <Input
-                type="password"
-                placeholder={
-                  "例如:sk-xxxxxt4YCxZ2fbfZ0YnT3BlbkFJwHM9Yurwnb02FqsKZvYA"
-                }
-                onChange={handleKChange}
-                value={key}
-              ></Input>
-              <Button
-                color="green"
-                bgColor={"gray.200"}
-                onClick={handleKeySave}
-              >
-                保存APIKEY
-              </Button>
-            </InputGroup>
-            <InputGroup
-              onChange={handleUChange}
-              position={"absolute"}
-              mt="60px"
-              fontSize={6}
-              rounded="md"
-              shadow="md"
-              bgColor={"gray.200"}
-              zIndex="999"
-              maxW={"500px"}
-              width={{ base: "330px", md: "330px", lg: "400px" }}
-              right={{ base: "20px", md: "30px", lg: "200px" }}
-              px={3}
-            >
-              <Input
-                autoComplete="off"
-                placeholder={"例如https://api.openai-proxy.com"}
-                color="blue.500"
-                onChange={handleUChange}
-                value={url}
-              ></Input>
-              <Button color="green" bgColor={"gray.200"} onClick={handleAPI}>
-                保存API
-              </Button>
-            </InputGroup>
-            <Flex>
-              <Button
-                position={"absolute"}
-                mt="148px"
-                right={{ base: "20px", md: "30px", lg: "200px" }}
-                color="red"
-                bgColor={"gray.200"}
-                onClick={handleLogClean}
-                zIndex={999}
-              >
-                清除记录
-              </Button>
-              <Button
-                position={"absolute"}
-                mt="104px"
-                right={{ base: "20px", md: "30px", lg: "200px" }}
-                color="red"
-                bgColor={"gray.200"}
-                onClick={handleKey}
-                zIndex={999}
-              >
-                清除APIKEY
-              </Button>
-            </Flex>
-          </Collapse>
-        </Flex>
-      </HStack>
+      <Header
+        keyz={key}
+        loading={loding}
+        handleKChange={handleKChange}
+        handleUChange={handleUChange}
+        url={url}
+        submit={submit}
+        handleLogClean={handleLogClean}
+        handleKey={handleKey}
+        handleMode={handleMode}
+        chatMode={chatMode}
+      ></Header>
       <Flex
         direction={"column"}
         alignItems={"center"}
@@ -419,17 +282,17 @@ export default function Home() {
         ))}
       </Flex>
       <Flex
-        bgColor={"gray.300"}
-        shadow={"dark-lg"}
         position="absolute"
         bottom="0"
         left="0"
         right="0"
-        align={"center"}
-        py={{ base: "10px", md: "10px", lg: "10px" }}
-        px={{ base: "20px", md: "30px", lg: "200px" }}
+        align={"flex-end"}
+        p={{ base: "10px", md: "10px", lg: "10px" }}
+        mx={{ base: "10px", md: "30px", lg: "290px" }}
       >
         <Textarea
+          border={"4px"}
+          borderRadius={0}
           maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
           placeholder="在此输入问题..."
           mr="2"
@@ -440,19 +303,14 @@ export default function Home() {
           onKeyDown={handleKeyDown}
         />
         <Button
-          height={{ base: "40px", md: "40px", lg: "40px" }}
-          colorScheme="yellow"
+          leftIcon={<ArrowUpIcon />}
+          colorScheme="green"
           onClick={get}
           isDisabled={loding}
           isLoading={loding}
-          spinner={
-            <Spinner
-              thickness="4px"
-              emptyColor="white"
-              color="green.900"
-            ></Spinner>
-          }
-          shadow="md"
+          spinner={<Spinner emptyColor="white" color="green.900"></Spinner>}
+          border="4px"
+          borderColor={"black"}
         >
           发送
         </Button>
