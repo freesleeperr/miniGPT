@@ -16,7 +16,7 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useState } from "react";
 // interface IProps {
 //   scrollRef?: any;
@@ -48,7 +48,6 @@ export default function MyCard(props: any) {
         <SyntaxHighlighter
           children={children}
           language={language}
-          {...props}
           style={dracula}
         ></SyntaxHighlighter>
       );
