@@ -339,6 +339,15 @@ export default function Home() {
     }
   }, [chatlog]);
   useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+    if (answer !== "" || reduceLog) {
+      localStorage.setItem("chatlog", JSON.stringify(chatlog));
+      setreduceLog(false);
+    }
+  }, [scrollRef.current]);
+  useEffect(() => {
     if (localStorage.getItem("apiKey") !== null || "") {
       setKey(localStorage.getItem("apiKey"));
     }
@@ -409,14 +418,14 @@ export default function Home() {
         mx={{ base: "10px", md: "30px", lg: "260px" }}
       >
         <Textarea
-          borderRadius={0}
+          borderRadius={"5px"}
           maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
           placeholder="在此输入问题..."
           mr="2"
           borderColor={"messenger.600"}
           value={input}
           onChange={handleChange}
-          bgColor="gray.100"
+          bgColor="white"
           isDisabled={loding}
         />
         <HStack>

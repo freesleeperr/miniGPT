@@ -22,7 +22,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { HamburgerIcon, DeleteIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, DeleteIcon, MinusIcon } from "@chakra-ui/icons";
 
 export default function DrawerSettings(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -31,12 +31,12 @@ export default function DrawerSettings(props: any) {
   return (
     <Box className="Card">
       <Button
-        colorScheme="messenger"
-        borderRadius={"5px"}
-        border={"4px"}
+        bgColor={"messenger.500"}
+        borderRadius={"3px"}
         borderColor="gray.700"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
         iconSpacing={"0"}
+        color="white"
         onClick={onOpen}
       ></Button>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>

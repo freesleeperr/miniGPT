@@ -7,7 +7,7 @@ html {
 }
 html,
 .Card {
-  background-color: rgb(255, 253, 242);
+  background-color: rgb(243, 243, 243);
 }
 @keyframes blinking {
   10% {

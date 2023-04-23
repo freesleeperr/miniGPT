@@ -6,11 +6,15 @@ import {
   HStack,
   Button,
   Spacer,
+  Divider,
+  Box,
+  IconButton,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
-import { CloseIcon } from "@chakra-ui/icons";
+import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 import { useState } from "react";
@@ -36,79 +40,89 @@ export default function MyCard(props: any) {
       );
     },
   };
-  // function handleVisable() {
-
-  //   setVisable(visable ? false : true);
-  //
+  function handleVisable() {
+    setVisable(visable ? false : true);
+  }
   function deleteItem() {
     console.log(props.id);
     props.handleDelete(props.id);
   }
   return (
     <>
-      <Flex
-        mb={"-4px"}
-        bgColor={"gray.200"}
-        direction={"row-reverse"}
-        position="relative"
-        borderColor="gray.300"
-        border={"4px"}
-        borderTopRadius={"5px"}
+      <Box
+        shadow={"md"}
+        borderRadius="6px"
+        border={"2px"}
+        borderColor="gray.200"
+        p="2px"
       >
-        <Text
-          fontWeight={"bold"}
-          pb={"2px"}
-          px={"10px"}
-          fontSize={{ base: "30px", md: "30px", lg: "35px" }}
-          color={"black"}
+        <Flex
+          mb={"-4px"}
+          bgColor="white"
+          direction={"row-reverse"}
+          position="relative"
+          borderTopRadius={"5px"}
+          color="white"
+          py={"5px"}
+          px={"16px"}
+          borderBottomColor="gray.300"
+          borderBottom={"5px"}
         >
-          {props.question ? props.question : null}
-        </Text>
-        <Spacer></Spacer>
-        <Button
-          m={"6px"}
-          border={"4px"}
-          borderColor="gray.900"
-          borderRadius={"0"}
-          bgColor={"gray.300"}
-          iconSpacing="0"
-          leftIcon={<CloseIcon></CloseIcon>}
-          left="0"
-          height={"40px"}
-          width={"40px"}
-          onClick={deleteItem}
-        ></Button>
-      </Flex>
-      {visable ? (
-        <Stack
-          borderBottomRadius={"5px"}
-          p={4}
-          bgColor={props.status === "image" ? "black" : "white"}
-          border={"4px"}
-          borderColor={"gray.900"}
-        >
-          {props.status === "image" ? (
-            <Flex direction={"column"} align="center">
-              <img
-                src={`${props.answer}`}
-                alt={`${props.question}`}
-                width="512"
-                height="512"
-              ></img>
-            </Flex>
-          ) : (
-            <>
-              <ReactMarkdown
-                components={ChakraUIRenderer(newTheme)}
-                children={props.answer ? ` 🤖:${props.answer}` : ""}
-              />
-            </>
-          )}
-        </Stack>
-      ) : (
-        <></>
-      )}
-      <Text fontSize={"15px"} mb="25px" color={"gray.600"}>
+          <Text
+            
+            fontWeight={"bold"}
+            fontSize={{ base: "29px", md: "29px", lg: "30px" }}
+            color={"messenger.600"}
+          >
+            {props.question ? props.question : null}
+          </Text>
+          <Spacer></Spacer>
+          <ButtonGroup mt="5px" variant="solid" isAttached>
+            {" "}
+            <IconButton
+              aria-label="avoid"
+              color="red.500"
+              icon={<CloseIcon />}
+              onClick={deleteItem}
+            ></IconButton>
+            <IconButton
+              color="green.300"
+              aria-label="avoid"
+              icon={<MinusIcon />}
+              onClick={handleVisable}
+            ></IconButton>{" "}
+          </ButtonGroup>
+        </Flex>
+
+        {visable ? (
+          <Stack
+            borderBottomRadius={"6px"}
+            p={"16px"}
+            bgColor={props.status === "image" ? "black" : "white"}
+          >
+            {props.status === "image" ? (
+              <Flex direction={"column"} align="center">
+                <img
+                  src={`${props.answer}`}
+                  alt={`${props.question}`}
+                  width="512"
+                  height="512"
+                ></img>
+              </Flex>
+            ) : (
+              <>
+                <ReactMarkdown
+                  components={ChakraUIRenderer(newTheme)}
+                  children={props.answer ? ` 🤖:${props.answer}` : ""}
+                />
+              </>
+            )}
+          </Stack>
+        ) : (
+          <></>
+        )}
+      </Box>{" "}
+      <Text fontSize={"10px"} mb="25px" ml={"5px"} mt="3px" color={"gray.600"}>
         {props.time} {props.status}
       </Text>
     </>
