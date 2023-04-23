@@ -50,7 +50,7 @@ export default function MyCard(props: any) {
       <Flex
         mb={"-4px"}
         border={"4px"}
-        bgColor={"messenger.500"}
+        bgColor={"pink.400"}
         direction={"row-reverse"}
         position="relative"
       >

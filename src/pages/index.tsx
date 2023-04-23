@@ -42,8 +42,9 @@ export default function Home() {
   const [chatlog, setChatlog] = useState<IChat[]>([]);
   const [chatMode, setChatMode] = useState(0);
   const [key, setKey] = useState<any>("");
-  const [id, setId] = useState<any>("");
+  const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [url, setUrl] = useState("https://gptproxy.555913333.xyz");
+
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const { isOpen, onToggle } = useDisclosure();
@@ -87,11 +88,11 @@ export default function Home() {
     handleKeySave();
   }
   function handleDelete(id: string) {
-    setChatlog(
-      chatlog.filter((item) => {
-        return item.id != id;
-      })
-    );
+    const dataItem = chatlog.filter((item) => {
+      return item.id != id;
+    });
+    setChatlog(dataItem);
+    setreduceLog(true);
   }
 
   async function get(event: any) {
@@ -328,10 +329,12 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    if (chatlog[chatlog.length - 1]?.answer !== "") {
+  }, [scrollRef.current]);
+  useEffect(() => {
+    if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
+      setreduceLog(false);
     }
-    console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
     if (localStorage.getItem("apiKey") !== null || "") {
@@ -342,7 +345,8 @@ export default function Home() {
     }
     if (localStorage.getItem("chatlog") !== null) {
       const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
-      setChatlog(localStorageChat);
+      const storedData = localStorage.getItem("chatlog");
+      setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
     }
   }, []);
 
