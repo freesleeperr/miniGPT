@@ -328,7 +328,7 @@ export default function Home() {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-    if (answer !== "") {
+    if (chatlog[chatlog.length - 1]?.answer !== "") {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
     }
     console.log(chatlog);
