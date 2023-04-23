@@ -58,11 +58,11 @@ export default function Home() {
   const handleUChange = (event: any) => {
     setUrl(event.target.value);
   };
-  const handleKeyDown = (e: any) => {
-    if (e.key === "Enter") {
-      get(e);
-    }
-  };
+  // const handleKeyDown = (e: any) => {
+  //   if (e.key === "Enter") {
+  //     get(e);
+  //   }
+  // };
   function handleKey() {
     setKey("");
     localStorage.removeItem("apiKey");
@@ -325,12 +325,11 @@ export default function Home() {
       }
     }
   }
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [scrollRef.current]);
-  useEffect(() => {
     if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
       setreduceLog(false);
@@ -418,7 +417,6 @@ export default function Home() {
           onChange={handleChange}
           bgColor="gray.100"
           isDisabled={loding}
-          onKeyDown={handleKeyDown}
         />
         <VStack>
           <Button
