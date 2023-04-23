@@ -362,7 +362,13 @@ export default function Home() {
   }, []);
 
   return (
-    <Box minH="100vh" className="Card" minWidth={"340px"} position="relative">
+    <Box
+      pb={"25px"}
+      minH="100vh"
+      className="Card"
+      minWidth={"340px"}
+      position="relative"
+    >
       <Header
         keyz={key}
         loading={loding}
@@ -411,7 +417,7 @@ export default function Home() {
       </Flex>
       <Flex
         position={"absolute"}
-        bottom="5px"
+        bottom="25px"
         left="0"
         right="0"
         align={"flex-end"}

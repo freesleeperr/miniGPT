@@ -54,7 +54,7 @@ export default function MyCard(props: any) {
         borderRadius="6px"
         border={"2px"}
         borderColor="gray.200"
-        p="2px"
+        p="1px"
       >
         <Flex
           mb={"-4px"}
@@ -69,7 +69,6 @@ export default function MyCard(props: any) {
           borderBottom={"5px"}
         >
           <Text
-            
             fontWeight={"bold"}
             fontSize={{ base: "29px", md: "29px", lg: "30px" }}
             color={"messenger.600"}
@@ -77,15 +76,24 @@ export default function MyCard(props: any) {
             {props.question ? props.question : null}
           </Text>
           <Spacer></Spacer>
-          <ButtonGroup mt="5px" variant="solid" isAttached>
+          <ButtonGroup
+            mt="5px"
+            mr={"10px"}
+            variant="solid"
+            justifyContent={"space-between"}
+            isAttached
+
+          >
             {" "}
             <IconButton
+              borderRadius={"6px"}
               aria-label="avoid"
               color="red.500"
               icon={<CloseIcon />}
               onClick={deleteItem}
             ></IconButton>
             <IconButton
+              borderRadius={"6px"}
               color="green.300"
               aria-label="avoid"
               icon={<MinusIcon />}
