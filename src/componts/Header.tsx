@@ -21,7 +21,6 @@ export default function Header(props: any) {
       <HStack
         borderBottomWidth={"4px"}
         borderColor="gray.200"
-        align={"center"}
         as={"nav"}
         width="full"
         position={"fixed"}
@@ -44,9 +43,10 @@ export default function Header(props: any) {
           handleMode={props.handleMode}
           chatMode={props.chatMode}
         ></DrawerSettings>
-        <Heading p={2} fontSize={"18px"} color="black">
+        <Spacer></Spacer>
+        <Heading fontSize={"25px"} color="messenger.600">
           🤖miniGPT
-        </Heading>
+        </Heading>{" "}
         <Spacer></Spacer>
       </HStack>
     </>

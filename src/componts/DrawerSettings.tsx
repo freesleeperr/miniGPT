@@ -29,7 +29,7 @@ export default function DrawerSettings(props: any) {
   const firstField = React.useRef();
 
   return (
-    <Box className="Card">
+    <Box className="Card" position={"absolute"}>
       <Button
         bgColor={"messenger.500"}
         borderRadius={"3px"}
