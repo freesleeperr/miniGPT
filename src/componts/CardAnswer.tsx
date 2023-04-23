@@ -16,7 +16,7 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useState } from "react";
 // interface IProps {
 //   scrollRef?: any;
@@ -34,12 +34,27 @@ export default function MyCard(props: any) {
     p: (props: any) => {
       const { children } = props;
       return (
-        <Text lineHeight={"27px"} fontSize={"18px"} color="black">
-          {children}
-        </Text>
+        <>
+          <Text lineHeight={"27px"} fontSize={"18px"} color="black">
+            {children}
+          </Text>
+        </>
+      );
+    },
+    code: (props: any) => {
+      const { className, children } = props;
+      const language = className?.replace("language-", "") || "";
+      return (
+        <SyntaxHighlighter
+          children={children}
+          language={language}
+          {...props}
+          style={dracula}
+        ></SyntaxHighlighter>
       );
     },
   };
+
   function handleVisable() {
     setVisable(visable ? false : true);
   }
@@ -52,7 +67,7 @@ export default function MyCard(props: any) {
       <Box
         shadow={"md"}
         borderRadius="6px"
-        border={"2px"}
+        border={"1px"}
         borderColor="gray.200"
         p="1px"
       >
@@ -82,7 +97,6 @@ export default function MyCard(props: any) {
             variant="solid"
             justifyContent={"space-between"}
             isAttached
-
           >
             {" "}
             <IconButton
@@ -120,6 +134,7 @@ export default function MyCard(props: any) {
             ) : (
               <>
                 <ReactMarkdown
+                  skipHtml
                   components={ChakraUIRenderer(newTheme)}
                   children={props.answer ? ` 🤖:${props.answer}` : ""}
                 />

@@ -53,7 +53,6 @@ export default function Home() {
   const { isOpen, onToggle } = useDisclosure();
   const handleChange = (event: any) => {
     setInput(event.target.value);
-    setQuestion(event.target.input);
   };
   const handleKChange = (event: any) => {
     setKey(event.target.value);
