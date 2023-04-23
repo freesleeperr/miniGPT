@@ -19,6 +19,8 @@ export default function Header(props: any) {
   return (
     <>
       <HStack
+        borderBottomWidth={"4px"}
+        borderColor="gray.300"
         align={"center"}
         as={"nav"}
         width="full"

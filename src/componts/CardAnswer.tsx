@@ -58,7 +58,7 @@ export default function MyCard(props: any) {
           fontWeight={"bold"}
           pb={"2px"}
           px={"10px"}
-          fontSize={"35px"}
+          fontSize={{ base: "30px", md: "30px", lg: "35px" }}
           color={"white"}
         >
           {props.question ? props.question : null}
