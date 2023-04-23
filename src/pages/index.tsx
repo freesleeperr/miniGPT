@@ -30,6 +30,7 @@ interface IChat {
   scrollRef?: any;
   time?: string;
   status?: string;
+  id: string;
 }
 
 export default function Home() {
@@ -83,10 +84,18 @@ export default function Home() {
     handleAPI();
     handleKeySave();
   }
+  function handleDelete(id: string) {
+    setChatlog(
+      chatlog.filter((item) => {
+        return item.id != id;
+      })
+    );
+  }
 
   async function get(event: any) {
     const date = new Date();
     const currentTime = date.toLocaleString();
+    let uuid = uuidv4();
     event.preventDefault();
     if (input == "") {
       toast({
@@ -181,6 +190,7 @@ export default function Home() {
                 question: input,
                 answer: res.choices[0].message.content,
                 time: currentTime,
+                id: uuid,
               },
             ]);
 
@@ -206,6 +216,7 @@ export default function Home() {
     }
   }
   async function getImg(event: any) {
+    let uuid = uuidv4();
     const date = new Date();
     const currentTime = date.toLocaleString();
     event.preventDefault();
@@ -286,6 +297,7 @@ export default function Home() {
                 question: input,
                 answer: res.data[0].url,
                 time: currentTime,
+                id: uuid,
               },
             ]);
 
@@ -317,7 +329,7 @@ export default function Home() {
     if (answer !== "") {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
     }
-    // console.log(chatlog);
+    console.log(chatlog);
   }, [chatlog]);
   useEffect(() => {
     if (localStorage.getItem("apiKey") !== null || "") {
@@ -363,13 +375,15 @@ export default function Home() {
         )} */}
         {chatlog.map((item, index) => (
           <Box
-            boxSize={"full"}
-            className="card"
             key={index}
+            width={"full"}
+            className="card"
             ref={index === chatlog.length - 1 ? scrollRef : null}
           >
             <MyCard
-              index={index}
+              key={index}
+              handleDelete={handleDelete}
+              id={item.id}
               question={item.question}
               answer={item.answer}
               time={item.time}
@@ -393,6 +407,7 @@ export default function Home() {
           maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
           placeholder="在此输入问题..."
           mr="2"
+          borderColor={"messenger.600"}
           value={input}
           onChange={handleChange}
           bgColor="gray.100"
@@ -402,13 +417,13 @@ export default function Home() {
         <VStack>
           <Button
             leftIcon={<ViewIcon />}
-            colorScheme="pink"
+            colorScheme="messenger"
             onClick={getImg}
             isDisabled={loding}
             isLoading={loding}
-            spinner={<Spinner emptyColor="white" color="green.900"></Spinner>}
+            spinner={<Spinner></Spinner>}
             border="4px"
-            borderColor={"black"}
+            borderColor={"gray.100"}
             height="36px"
             borderRadius={0}
           >
@@ -421,9 +436,9 @@ export default function Home() {
             onClick={get}
             isDisabled={loding}
             isLoading={loding}
-            spinner={<Spinner emptyColor="white" color="green.900"></Spinner>}
+            spinner={<Spinner></Spinner>}
             border="4px"
-            borderColor={"black"}
+            borderColor={"gray.800"}
             height="36px"
             borderRadius={0}
           >

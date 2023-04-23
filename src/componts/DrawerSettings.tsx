@@ -108,7 +108,7 @@ export default function DrawerSettings(props: any) {
           <DrawerFooter borderTopWidth="1px">
             <Link href="https://github.com/freesleeperr/">GitHub</Link>
             <Spacer></Spacer>
-            <Button colorScheme="blue" onClick={props.submit}>
+            <Button borderRadius={"0"}  colorScheme="blue" onClick={props.submit}>
               保存
             </Button>
           </DrawerFooter>

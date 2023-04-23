@@ -15,15 +15,16 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { use, useState } from "react";
-interface IProps {
-  scrollRef?: any;
-  answer: string;
-  question: string;
-  time?: string;
-  status?: string;
-  index: number;
-}
-export default function MyCard(props: IProps) {
+// interface IProps {
+//   scrollRef?: any;
+//   answer: string;
+//   question: string;
+//   time?: string;
+//   status?: string;
+//   id: string;
+
+// }
+export default function MyCard(props: any) {
   const [visable, setVisable] = useState(true);
 
   const newTheme = {
@@ -36,21 +37,32 @@ export default function MyCard(props: IProps) {
       );
     },
   };
-  function handleVisable() {
-    setVisable(visable ? false : true);
+  // function handleVisable() {
+
+  //   setVisable(visable ? false : true);
+  //
+  function deleteItem() {
+    console.log(props.id);
+    props.handleDelete(props.id);
   }
   return (
     <>
       <Flex
         mb={"-4px"}
         border={"4px"}
-        bgColor={"pink.400"}
+        bgColor={"messenger.500"}
         direction={"row-reverse"}
         position="relative"
       >
-        <Heading pb={"2px"} px={"10px"} fontSize={"35px"} color={"gray.100"}>
+        <Text
+          fontWeight={"bold"}
+          pb={"2px"}
+          px={"10px"}
+          fontSize={"35px"}
+          color={"white"}
+        >
           {props.question ? props.question : null}
-        </Heading>
+        </Text>
         <Spacer></Spacer>
         <Button
           m={"4px"}
@@ -62,7 +74,7 @@ export default function MyCard(props: IProps) {
           left="0"
           height={"40px"}
           width={"40px"}
-          onClick={handleVisable}
+          onClick={deleteItem}
         ></Button>
       </Flex>
       {visable ? (
