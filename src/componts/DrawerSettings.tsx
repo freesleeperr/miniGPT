@@ -74,8 +74,9 @@ export default function DrawerSettings(props: any) {
                 <FormLabel htmlFor="owner">对话模式</FormLabel>
                 <Select
                   id="owner"
-                  defaultValue="segun"
+                  defaultValue="0"
                   onChange={props.handleMode}
+                  value={props.chatMode}
                 >
                   <option value="0">问答</option>
                   <option value="1">连续</option>
@@ -108,7 +109,11 @@ export default function DrawerSettings(props: any) {
           <DrawerFooter borderTopWidth="1px">
             <Link href="https://github.com/freesleeperr/">GitHub</Link>
             <Spacer></Spacer>
-            <Button borderRadius={"0"}  colorScheme="blue" onClick={props.submit}>
+            <Button
+              borderRadius={"0"}
+              colorScheme="blue"
+              onClick={props.submit}
+            >
               保存
             </Button>
           </DrawerFooter>

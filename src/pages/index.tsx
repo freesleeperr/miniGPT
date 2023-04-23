@@ -24,6 +24,7 @@ import MyCard from "@/componts/CardAnswer";
 import { useEffect, useRef, useState } from "react";
 import Header from "@/componts/Header";
 import { ArrowUpIcon, ChatIcon, ViewIcon } from "@chakra-ui/icons";
+import { eventNames } from "process";
 interface IChat {
   question: string;
   answer: string;
@@ -67,6 +68,7 @@ export default function Home() {
   }
   function handleMode(event: any) {
     setChatMode(event.target.value);
+    console.log(event.target.value);
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
@@ -421,11 +423,11 @@ export default function Home() {
             onClick={getImg}
             isDisabled={loding}
             isLoading={loding}
-            spinner={<Spinner></Spinner>}
             border="4px"
             borderColor={"gray.100"}
             height="36px"
             borderRadius={0}
+            loadingText="Loading"
           >
             图片
           </Button>
@@ -436,11 +438,11 @@ export default function Home() {
             onClick={get}
             isDisabled={loding}
             isLoading={loding}
-            spinner={<Spinner></Spinner>}
             border="4px"
             borderColor={"gray.800"}
             height="36px"
             borderRadius={0}
+            loadingText="Loading"
           >
             对话
           </Button>
