@@ -32,7 +32,7 @@ export default function DrawerSettings(props: any) {
     <Box className="Card">
       <Button
         colorScheme="messenger"
-        borderRadius={0}
+        borderRadius={"5px"}
         border={"4px"}
         borderColor="gray.700"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
@@ -110,9 +110,12 @@ export default function DrawerSettings(props: any) {
             <Link href="https://github.com/freesleeperr/">GitHub</Link>
             <Spacer></Spacer>
             <Button
-              borderRadius={"0"}
+              borderRadius={"5px"}
               colorScheme="blue"
-              onClick={props.submit}
+              onClick={() => {
+                props.submit();
+                onClose();
+              }}
             >
               保存
             </Button>

@@ -12,9 +12,8 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import { CloseIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { materialDark } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import { use, useState } from "react";
+
+import { useState } from "react";
 // interface IProps {
 //   scrollRef?: any;
 //   answer: string;
@@ -49,26 +48,29 @@ export default function MyCard(props: any) {
     <>
       <Flex
         mb={"-4px"}
-        border={"4px"}
-        bgColor={"pink.400"}
+        bgColor={"gray.200"}
         direction={"row-reverse"}
         position="relative"
+        borderColor="gray.300"
+        border={"4px"}
+        borderTopRadius={"5px"}
       >
         <Text
           fontWeight={"bold"}
           pb={"2px"}
           px={"10px"}
           fontSize={{ base: "30px", md: "30px", lg: "35px" }}
-          color={"white"}
+          color={"black"}
         >
           {props.question ? props.question : null}
         </Text>
         <Spacer></Spacer>
         <Button
-          m={"4px"}
+          m={"6px"}
           border={"4px"}
+          borderColor="gray.900"
           borderRadius={"0"}
-          bgColor={"gray.400"}
+          bgColor={"gray.300"}
           iconSpacing="0"
           leftIcon={<CloseIcon></CloseIcon>}
           left="0"
@@ -79,10 +81,11 @@ export default function MyCard(props: any) {
       </Flex>
       {visable ? (
         <Stack
+          borderBottomRadius={"5px"}
           p={4}
-          bgColor={props.status === "image" ? "black" : "gray.100"}
+          bgColor={props.status === "image" ? "black" : "white"}
           border={"4px"}
-          borderColor={"black"}
+          borderColor={"gray.900"}
         >
           {props.status === "image" ? (
             <Flex direction={"column"} align="center">

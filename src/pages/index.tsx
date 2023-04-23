@@ -3,12 +3,14 @@ import { v4 as uuidv4 } from "uuid";
 import {
   Box,
   Button,
+  ButtonGroup,
   Center,
   Collapse,
   Fade,
   Flex,
   Heading,
   HStack,
+  IconButton,
   Input,
   InputGroup,
   Spacer,
@@ -24,7 +26,8 @@ import MyCard from "@/componts/CardAnswer";
 import { useEffect, useRef, useState } from "react";
 import Header from "@/componts/Header";
 import { ArrowUpIcon, ChatIcon, ViewIcon } from "@chakra-ui/icons";
-import { eventNames } from "process";
+import { Icon } from "@chakra-ui/react";
+import { RiImageAddLine } from "react-icons/ri";
 interface IChat {
   question: string;
   answer: string;
@@ -403,11 +406,9 @@ export default function Home() {
         left="0"
         right="0"
         align={"flex-end"}
-        p={{ base: "10px", md: "10px", lg: "10px" }}
-        mx={{ base: "10px", md: "30px", lg: "290px" }}
+        mx={{ base: "10px", md: "30px", lg: "260px" }}
       >
         <Textarea
-          border={"4px"}
           borderRadius={0}
           maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
           placeholder="在此输入问题..."
@@ -418,37 +419,36 @@ export default function Home() {
           bgColor="gray.100"
           isDisabled={loding}
         />
-        <VStack>
-          <Button
-            leftIcon={<ViewIcon />}
-            colorScheme="messenger"
-            onClick={getImg}
-            isDisabled={loding}
-            isLoading={loding}
-            border="4px"
-            borderColor={"gray.100"}
-            height="36px"
-            borderRadius={0}
-            loadingText="Loading"
-          >
-            图片
-          </Button>
-
-          <Button
-            leftIcon={<ChatIcon />}
-            colorScheme="whatsapp"
-            onClick={get}
-            isDisabled={loding}
-            isLoading={loding}
-            border="4px"
-            borderColor={"gray.800"}
-            height="36px"
-            borderRadius={0}
-            loadingText="Loading"
-          >
-            对话
-          </Button>
-        </VStack>
+        <HStack>
+          <ButtonGroup height="80px" variant="outline" isAttached>
+            <Button
+              leftIcon={<ChatIcon />}
+              colorScheme="whatsapp"
+              onClick={get}
+              isDisabled={loding}
+              isLoading={loding}
+              borderRadius={"5px"}
+              width={"80px"}
+              height="80px"
+              bgColor={"green.200"}
+            >
+              对话
+            </Button>
+            <IconButton
+              aria-label="图片生成"
+              icon={<Icon as={RiImageAddLine} />}
+              colorScheme="messenger"
+              onClick={getImg}
+              isDisabled={loding}
+              isLoading={loding}
+              borderColor={"gray.400"}
+              width={"40px"}
+              height="80px"
+              borderRadius={"5px"}
+              bgColor={"blue.100"}
+            ></IconButton>
+          </ButtonGroup>
+        </HStack>
       </Flex>
     </Box>
   );
