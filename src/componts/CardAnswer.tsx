@@ -67,17 +67,19 @@ export default function MyCard(props: any) {
         shadow={"md"}
         borderRadius="6px"
         border={"1px"}
-        borderColor="gray.200"
+      
+        borderColor="messenger.400"
         p="1px"
+
       >
         <Flex
-          mb={"-4px"}
+          
           bgColor="white"
           direction={"row-reverse"}
           position="relative"
           borderTopRadius={"5px"}
           color="white"
-          py={"5px"}
+          py={"20px"}
           px={"16px"}
           borderBottomColor="gray.300"
           borderBottom={"5px"}
