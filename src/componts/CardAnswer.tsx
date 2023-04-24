@@ -142,7 +142,7 @@ export default function MyCard(props: any) {
           <></>
         )}
       </Box>{" "}
-      <Text fontSize={"10px"} mb="25px" ml={"5px"} mt="3px" color={"gray.600"}>
+      <Text fontSize={"10px"} mb={"5px"} ml={"5px"} color={"gray.400"}>
         {props.time} {props.status}
       </Text>
     </>
