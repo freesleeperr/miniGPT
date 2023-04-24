@@ -29,6 +29,7 @@ export default function Header(props: any) {
         >
           {/* 设置选项 */}
           <DrawerSettings
+            handleSlide={props.handleSlide}
             userSettings={props.userSettings}
             handleKChange={props.handleKChange}
             handleUChange={props.handleUChange}
@@ -47,7 +48,7 @@ export default function Header(props: any) {
           <Spacer></Spacer>
         </HStack>
         {props.isLoading ? (
-          <Progress color={"whatsapp.200"} size="xs" isIndeterminate />
+          <Progress color={"whatsapp.200"} size="xs" animation={"ease"} isIndeterminate />
         ) : (
           ""
         )}

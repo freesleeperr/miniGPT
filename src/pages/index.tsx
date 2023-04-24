@@ -81,6 +81,12 @@ export default function Home() {
   function handleMode(event: any) {
     setChatMode(event.target.value);
   }
+  function handleSlide(val: any) {
+    setUserSetting({
+      ...userSettings,
+      userTemperature: val / 10,
+    });
+  }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
     setChatlog([]);
@@ -293,6 +299,7 @@ export default function Home() {
       position="relative"
     >
       <Header
+        handleSlide={handleSlide}
         userSettings={userSettings}
         loading={loding}
         handleKChange={handleKChange}
