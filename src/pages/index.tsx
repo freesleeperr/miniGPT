@@ -28,6 +28,8 @@ import Header from "@/componts/Header";
 import { ArrowUpIcon, ChatIcon, ViewIcon } from "@chakra-ui/icons";
 import { Icon } from "@chakra-ui/react";
 import { RiImageAddLine } from "react-icons/ri";
+import { request } from "https";
+
 interface IChat {
   question: string;
   answer: string;
@@ -36,7 +38,16 @@ interface IChat {
   status?: string;
   id: string;
 }
-
+interface ISetting {
+  userUrl: string;
+  userApiKey: string;
+  userTemperature: number;
+}
+interface IMessageChat {
+  content: string;
+  role: string;
+}
+interface requestChat {}
 export default function Home() {
   const [question, setQuestion] = useState<any>("");
   const [answer, setAnsewer] = useState<any>("");
@@ -47,47 +58,43 @@ export default function Home() {
   const [key, setKey] = useState<any>("");
   const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [url, setUrl] = useState("https://gptproxy.555913333.xyz");
-
+  const [userSettings, setUserSetting] = useState<ISetting>({
+    userUrl: "https://gptproxy.555913333.xyz",
+    userApiKey: "",
+    userTemperature: 1,
+  });
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const { isOpen, onToggle } = useDisclosure();
   const handleChange = (event: any) => {
     setInput(event.target.value);
   };
   const handleKChange = (event: any) => {
-    setKey(event.target.value);
+    setUserSetting({ ...userSettings, userApiKey: event.target.value });
   };
   const handleUChange = (event: any) => {
-    setUrl(event.target.value);
+    setUserSetting({ ...userSettings, userUrl: event.target.value });
   };
-  // const handleKeyDown = (e: any) => {
-  //   if (e.key === "Enter") {
-  //     get(e);
-  //   }
-  // };
   function handleKey() {
-    setKey("");
-    localStorage.removeItem("apiKey");
+    setUserSetting({ ...userSettings, userApiKey: "" });
+    submit();
   }
   function handleMode(event: any) {
     setChatMode(event.target.value);
-    console.log(event.target.value);
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
     setChatlog([]);
   }
-  function handleKeySave() {
-    setKey(key);
-    localStorage.setItem("apiKey", key);
-  }
-  function handleAPI() {
-    setUrl(url);
-    localStorage.setItem("url", url);
-  }
+
   function submit() {
-    handleAPI();
-    handleKeySave();
+    // setUserSetting({
+    //   userUrl: url,
+    //   userApiKey: key,
+    //   userTemperature: 1,
+    // });
+    setUserSetting({ ...userSettings });
+    localStorage.setItem("userSettings", JSON.stringify(userSettings));
+    console.log(userSettings);
   }
   function handleDelete(id: string) {
     const dataItem = chatlog.filter((item) => {
@@ -96,12 +103,48 @@ export default function Home() {
     setChatlog(dataItem);
     setreduceLog(true);
   }
-
-  async function get(event: any) {
-    const date = new Date();
-    const currentTime = date.toLocaleString();
-    let uuid = uuidv4();
-    event.preventDefault();
+  async function get(requestUrl: any, requestBody: any) {
+    const options = {
+      method: "POST",
+      body: requestBody,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userSettings.userApiKey}`,
+      },
+    };
+    try {
+      const data = await fetch(requestUrl, options)
+        .then((response: any) => {
+          return response.json().then((data: any) => {
+            if (!response.ok) {
+              toast({
+                title: data.error.message,
+                status: "warning",
+                isClosable: true,
+              });
+              setLoading(false);
+            }
+            return data;
+          });
+        })
+        .then((response: any) => {
+          setLoading(false);
+          setInput("");
+          return response;
+        });
+      return data;
+    } catch (err) {
+      toast({
+        title: `${err}`,
+        position: "bottom",
+        status: "error",
+        isClosable: true,
+      });
+      setLoading(false);
+    }
+  }
+  function checkInput() {
+    console.log(userSettings);
     if (input == "") {
       toast({
         title: "问题为空",
@@ -110,15 +153,23 @@ export default function Home() {
         status: "warning",
         isClosable: true,
       });
-      return;
-    } else if (key == "" || null) {
+      return false;
+    } else if (userSettings.userApiKey == "" || null) {
       toast({
         title: "请设置API KEY，platform.openai.com/account/api-keys",
         position: "top",
         status: "warning",
         isClosable: true,
       });
-      return;
+      return false;
+    } else if (userSettings.userApiKey == "" || null) {
+      toast({
+        title: "请设置API 地址，platform.openai.com/account/api-keys",
+        position: "top",
+        status: "warning",
+        isClosable: true,
+      });
+      return false;
     } else {
       setLoading(true);
       setQuestion(input);
@@ -128,7 +179,15 @@ export default function Home() {
         duration: 800,
         status: "success",
       });
-      let messages: any = [];
+      return true;
+    }
+  }
+  async function getChat() {
+    if (checkInput()) {
+      const date = new Date();
+      const currentTime = date.toLocaleString();
+      let uuid = uuidv4();
+      let messages: IMessageChat[] = [];
       if (chatMode == 1) {
         if (chatlog.length > 2) {
           for (let i = 1; -1 < i; i--) {
@@ -146,185 +205,60 @@ export default function Home() {
           }
         }
       }
-      const data = JSON.stringify({
+      const data = {
         model: "gpt-3.5-turbo",
         messages: [...messages, { role: "user", content: `${input}` }],
-        temperature: 0.7,
-      });
-
-      const options = {
-        method: "POST",
-        body: data,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${key}`,
-        },
+        temperature: userSettings.userTemperature,
       };
-
-      try {
-        const response = await fetch(
-          //my server
-          `${url}/v1/chat/completions`,
-          options
-        );
-
-        // const response = await fetch(
-        //   "http://localhost:3000/api/gptProxy",
-        //   options
-        // );
-        const reply = response.json();
-        reply.then(
-          (res) => {
-            if (response.status !== 200) {
-              if (response.status == 401) {
-                toast({ title: res.error.message, status: "warning" });
-              }
-              if (response.status == 404) {
-                toast({ title: "无响应", status: "warning" });
-              }
-              setLoading(false);
-              return;
-            }
-
-            setAnsewer(res.data);
-
-            setChatlog([
-              ...chatlog,
-              {
-                status: "chat",
-                question: input,
-                answer: res.choices[0].message.content,
-                time: currentTime,
-                id: uuid,
-              },
-            ]);
-
-            setLoading(false);
-            setInput("");
-          },
-          (err) => {
-            toast({ title: err });
-            setLoading(false);
-            throw err;
-          }
-        );
-      } catch (err) {
-        console.log(err);
-        toast({
-          title: `${err}`,
-          position: "bottom",
-          status: "error",
-          isClosable: true,
-        });
-        setLoading(false);
+      const requestBody = JSON.stringify(data);
+      const requestUrl = `${userSettings.userUrl}/v1/chat/completions`;
+      const response = await get(requestUrl, requestBody);
+      console.log(response);
+      console.log(userSettings);
+      if (response.error) {
+        return;
       }
+      setChatlog([
+        ...chatlog,
+        {
+          status: "chat",
+          question: input,
+          answer: response.choices[0].message.content,
+          time: currentTime,
+          id: uuid,
+        },
+      ]);
     }
+    setLoading(false);
   }
-  async function getImg(event: any) {
-    let uuid = uuidv4();
-    const date = new Date();
-    const currentTime = date.toLocaleString();
-    event.preventDefault();
-    if (input == "") {
-      toast({
-        title: "问题为空",
-        duration: 800,
-        position: "top",
-        status: "warning",
-        isClosable: true,
-      });
-      return;
-    } else if (key == "" || null) {
-      toast({
-        title: "请设置API KEY，platform.openai.com/account/api-keys",
-        position: "top",
-        status: "warning",
-        isClosable: true,
-      });
-      return;
-    } else {
-      setLoading(true);
-      setQuestion(input);
-      toast({
-        title: "提交成功",
-        position: "top",
-        duration: 800,
-        status: "success",
-      });
-      const messages: any = [];
 
-      const data = JSON.stringify({
+  async function getImage() {
+    if (checkInput()) {
+      const date = new Date();
+      const currentTime = date.toLocaleString();
+      let uuid = uuidv4();
+      const data = {
         prompt: `${input}`,
         n: 1,
         size: "512x512",
-      });
-
-      const options = {
-        method: "POST",
-        body: data,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${key}`,
-        },
       };
+      const requestBody = JSON.stringify(data);
+      const requestUrl = `${userSettings.userUrl}/v1/images/generations`;
+      const response = await get(requestUrl, requestBody);
 
-      try {
-        const response = await fetch(
-          //my server
-          `${url}/v1/images/generations`,
-          options
-        );
-
-        // const response = await fetch(
-        //   "http://localhost:3000/api/gptProxy",
-        //   options
-        // );
-        const reply = response.json();
-        reply.then(
-          (res) => {
-            if (response.status !== 200) {
-              if (response.status == 401) {
-                toast({ title: res.error.message, status: "warning" });
-              }
-              if (response.status == 404) {
-                toast({ title: "无响应", status: "warning" });
-              }
-              setLoading(false);
-              return;
-            }
-
-            setAnsewer(res.data);
-
-            setChatlog([
-              ...chatlog,
-              {
-                status: "image",
-                question: input,
-                answer: res.data[0].url,
-                time: currentTime,
-                id: uuid,
-              },
-            ]);
-
-            setLoading(false);
-            setInput("");
+      if (response) {
+        setChatlog([
+          ...chatlog,
+          {
+            status: "image",
+            question: input,
+            answer: response.data[0].url,
+            time: currentTime,
+            id: uuid,
           },
-          (err) => {
-            toast({ title: err });
-            setLoading(false);
-            throw err;
-          }
-        );
-      } catch (err) {
-        console.log(err);
-        toast({
-          title: `${err}`,
-          position: "bottom",
-          status: "error",
-          isClosable: true,
-        });
-        setLoading(false);
+        ]);
       }
+      setLoading(false);
     }
   }
 
@@ -338,26 +272,16 @@ export default function Home() {
     }
   }, [chatlog]);
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    if (localStorage.getItem("userSettings") !== null || "") {
+      setUserSetting(JSON.parse(localStorage.getItem("userSettings")!));
     }
-    if (answer !== "" || reduceLog) {
-      localStorage.setItem("chatlog", JSON.stringify(chatlog));
-      setreduceLog(false);
-    }
-  }, [scrollRef.current]);
-  useEffect(() => {
-    if (localStorage.getItem("apiKey") !== null || "") {
-      setKey(localStorage.getItem("apiKey"));
-    }
-    if (localStorage.getItem("url") !== null || "") {
-      setUrl(localStorage.getItem("url")!);
-    }
+
     if (localStorage.getItem("chatlog") !== null) {
       const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
       const storedData = localStorage.getItem("chatlog");
       setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
     }
+    console.log(userSettings);
   }, []);
 
   return (
@@ -369,17 +293,18 @@ export default function Home() {
       position="relative"
     >
       <Header
-        keyz={key}
+        userSettings={userSettings}
         loading={loding}
         handleKChange={handleKChange}
         handleUChange={handleUChange}
-        url={url}
         submit={submit}
         handleLogClean={handleLogClean}
         handleKey={handleKey}
         handleMode={handleMode}
         chatMode={chatMode}
+        isLoading={loding}
       ></Header>
+
       <Flex
         direction={"column"}
         alignItems={"center"}
@@ -438,7 +363,7 @@ export default function Home() {
             <Button
               leftIcon={<ChatIcon />}
               colorScheme="whatsapp"
-              onClick={get}
+              onClick={getChat}
               isDisabled={loding}
               isLoading={loding}
               borderRadius={"5px"}
@@ -452,7 +377,7 @@ export default function Home() {
               aria-label="图片生成"
               icon={<Icon as={RiImageAddLine} />}
               colorScheme="messenger"
-              onClick={getImg}
+              onClick={getImage}
               isDisabled={loding}
               isLoading={loding}
               borderColor={"gray.400"}

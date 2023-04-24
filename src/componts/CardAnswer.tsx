@@ -67,20 +67,19 @@ export default function MyCard(props: any) {
         shadow={"md"}
         borderRadius="6px"
         border={"1px"}
-      
         borderColor="messenger.400"
         p="1px"
-
+        bg={"white"}
       >
         <Flex
-          
           bgColor="white"
           direction={"row-reverse"}
           position="relative"
-          borderTopRadius={"5px"}
+          alignItems={"center"}
+          borderRadius={"5px"}
           color="white"
-          py={"20px"}
           px={"16px"}
+          py="15px"
           borderBottomColor="gray.300"
           borderBottom={"5px"}
         >
@@ -92,29 +91,32 @@ export default function MyCard(props: any) {
             {props.question ? props.question : null}
           </Text>
           <Spacer></Spacer>
-          <ButtonGroup
-            mt="5px"
-            mr={"10px"}
-            variant="solid"
-            justifyContent={"space-between"}
-            isAttached
-          >
-            {" "}
-            <IconButton
-              borderRadius={"6px"}
-              aria-label="avoid"
-              color="red.500"
-              icon={<CloseIcon />}
-              onClick={deleteItem}
-            ></IconButton>
-            <IconButton
-              borderRadius={"6px"}
-              color="green.300"
-              aria-label="avoid"
-              icon={<MinusIcon />}
-              onClick={handleVisable}
-            ></IconButton>{" "}
-          </ButtonGroup>
+          <Flex direction={"column"}>
+            <ButtonGroup
+              flexDirection={"column"}
+              mr={"10px"}
+              ml={"-8px"}
+              variant="ghost"
+              justifyContent={"space-between"}
+              isAttached
+            >
+              <IconButton
+                borderRadius={"0"}
+                borderEndRadius={"24px"}
+                aria-label="avoid"
+                color="red.500"
+                icon={<CloseIcon />}
+                onClick={deleteItem}
+              ></IconButton>
+              <IconButton
+                borderRadius={"0"}
+                color="green.300"
+                aria-label="avoid"
+                icon={<MinusIcon />}
+                onClick={handleVisable}
+              ></IconButton>{" "}
+            </ButtonGroup>
+          </Flex>
         </Flex>
 
         {visable ? (

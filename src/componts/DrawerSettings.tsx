@@ -22,21 +22,20 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { HamburgerIcon, DeleteIcon, MinusIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, DeleteIcon } from "@chakra-ui/icons";
 
 export default function DrawerSettings(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const firstField = React.useRef();
 
   return (
     <Box className="Card" position={"absolute"}>
       <Button
-        bgColor={"messenger.500"}
+        variant={"outline"}
+        bgColor={"messenger.300"}
         borderRadius={"3px"}
         borderColor="gray.700"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
         iconSpacing={"0"}
-        color="white"
         onClick={onOpen}
       ></Button>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -50,18 +49,17 @@ export default function DrawerSettings(props: any) {
               <Box>
                 <FormLabel htmlFor="username">APIKEY</FormLabel>
                 <Input
-                  id="username"
+                  id="url"
                   onChange={props.handleKChange}
-                  value={props.keyz}
+                  value={props.userSettings.userApiKey}
                   placeholder="请输入APIKEY"
                 />
               </Box>
-
               <Box>
                 <FormLabel htmlFor="url">API</FormLabel>
                 <InputGroup>
                   <Input
-                    value={props.url}
+                    value={props.userSettings.userUrl}
                     onChange={props.handleUChange}
                     type="url"
                     id="url"
@@ -74,7 +72,6 @@ export default function DrawerSettings(props: any) {
                 <FormLabel htmlFor="owner">对话模式</FormLabel>
                 <Select
                   id="owner"
-                  defaultValue="0"
                   onChange={props.handleMode}
                   value={props.chatMode}
                 >
@@ -112,10 +109,12 @@ export default function DrawerSettings(props: any) {
             <Button
               borderRadius={"5px"}
               colorScheme="blue"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 props.submit();
                 onClose();
               }}
+              variant="outline"
             >
               保存
             </Button>
