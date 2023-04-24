@@ -306,8 +306,8 @@ export default function Home() {
         direction={"column"}
         alignItems={"center"}
         justify="center"
-        pb={"70px"}
-        pt="120px"
+        pb={"100px"}
+        pt="70px"
         px={{ base: "20px", md: "30px", lg: "300px" }}
       >
         {/* {!key ? (
