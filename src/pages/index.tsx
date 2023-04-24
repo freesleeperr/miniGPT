@@ -100,7 +100,7 @@ export default function Home() {
     // });
     setUserSetting({ ...userSettings });
     localStorage.setItem("userSettings", JSON.stringify(userSettings));
-    console.log(userSettings);
+
   }
   function handleDelete(id: string) {
     const dataItem = chatlog.filter((item) => {
@@ -150,7 +150,7 @@ export default function Home() {
     }
   }
   function checkInput() {
-    console.log(userSettings);
+
     if (input == "") {
       toast({
         title: "问题为空",
@@ -219,8 +219,6 @@ export default function Home() {
       const requestBody = JSON.stringify(data);
       const requestUrl = `${userSettings.userUrl}/v1/chat/completions`;
       const response = await get(requestUrl, requestBody);
-      console.log(response);
-      console.log(userSettings);
       if (response.error) {
         return;
       }
@@ -287,7 +285,7 @@ export default function Home() {
       const storedData = localStorage.getItem("chatlog");
       setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
     }
-    console.log(userSettings);
+ 
   }, []);
 
   return (

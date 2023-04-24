@@ -20,9 +20,7 @@ import {
   SliderTrack,
   Spacer,
   Stack,
-  Textarea,
   useDisclosure,
-  VStack,
   HStack,
   SliderMark,
   InputRightElement,
@@ -35,7 +33,7 @@ export default function DrawerSettings(props: any) {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   return (
-    <Box className="Card" position={"absolute"}>
+    <Box className="Card">
       <Button
         color={"white"}
         variant={"outline"}

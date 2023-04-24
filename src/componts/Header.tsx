@@ -1,18 +1,4 @@
-import {
-  HStack,
-  Button,
-  Collapse,
-  Flex,
-  Heading,
-  Text,
-  Input,
-  Link,
-  Spacer,
-  useDisclosure,
-  Center,
-  Progress,
-  Box,
-} from "@chakra-ui/react";
+import { HStack, Heading, Spacer, Progress, Box } from "@chakra-ui/react";
 import DrawerSettings from "./DrawerSettings";
 export default function Header(props: any) {
   return (
@@ -40,15 +26,14 @@ export default function Header(props: any) {
             handleMode={props.handleMode}
             chatMode={props.chatMode}
           ></DrawerSettings>
-          <Spacer></Spacer>
           <Heading fontSize={"25px"} color="messenger.600">
-            🤖miniGPT
+            🤖SimGPT
           </Heading>
 
           <Spacer></Spacer>
         </HStack>
         {props.isLoading ? (
-          <Progress color={"whatsapp.200"} size="xs" animation={"ease"} isIndeterminate />
+          <Progress color={"whatsapp.200"} size="xs" isIndeterminate />
         ) : (
           ""
         )}

@@ -58,7 +58,6 @@ export default function MyCard(props: any) {
     setVisable(visable ? false : true);
   }
   function deleteItem() {
-    console.log(props.id);
     props.handleDelete(props.id);
   }
   return (
