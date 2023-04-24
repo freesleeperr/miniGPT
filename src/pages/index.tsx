@@ -1,34 +1,20 @@
 import { v4 as uuidv4 } from "uuid";
-
 import {
   Box,
   Button,
   ButtonGroup,
-  Center,
-  Collapse,
-  Fade,
   Flex,
-  Heading,
   HStack,
   IconButton,
-  Input,
-  InputGroup,
-  Spacer,
-  Spinner,
-  Text,
   Textarea,
-  Toast,
-  useDisclosure,
   useToast,
-  VStack,
 } from "@chakra-ui/react";
 import MyCard from "@/componts/CardAnswer";
 import { useEffect, useRef, useState } from "react";
 import Header from "@/componts/Header";
-import { ArrowUpIcon, ChatIcon, ViewIcon } from "@chakra-ui/icons";
+import { ChatIcon } from "@chakra-ui/icons";
 import { Icon } from "@chakra-ui/react";
 import { RiImageAddLine } from "react-icons/ri";
-import { request } from "https";
 
 interface IChat {
   question: string;
@@ -49,15 +35,12 @@ interface IMessageChat {
 }
 interface requestChat {}
 export default function Home() {
-  const [question, setQuestion] = useState<any>("");
   const [answer, setAnsewer] = useState<any>("");
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
-  const [chatMode, setChatMode] = useState(0);
-  const [key, setKey] = useState<any>("");
+  const [chatMode, setChatMode] = useState("0");
   const [reduceLog, setreduceLog] = useState<boolean>(false);
-  const [url, setUrl] = useState("https://gptproxy.555913333.xyz");
   const [userSettings, setUserSetting] = useState<ISetting>({
     userUrl: "https://gptproxy.555913333.xyz",
     userApiKey: "",
@@ -100,7 +83,6 @@ export default function Home() {
     // });
     setUserSetting({ ...userSettings });
     localStorage.setItem("userSettings", JSON.stringify(userSettings));
-
   }
   function handleDelete(id: string) {
     const dataItem = chatlog.filter((item) => {
@@ -150,7 +132,6 @@ export default function Home() {
     }
   }
   function checkInput() {
-
     if (input == "") {
       toast({
         title: "问题为空",
@@ -178,7 +159,6 @@ export default function Home() {
       return false;
     } else {
       setLoading(true);
-      setQuestion(input);
       toast({
         title: "提交成功",
         position: "top",
@@ -194,7 +174,7 @@ export default function Home() {
       const currentTime = date.toLocaleString();
       let uuid = uuidv4();
       let messages: IMessageChat[] = [];
-      if (chatMode == 1) {
+      if (chatMode === "1") {
         if (chatlog.length > 2) {
           for (let i = 1; -1 < i; i--) {
             messages = [
@@ -209,6 +189,17 @@ export default function Home() {
               },
             ];
           }
+        } else if (chatlog.length === 1) {
+          messages = [
+            {
+              role: "user",
+              content: chatlog[chatlog.length - 1].question,
+            },
+            {
+              role: "assistant",
+              content: chatlog[chatlog.length - 1].answer,
+            },
+          ];
         }
       }
       const data = {
@@ -232,6 +223,8 @@ export default function Home() {
           id: uuid,
         },
       ]);
+      setAnsewer(response.choices[0].message.content);
+      setLoading(false);
     }
     setLoading(false);
   }
@@ -285,7 +278,6 @@ export default function Home() {
       const storedData = localStorage.getItem("chatlog");
       setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
     }
- 
   }, []);
 
   return (

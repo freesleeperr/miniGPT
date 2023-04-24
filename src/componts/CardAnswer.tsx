@@ -1,17 +1,12 @@
 import {
   Text,
-  Heading,
   Stack,
   Flex,
-  HStack,
-  Button,
   Spacer,
-  Divider,
   Box,
   IconButton,
   ButtonGroup,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
