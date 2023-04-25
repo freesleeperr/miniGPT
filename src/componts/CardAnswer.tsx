@@ -57,14 +57,7 @@ export default function MyCard(props: any) {
   }
   return (
     <>
-      <Box
-        shadow={"md"}
-        borderRadius="6px"
-        border={"1px"}
-        borderColor="messenger.400"
-        p="1px"
-        bg={"white"}
-      >
+      <Box shadow={"md"} borderColor="gray.100" mb="-2px" bg={"white"}>
         <Flex
           bgColor="white"
           direction={"row-reverse"}
@@ -142,9 +135,6 @@ export default function MyCard(props: any) {
           <></>
         )}
       </Box>{" "}
-      <Text fontSize={"10px"} mb={"5px"} ml={"5px"} color={"gray.400"}>
-        {props.time} {props.status}
-      </Text>
     </>
   );
 }
