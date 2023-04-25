@@ -117,7 +117,6 @@ export default function Home() {
         })
         .then((response: any) => {
           setLoading(false);
-          setInput("");
           return response;
         });
       return data;
@@ -223,6 +222,7 @@ export default function Home() {
           id: uuid,
         },
       ]);
+      setInput("");
       setAnsewer(response.choices[0].message.content);
       setLoading(false);
     }
@@ -254,14 +254,19 @@ export default function Home() {
             id: uuid,
           },
         ]);
+        setInput("");
+        setAnsewer(response.choices[0].message.content);
+        setLoading(false);
       }
       setLoading(false);
     }
   }
-
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth" });
+    if (reduceLog === false) {
+      setreduceLog(false);
+      if (scrollRef.current) {
+        scrollRef.current.scrollIntoView({ behavior: "smooth" });
+      }
     }
     if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));

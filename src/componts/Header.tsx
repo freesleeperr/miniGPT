@@ -5,7 +5,7 @@ export default function Header(props: any) {
     <>
       <Box zIndex={999} width="full" position={"fixed"}>
         <HStack
-          borderBottomWidth={"2px"}
+          borderBottomWidth={"1px"}
           borderColor="gray.200"
           as={"nav"}
           bgColor={"white"}
