@@ -42,7 +42,7 @@ export default function Home() {
   const [chatMode, setChatMode] = useState("0");
   const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [userSettings, setUserSetting] = useState<ISetting>({
-    userUrl: "api.openai-proxy.com",
+    userUrl: "https://api.openai-proxy.com",
     userApiKey: "",
     userTemperature: 1,
   });
