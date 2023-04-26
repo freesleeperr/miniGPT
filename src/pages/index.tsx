@@ -255,7 +255,7 @@ export default function Home() {
           },
         ]);
         setInput("");
-        setAnsewer(response.choices[0].message.content);
+        setAnsewer(response.data[0].url);
         setLoading(false);
       }
       setLoading(false);

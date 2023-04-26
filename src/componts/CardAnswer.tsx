@@ -108,7 +108,6 @@ export default function MyCard(props: any) {
 
         {visable ? (
           <Stack
-            borderBottomRadius={"6px"}
             p={"16px"}
             bgColor={props.status === "image" ? "black" : "white"}
           >
