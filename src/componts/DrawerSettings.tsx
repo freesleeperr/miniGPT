@@ -99,11 +99,11 @@ export default function DrawerSettings(props: any) {
                   <option value="0">一问一答</option>
                   <option value="1">连续对话</option>
                 </Select>
-                <Text mt={"20px"}>回答随机性</Text>
+                <Text mt={"20px"}>回答创造性</Text>
                 <Slider
                   defaultValue={props.userSettings.userTemperature * 10}
                   min={0}
-                  max={20}
+                  max={10}
                   aria-label="slider-ex-5"
                   onChangeEnd={props.handleSlide}
                   width="265px"
@@ -111,10 +111,10 @@ export default function DrawerSettings(props: any) {
                   <SliderMark mt={"5px"} value={0}>
                     低
                   </SliderMark>
-                  <SliderMark mt={"5px"} value={9}>
+                  <SliderMark mt={"5px"} value={5}>
                     默认
                   </SliderMark>
-                  <SliderMark mt={"5px"} value={19}>
+                  <SliderMark mt={"5px"} value={10}>
                     高
                   </SliderMark>
                   <SliderTrack>

@@ -44,7 +44,7 @@ export default function Home() {
   const [userSettings, setUserSetting] = useState<ISetting>({
     userUrl: "https://api.openai-proxy.com",
     userApiKey: "",
-    userTemperature: 1,
+    userTemperature: 0.5
   });
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
