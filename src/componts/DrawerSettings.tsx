@@ -111,7 +111,7 @@ export default function DrawerSettings(props: any) {
                   <SliderMark mt={"5px"} value={0}>
                     低
                   </SliderMark>
-                  <SliderMark mt={"5px"} value={4}>
+                  <SliderMark mt={"5px"} value={4.5}>
                     默认
                   </SliderMark>
                   <SliderMark mt={"5px"} value={10}>
