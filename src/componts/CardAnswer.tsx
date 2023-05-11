@@ -24,7 +24,7 @@ import { time } from "console";
 
 // }
 export default function MyCard(props: any) {
-  const date1 = new Date(props.status);
+  const date1 = new Date(props.time);
   const date2 = new Date();
   const timeDiff = Math.abs(date2.getTime() - date1.getTime());
   const hoursDiff = timeDiff / (1000 * 3600);
