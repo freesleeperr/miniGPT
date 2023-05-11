@@ -40,7 +40,7 @@ export default function Home() {
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
-  const [chatMode, setChatMode] = useState("0");
+  const [chatMode, setChatMode] = useState(false);
   const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [userSettings, setUserSetting] = useState<ISetting>({
     userUrl: "https://api.openai-proxy.com",
@@ -54,9 +54,7 @@ export default function Home() {
     setUserSetting({ ...userSettings, userApiKey: "" });
     submit();
   }
-  function handleMode(event: any) {
-    setChatMode(event.target.value);
-  }
+
   function handleSlide(val: any) {
     setUserSetting({
       ...userSettings,
@@ -166,7 +164,7 @@ export default function Home() {
       const currentTime = date.toLocaleString();
       let uuid = uuidv4();
       let messages: IMessageChat[] = [];
-      if (chatMode === "1") {
+      if (chatMode) {
         if (chatlog.length > 2) {
           for (let i = 1; -1 < i; i--) {
             messages = [
@@ -289,11 +287,12 @@ export default function Home() {
       <Header
         handleSlide={handleSlide}
         userSettings={userSettings}
+        setUserSetting={setUserSetting}
         loading={loding}
         submit={submit}
         handleLogClean={handleLogClean}
         handleKey={handleKey}
-        handleMode={handleMode}
+        handleMode={setChatMode}
         chatMode={chatMode}
         isLoading={loding}
       ></Header>

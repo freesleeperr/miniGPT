@@ -17,6 +17,7 @@ export default function Header(props: any) {
           <DrawerSettings
             handleSlide={props.handleSlide}
             userSettings={props.userSettings}
+            setUserSetting={props.setUserSetting}
             handleKChange={props.handleKChange}
             handleUChange={props.handleUChange}
             handleKey={props.handleKey}

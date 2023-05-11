@@ -24,6 +24,8 @@ import {
   HStack,
   SliderMark,
   InputRightElement,
+  Switch,
+  Checkbox,
 } from "@chakra-ui/react";
 import React from "react";
 import { HamburgerIcon, DeleteIcon } from "@chakra-ui/icons";
@@ -58,7 +60,12 @@ export default function DrawerSettings(props: any) {
                 <InputGroup size="md">
                   <Input
                     id="url"
-                    onChange={props.handleKChange}
+                    onChange={(event) => {
+                      props.setUserSetting({
+                        ...props.userSettings,
+                        userApiKey: event.target.value,
+                      });
+                    }}
                     value={props.userSettings.userApiKey}
                     placeholder="请输入APIKEY"
                     type={show ? "text" : "password"}
@@ -81,7 +88,12 @@ export default function DrawerSettings(props: any) {
                 <InputGroup>
                   <Input
                     value={props.userSettings.userUrl}
-                    onChange={props.handleUChange}
+                    onChange={(event) => {
+                      props.setUserSetting({
+                        ...props.userSettings,
+                        userUrl: event.target.value,
+                      });
+                    }}
                     type="url"
                     id="url"
                     placeholder="请输入API地址"
@@ -92,15 +104,16 @@ export default function DrawerSettings(props: any) {
               <Box>
                 <FormLabel htmlFor="owner">对话设置</FormLabel>
                 <Text my={"10px"}>回答模式</Text>
-                <Select
-                  id="owner"
-                  onChange={props.handleMode}
-                  value={props.chatMode}
+                <FormLabel></FormLabel>
+                <Checkbox
+                  isChecked={props.chatMode}
+                  onChange={(e) => {
+                    props.handleMode(e.target.checked);
+                  }}
                 >
-                  <option value="0">一问一答</option>
-                  <option value="1">连续对话</option>
-                </Select>
-                <Text mt={"20px"}>回答创造性</Text>
+                  连续对话
+                </Checkbox>
+                <Text mt={"20px"}>对话风格</Text>
                 <Slider
                   defaultValue={props.userSettings.userTemperature * 10}
                   min={0}
@@ -110,13 +123,13 @@ export default function DrawerSettings(props: any) {
                   width="265px"
                 >
                   <SliderMark mt={"5px"} value={0}>
-                    低
+                    精确
                   </SliderMark>
                   <SliderMark mt={"5px"} value={4.5}>
-                    默认
+                    平衡
                   </SliderMark>
-                  <SliderMark mt={"5px"} value={9}>
-                    高
+                  <SliderMark mt={"5px"} value={8.7}>
+                    创意
                   </SliderMark>
                   <SliderTrack>
                     <SliderFilledTrack />
