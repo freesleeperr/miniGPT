@@ -23,7 +23,7 @@ import { useState } from "react";
 
 // }
 export default function MyCard(props: any) {
-  const [visable, setVisable] = useState(true);
+  const [visable, setVisable] = useState(false);
 
   const newTheme = {
     p: (props: any) => {

@@ -36,8 +36,9 @@ export default function DrawerSettings(props: any) {
     <Box className="Card">
       <Button
         color={"white"}
-        variant={"outline"}
-        bgColor={"messenger.300"}
+        variant={"ghost"}
+        bgColor={"messenger.500"}
+        height="30px"
         borderRadius={"3px"}
         borderColor="gray.700"
         leftIcon={<HamburgerIcon></HamburgerIcon>}

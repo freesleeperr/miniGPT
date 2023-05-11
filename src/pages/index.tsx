@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+
 import {
   Box,
   Button,
@@ -33,7 +34,7 @@ interface IMessageChat {
   content: string;
   role: string;
 }
-interface requestChat {}
+
 export default function Home() {
   const [answer, setAnsewer] = useState<any>("");
   const [loding, setLoading] = useState<boolean>(false);
@@ -44,19 +45,11 @@ export default function Home() {
   const [userSettings, setUserSetting] = useState<ISetting>({
     userUrl: "https://api.openai-proxy.com",
     userApiKey: "",
-    userTemperature: 0.5
+    userTemperature: 0.5,
   });
   const toast = useToast();
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const handleChange = (event: any) => {
-    setInput(event.target.value);
-  };
-  const handleKChange = (event: any) => {
-    setUserSetting({ ...userSettings, userApiKey: event.target.value });
-  };
-  const handleUChange = (event: any) => {
-    setUserSetting({ ...userSettings, userUrl: event.target.value });
-  };
+
   function handleKey() {
     setUserSetting({ ...userSettings, userApiKey: "" });
     submit();
@@ -297,8 +290,6 @@ export default function Home() {
         handleSlide={handleSlide}
         userSettings={userSettings}
         loading={loding}
-        handleKChange={handleKChange}
-        handleUChange={handleUChange}
         submit={submit}
         handleLogClean={handleLogClean}
         handleKey={handleKey}
@@ -349,17 +340,7 @@ export default function Home() {
         align={"flex-end"}
         mx={{ base: "10px", md: "30px", lg: "260px" }}
       >
-        <Textarea
-          borderRadius={"5px"}
-          maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
-          placeholder="在此输入问题..."
-          mr="2"
-          borderColor={"messenger.600"}
-          value={input}
-          onChange={handleChange}
-          bgColor="white"
-          isDisabled={loding}
-        />
+        <QuestionInput input={input} setInput={setInput} loding={loding} />
         <HStack>
           <ButtonGroup height="80px" variant="outline" isAttached>
             <Button
@@ -392,5 +373,20 @@ export default function Home() {
         </HStack>
       </Flex>
     </Box>
+  );
+}
+function QuestionInput(props: any) {
+  return (
+    <Textarea
+      onChange={(e) => props.setInput(e.target.value)}
+      borderRadius={"5px"}
+      maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
+      placeholder="在此输入问题..."
+      mr="2"
+      borderColor={"messenger.600"}
+      value={props.input}
+      bgColor="white"
+      isDisabled={props.loding}
+    />
   );
 }
