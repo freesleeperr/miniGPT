@@ -13,6 +13,7 @@ import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useState } from "react";
+import { time } from "console";
 // interface IProps {
 //   scrollRef?: any;
 //   answer: string;
@@ -23,7 +24,18 @@ import { useState } from "react";
 
 // }
 export default function MyCard(props: any) {
-  const [visable, setVisable] = useState(false);
+  const date1 = new Date(props.status);
+  const date2 = new Date();
+  const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+  const hoursDiff = timeDiff / (1000 * 3600);
+
+  const [visable, setVisable] = useState(() => {
+    if (hoursDiff > 4) {
+      return false;
+    } else {
+      return true;
+    }
+  });
 
   const newTheme = {
     p: (props: any) => {
