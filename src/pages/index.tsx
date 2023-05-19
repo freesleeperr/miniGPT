@@ -16,6 +16,7 @@ import Header from "@/componts/Header";
 import { ChatIcon } from "@chakra-ui/icons";
 import { Icon } from "@chakra-ui/react";
 import { RiImageAddLine } from "react-icons/ri";
+import { time } from "console";
 
 interface IChat {
   question: string;
@@ -26,8 +27,8 @@ interface IChat {
   id: string;
 }
 interface IChatMemoery {
-  creatTime: string;
-  chatlog: IChat[];
+  creatTime?: string;
+  chatlog?: IChat[];
 }
 interface ISetting {
   userUrl: string;
@@ -225,6 +226,10 @@ export default function Home() {
           id: uuid,
         },
       ]);
+      chatlogMemoery[0] = {
+        chatlog,
+      };
+      setChatlogMemory(chatlogMemoery);
       setInput("");
       setAnsewer(response.choices[0].message.content);
       setLoading(false);
@@ -264,6 +269,17 @@ export default function Home() {
       setLoading(false);
     }
   }
+
+  function newChat() {
+    const date = new Date();
+    const currentTime = date.toLocaleString();
+    setChatlog([]);
+    setChatlogMemory([
+      ...chatlogMemoery,
+      { creatTime: currentTime, chatlog: [] },
+    ]);
+    localStorage.setItem("chatlogMemoery", JSON.stringify(chatlogMemoery));
+  }
   useEffect(() => {
     if (reduceLog === false) {
       setreduceLog(false);
@@ -273,6 +289,7 @@ export default function Home() {
     }
     if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
+      localStorage.setItem("chatlogMemoery", JSON.stringify(chatlogMemoery));
       setreduceLog(false);
     }
   }, [chatlog]);
@@ -285,6 +302,13 @@ export default function Home() {
       const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
       const storedData = localStorage.getItem("chatlog");
       setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
+    }
+    if (localStorage.getItem("chatlogMemoery") !== null) {
+      const localStorageChat = JSON.parse(
+        localStorage.getItem("chatlogMemoery")!
+      );
+      const storedData = localStorage.getItem("chatlogMemoery");
+      setChatlogMemory(localStorageChat ? JSON.parse(storedData!) : []);
     }
   }, []);
 
@@ -307,6 +331,7 @@ export default function Home() {
         handleMode={setChatMode}
         chatMode={chatMode}
         isLoading={loding}
+        newChat={newChat}
       ></Header>
 
       <Flex
@@ -315,7 +340,7 @@ export default function Home() {
         justify="center"
         pb={"100px"}
         pt="70px"
-        px={{ base: "20px", md: "30px", lg: "300px" }}
+        px={{ base: "10px", md: "30px", lg: "300px" }}
       >
         {/* {!key ? (
           <Text color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
@@ -327,7 +352,7 @@ export default function Home() {
         <Flex
           bgColor={"black"}
           border={"2px"}
-          borderColor={"pink"}
+          borderColor={"pink.200"}
           borderRadius="5px"
           width={"full"}
           direction={"column"}
@@ -364,31 +389,32 @@ export default function Home() {
         <HStack>
           <ButtonGroup height="80px" variant="outline" isAttached>
             <Button
+              variant={"unstyled"}
               leftIcon={<ChatIcon />}
               colorScheme="whatsapp"
               color={"green.200"}
               onClick={getChat}
               isDisabled={loding}
-              isLoading={loding}
               borderRadius={"5px"}
               width={"80px"}
               height="80px"
               border={"2px"}
-              borderColor="pink.200"
+              borderColor="green.200"
             >
               对话
             </Button>
             <IconButton
+              color={"blue.200"}
+              variant={"unstyled"}
               aria-label="图片生成"
               icon={<Icon as={RiImageAddLine} />}
               colorScheme="messenger"
               onClick={getImage}
               isDisabled={loding}
-              isLoading={loding}
               width={"40px"}
               height="80px"
               border={"2px"}
-              borderColor="pink.200"
+              borderColor="blue.200"
               borderRadius={"5px"}
             ></IconButton>
           </ButtonGroup>

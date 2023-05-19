@@ -15,10 +15,12 @@ export default function Header(props: any) {
     <>
       <Box backgroundColor="black" zIndex={999} width="full" position={"fixed"}>
         <HStack
+          align={"center"}
           as={"nav"}
           height={{ base: "55px", md: "60px", lg: "50px" }}
           padding={2}
           px={{ base: "20px", md: "30px", lg: "300px" }}
+          justify="center"
         >
           {/* 设置选项 */}
           <DrawerSettings
@@ -39,6 +41,7 @@ export default function Header(props: any) {
           </Text>
           <Spacer></Spacer>
           <IconButton
+            onClick={props.newChat}
             variant={"unstyled"}
             color="green.300"
             width={"40px"}

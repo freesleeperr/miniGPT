@@ -42,7 +42,12 @@ export default function MyCard(props: any) {
       const { children } = props;
       return (
         <>
-          <Text lineHeight={"27px"} fontSize={"18px"} color="messenger.300">
+          <Text
+            fontWeight={"light"}
+            lineHeight={"27px"}
+            fontSize={"18px"}
+            color="messenger.200"
+          >
             {children}
           </Text>
         </>
@@ -65,7 +70,13 @@ export default function MyCard(props: any) {
       const { children } = props;
       return (
         <>
-          <Text lineHeight={"27px"} fontSize={"26px"} color="green.300">
+          <Text
+            textOverflow={"ellipsis"}
+            lineHeight={"27px"}
+            fontSize={"25px"}
+            fontWeight="semibold"
+            color="whatsapp.100"
+          >
             {children}
           </Text>
         </>
@@ -91,12 +102,11 @@ export default function MyCard(props: any) {
   }
   return (
     <>
-      <Box>
+      <Box p={"20px"}>
         <Flex
           direction={"row-reverse"}
           position="relative"
           alignItems={"center"}
-          px={"16px"}
           py="15px"
         >
           <Text
@@ -119,14 +129,16 @@ export default function MyCard(props: any) {
               isAttached
             >
               <IconButton
+                variant={"unstyled"}
                 borderRadius={"0"}
                 borderEndRadius={"24px"}
                 aria-label="avoid"
-                color="yellow.200"
+                color="red.200"
                 icon={<CloseIcon />}
                 onClick={deleteItem}
               ></IconButton>
               <IconButton
+                variant={"unstyled"}
                 borderRadius={"0"}
                 color="green.300"
                 aria-label="avoid"
@@ -138,7 +150,7 @@ export default function MyCard(props: any) {
         </Flex>
 
         {visable ? (
-          <Stack p={"16px"}>
+          <Stack>
             {props.status === "image" ? (
               <Flex direction={"column"} align="center">
                 <img
