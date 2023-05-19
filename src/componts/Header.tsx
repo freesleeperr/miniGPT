@@ -41,13 +41,16 @@ export default function Header(props: any) {
             ✨NeonTalk
           </Text>
           <Spacer></Spacer>
-          <ChatListItem chatlogMemoery={props.chatlogMemoery}></ChatListItem>
+          <ChatListItem
+            setChatlogMemory={props.setChatlogMemory}
+            setChatlog={props.setChatlog}
+            chatlogMemoery={props.chatlogMemoery}
+          ></ChatListItem>
           <IconButton
             onClick={props.newChat}
             variant={"unstyled"}
             color="yellow.300"
-            width={"40px"}
-            height="20px"
+            height="40px"
             borderRadius={"5px"}
             icon={<Icon as={AddIcon} />}
             aria-label="chatList"

@@ -11,7 +11,11 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import { CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import {
+  dracula,
+  duotoneDark,
+  solarizedlight,
+} from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useState } from "react";
 import { time } from "console";
 // interface IProps {
@@ -89,7 +93,7 @@ export default function MyCard(props: any) {
           wrapLongLines
           children={children}
           language={language}
-          style={dracula}
+          style={solarizedlight}
         ></SyntaxHighlighter>
       );
     },
@@ -102,9 +106,9 @@ export default function MyCard(props: any) {
   }
   return (
     <>
-      <Box p={"20px"}>
+      <Box>
         <Flex direction={"row-reverse"} py="15px">
-          <Stack>
+          <Stack as={"button"} onClick={handleVisable}>
             <>
               <ReactMarkdown skipHtml components={ChakraUIRenderer(newTheme2)}>
                 {props.question ? props.question : null}
@@ -116,39 +120,27 @@ export default function MyCard(props: any) {
             direction={"column"}
             align="flex-start"
             justifyContent={"flex-start"}
-            mt="-8px"
           >
-            <ButtonGroup
-              flexDirection={"column"}
-              mr={"10px"}
-              ml={"-8px"}
-              variant="ghost"
-              justifyContent={"space-between"}
-              isAttached
-            >
-              <IconButton
-                variant={"unstyled"}
-                borderRadius={"0"}
-                borderEndRadius={"24px"}
-                aria-label="avoid"
-                color="red.200"
-                icon={<CloseIcon />}
-                onClick={deleteItem}
-              ></IconButton>
-              <IconButton
-                variant={"unstyled"}
-                borderRadius={"0"}
-                color="green.300"
-                aria-label="avoid"
-                icon={<MinusIcon />}
-                onClick={handleVisable}
-              ></IconButton>{" "}
-            </ButtonGroup>
+            <IconButton
+              mt={"-6px"}
+              variant={"unstyled"}
+              borderRadius={"0"}
+              borderEndRadius={"24px"}
+              aria-label="avoid"
+              color="red.200"
+              icon={<CloseIcon />}
+              onClick={deleteItem}
+            ></IconButton>
           </Flex>
         </Flex>
 
         {visable ? (
-          <Stack>
+          <Stack
+            border={"2px"}
+            borderColor="pink.300"
+            p={"8px"}
+            borderRadius="5px"
+          >
             {props.status === "image" ? (
               <Flex direction={"column"} align="center">
                 <img
@@ -171,7 +163,7 @@ export default function MyCard(props: any) {
         ) : (
           <></>
         )}
-      </Box>{" "}
+      </Box>
     </>
   );
 }

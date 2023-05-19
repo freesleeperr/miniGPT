@@ -36,29 +36,50 @@ export default function chatListItem(props: any) {
     const hoursDiff = timeDiff / (1000 * 3600);
     return hoursDiff;
   }
-  //   const memoj = localStorage.getItem("chatlogMemoery");
-  //   const memo = JSON.parse(memoj!);
+  let memo = props.chatlogMemoery;
+  function changNUM(target: any, index: number) {
+    // 获取目标元素在数组中的索引
+    if (index !== -1) {
+      memo.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
+      memo.unshift(target);
+      props.setChatlogMemory(memo);
+      memo = props.chatlogMemoery;
+      props.setChatlog(target.chatlog);
+      // 使用unshift()方法将目标元素添加到数组首位
+    }
+  }
+
   return (
     <Box m={"0"}>
       <Menu>
         {({ isOpen }) => (
           <>
             <MenuButton
+              _hover={{ bgColor: "green.300" }}
               color={"white"}
               bgColor={"black"}
               isActive={isOpen}
               as={Button}
               rightIcon={<ChevronDownIcon />}
+              height="30px"
             >
-              {isOpen ? "Close" : "Open"}
+              对话记录
             </MenuButton>
-            {/* <MenuList>
-              {memo.forEach((element: any) => {
-                <MenuItem>{element.chatlog[0].question}</MenuItem>;
+            <MenuList>
+              {memo.map((element: any, index: any) => {
+                return (
+                  <MenuItem
+                    onClick={() => {
+                      changNUM(element, index);
+                    }}
+                  >
+                    {element.chatlog[0]?.question === undefined
+                      ? "NewChat"
+                      : element.chatlog[0].question}
+                  </MenuItem>
+                );
               })}
-
-              <MenuItem onClick={() => alert(memo)}>Create a Copy</MenuItem>
-            </MenuList> */}
+            </MenuList>
           </>
         )}
       </Menu>

@@ -332,6 +332,8 @@ export default function Home() {
         isLoading={loding}
         newChat={newChat}
         chatlogMemoery={chatlogMemoery}
+        setChatlogMemory={setChatlogMemory}
+        setChatlog={setChatlog}
       ></Header>
 
       <Flex
@@ -351,30 +353,32 @@ export default function Home() {
         )} */}
         <Flex
           bgColor={"black"}
-          border={"2px"}
-          borderColor={"pink.200"}
           borderRadius="5px"
           width={"full"}
           direction={"column"}
         >
-          {chatlog.map((item, index) => (
-            <Box
-              key={index}
-              width={"full"}
-              className="card"
-              ref={index === chatlog.length - 1 ? scrollRef : null}
-            >
-              <MyCard
+          {chatlog.length > 0 ? (
+            chatlog.map((item, index) => (
+              <Box
                 key={index}
-                handleDelete={handleDelete}
-                id={item.id}
-                question={item.question}
-                answer={item.answer}
-                time={item.time}
-                status={item.status}
-              />
-            </Box>
-          ))}
+                width={"full"}
+                className="card"
+                ref={index === chatlog.length - 1 ? scrollRef : null}
+              >
+                <MyCard
+                  key={index}
+                  handleDelete={handleDelete}
+                  id={item.id}
+                  question={item.question}
+                  answer={item.answer}
+                  time={item.time}
+                  status={item.status}
+                />
+              </Box>
+            ))
+          ) : (
+            <></>
+          )}
         </Flex>
       </Flex>
       <Flex

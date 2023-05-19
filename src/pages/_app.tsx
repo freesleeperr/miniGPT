@@ -9,7 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
     md: "60em",
     lg: "80em",
   };
-  const theme = extendTheme({ breakpoints, ...breakpoints });
+
+  const theme = extendTheme({ breakpoints });
   return (
     <ChakraProvider theme={theme}>
       <Component {...pageProps} />

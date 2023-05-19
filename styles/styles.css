@@ -17,7 +17,10 @@ html,
     opacity: 0.6;
   }
 }
-
+ol,
+ul {
+  color: white;
+}
 .blinking {
   animation: blinking 2s ease-out infinite;
 }
