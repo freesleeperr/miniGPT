@@ -10,7 +10,6 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import DrawerSettings from "./DrawerSettings";
-import ChatList from "./ChatList";
 export default function Header(props: any) {
   return (
     <>
@@ -52,7 +51,6 @@ export default function Header(props: any) {
             icon={<Icon as={AddIcon} />}
             aria-label="chatList"
           ></IconButton>
-          <ChatList></ChatList>
         </HStack>
         {props.isLoading ? (
           <Progress colorScheme={"green"} size="xs" isIndeterminate />

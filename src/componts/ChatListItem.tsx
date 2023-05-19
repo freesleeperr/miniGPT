@@ -23,7 +23,7 @@ import { time } from "console";
 //   id: string;
 
 // }
-export default function chatList(props: any) {
+export default function chatListItem(props: any) {
   const date1 = new Date(props.time);
   const date2 = new Date();
   const timeDiff = Math.abs(date2.getTime() - date1.getTime());
