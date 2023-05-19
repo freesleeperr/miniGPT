@@ -299,7 +299,9 @@ export default function Home() {
     //   const storedData = localStorage.getItem("chatlog");
     //   setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
     // }
-
+    if (localStorage.getItem("chatlogMemoery") === null) {
+      newChat();
+    }
     if (localStorage.getItem("chatlogMemoery") !== null) {
       const localStorageChat = JSON.parse(
         localStorage.getItem("chatlogMemoery")!
