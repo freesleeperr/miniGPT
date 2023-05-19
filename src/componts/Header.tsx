@@ -1,4 +1,4 @@
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, RepeatClockIcon } from "@chakra-ui/icons";
 import {
   HStack,
   Heading,
@@ -10,6 +10,7 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import DrawerSettings from "./DrawerSettings";
+import ChatList from "./ChatList";
 export default function Header(props: any) {
   return (
     <>
@@ -19,7 +20,7 @@ export default function Header(props: any) {
           as={"nav"}
           height={{ base: "55px", md: "60px", lg: "50px" }}
           padding={2}
-          px={{ base: "20px", md: "30px", lg: "300px" }}
+          px={{ base: "20px", md: "30px", lg: "200px" }}
           justify="center"
         >
           {/* 设置选项 */}
@@ -37,19 +38,21 @@ export default function Header(props: any) {
             chatMode={props.chatMode}
           ></DrawerSettings>
           <Text textShadow={"base"} color={"whatsapp.200"}>
-            🤖NeonTalk
+            ✨NeonTalk
           </Text>
           <Spacer></Spacer>
+
           <IconButton
             onClick={props.newChat}
             variant={"unstyled"}
-            color="green.300"
+            color="yellow.300"
             width={"40px"}
             height="20px"
             borderRadius={"5px"}
             icon={<Icon as={AddIcon} />}
-            aria-label="newChat"
+            aria-label="chatList"
           ></IconButton>
+          <ChatList></ChatList>
         </HStack>
         {props.isLoading ? (
           <Progress colorScheme={"green"} size="xs" isIndeterminate />

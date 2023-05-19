@@ -226,10 +226,6 @@ export default function Home() {
           id: uuid,
         },
       ]);
-      chatlogMemoery[0] = {
-        chatlog,
-      };
-      setChatlogMemory(chatlogMemoery);
       setInput("");
       setAnsewer(response.choices[0].message.content);
       setLoading(false);
@@ -274,10 +270,8 @@ export default function Home() {
     const date = new Date();
     const currentTime = date.toLocaleString();
     setChatlog([]);
-    setChatlogMemory([
-      ...chatlogMemoery,
-      { creatTime: currentTime, chatlog: [] },
-    ]);
+    chatlogMemoery.unshift({ creatTime: currentTime, chatlog: [] });
+    setChatlogMemory(chatlogMemoery);
     localStorage.setItem("chatlogMemoery", JSON.stringify(chatlogMemoery));
   }
   useEffect(() => {
@@ -289,7 +283,9 @@ export default function Home() {
     }
     if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
-      localStorage.setItem("chatlogMemoery", JSON.stringify(chatlogMemoery));
+      const memo = JSON.parse(localStorage.getItem("chatlogMemoery")!);
+      memo[0].chatlog = chatlog;
+      localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
       setreduceLog(false);
     }
   }, [chatlog]);
@@ -298,17 +294,18 @@ export default function Home() {
       setUserSetting(JSON.parse(localStorage.getItem("userSettings")!));
     }
 
-    if (localStorage.getItem("chatlog") !== null) {
-      const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
-      const storedData = localStorage.getItem("chatlog");
-      setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
-    }
+    // if (localStorage.getItem("chatlog") !== null) {
+    //   const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
+    //   const storedData = localStorage.getItem("chatlog");
+    //   setChatlog(localStorageChat ? JSON.parse(storedData!) : []);
+    // }
+
     if (localStorage.getItem("chatlogMemoery") !== null) {
       const localStorageChat = JSON.parse(
         localStorage.getItem("chatlogMemoery")!
       );
-      const storedData = localStorage.getItem("chatlogMemoery");
-      setChatlogMemory(localStorageChat ? JSON.parse(storedData!) : []);
+      setChatlogMemory(localStorageChat);
+      setChatlog(localStorageChat[0] ? localStorageChat[0].chatlog : []);
     }
   }, []);
 
@@ -340,7 +337,7 @@ export default function Home() {
         justify="center"
         pb={"100px"}
         pt="70px"
-        px={{ base: "10px", md: "30px", lg: "300px" }}
+        px={{ base: "10px", md: "30px", lg: "200px" }}
       >
         {/* {!key ? (
           <Text color={"gray.800"} borderRadius={4} p={3} bg={"yellow.400"}>
@@ -383,7 +380,7 @@ export default function Home() {
         left="0"
         right="0"
         align={"flex-end"}
-        mx={{ base: "10px", md: "30px", lg: "260px" }}
+        px={{ base: "10px", md: "20px", lg: "160px" }}
       >
         <QuestionInput input={input} setInput={setInput} loding={loding} />
         <HStack>
