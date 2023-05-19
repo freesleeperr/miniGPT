@@ -25,6 +25,10 @@ interface IChat {
   status?: string;
   id: string;
 }
+interface IChatMemoery {
+  creatTime: string;
+  chatlog: IChat[];
+}
 interface ISetting {
   userUrl: string;
   userApiKey: string;
@@ -40,6 +44,7 @@ export default function Home() {
   const [loding, setLoading] = useState<boolean>(false);
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
+  const [chatlogMemoery, setChatlogMemory] = useState<IChatMemoery[]>([]);
   const [chatMode, setChatMode] = useState(false);
   const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [userSettings, setUserSetting] = useState<ISetting>({
@@ -164,8 +169,15 @@ export default function Home() {
       const currentTime = date.toLocaleString();
       let uuid = uuidv4();
       let messages: IMessageChat[] = [];
-      if (chatMode) {
-        if (chatlog.length > 2) {
+
+      if (chatMode && chatlog.length > 0) {
+        const date1 = new Date(chatlog[chatlog.length - 1].time!);
+        const date2 = date;
+        const timeDiff = Math.abs(date2.getTime() - date1.getTime());
+        const hoursDiff = timeDiff / (1000 * 3600);
+
+        //连续对话3
+        if (chatlog.length > 2 && hoursDiff < 0.1) {
           for (let i = 1; -1 < i; i--) {
             messages = [
               ...messages,
@@ -312,24 +324,33 @@ export default function Home() {
         ) : (
           <></>
         )} */}
-        {chatlog.map((item, index) => (
-          <Box
-            key={index}
-            width={"full"}
-            className="card"
-            ref={index === chatlog.length - 1 ? scrollRef : null}
-          >
-            <MyCard
+        <Flex
+          bgColor={"black"}
+          border={"2px"}
+          borderColor={"pink"}
+          borderRadius="5px"
+          width={"full"}
+          direction={"column"}
+        >
+          {chatlog.map((item, index) => (
+            <Box
               key={index}
-              handleDelete={handleDelete}
-              id={item.id}
-              question={item.question}
-              answer={item.answer}
-              time={item.time}
-              status={item.status}
-            />
-          </Box>
-        ))}
+              width={"full"}
+              className="card"
+              ref={index === chatlog.length - 1 ? scrollRef : null}
+            >
+              <MyCard
+                key={index}
+                handleDelete={handleDelete}
+                id={item.id}
+                question={item.question}
+                answer={item.answer}
+                time={item.time}
+                status={item.status}
+              />
+            </Box>
+          ))}
+        </Flex>
       </Flex>
       <Flex
         position={"absolute"}
@@ -345,13 +366,15 @@ export default function Home() {
             <Button
               leftIcon={<ChatIcon />}
               colorScheme="whatsapp"
+              color={"green.200"}
               onClick={getChat}
               isDisabled={loding}
               isLoading={loding}
               borderRadius={"5px"}
               width={"80px"}
               height="80px"
-              bgColor={"green.200"}
+              border={"2px"}
+              borderColor="pink.200"
             >
               对话
             </Button>
@@ -362,11 +385,11 @@ export default function Home() {
               onClick={getImage}
               isDisabled={loding}
               isLoading={loding}
-              borderColor={"gray.400"}
               width={"40px"}
               height="80px"
+              border={"2px"}
+              borderColor="pink.200"
               borderRadius={"5px"}
-              bgColor={"blue.100"}
             ></IconButton>
           </ButtonGroup>
         </HStack>
@@ -377,14 +400,15 @@ export default function Home() {
 function QuestionInput(props: any) {
   return (
     <Textarea
+      color={"white"}
       onChange={(e) => props.setInput(e.target.value)}
       borderRadius={"5px"}
       maxHeight={{ base: "40px", md: "40px", lg: "80px" }}
       placeholder="在此输入问题..."
       mr="2"
-      borderColor={"messenger.600"}
+      border={"2px"}
+      borderColor={"messenger.200"}
       value={props.input}
-      bgColor="white"
       isDisabled={props.loding}
     />
   );

@@ -1,14 +1,21 @@
-import { HStack, Heading, Spacer, Progress, Box } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import {
+  HStack,
+  Heading,
+  Text,
+  Spacer,
+  Progress,
+  Box,
+  IconButton,
+  Icon,
+} from "@chakra-ui/react";
 import DrawerSettings from "./DrawerSettings";
 export default function Header(props: any) {
   return (
     <>
-      <Box zIndex={999} width="full" position={"fixed"}>
+      <Box backgroundColor="black" zIndex={999} width="full" position={"fixed"}>
         <HStack
-          borderBottomWidth={"1px"}
-          borderColor="gray.200"
           as={"nav"}
-          bgColor={"white"}
           height={{ base: "55px", md: "60px", lg: "50px" }}
           padding={2}
           px={{ base: "20px", md: "30px", lg: "300px" }}
@@ -27,14 +34,22 @@ export default function Header(props: any) {
             handleMode={props.handleMode}
             chatMode={props.chatMode}
           ></DrawerSettings>
-          <Heading fontSize={"25px"} color="messenger.600">
-            🤖SimGPT
-          </Heading>
-
+          <Text textShadow={"base"} color={"whatsapp.200"}>
+            🤖NeonTalk
+          </Text>
           <Spacer></Spacer>
+          <IconButton
+            variant={"unstyled"}
+            color="green.300"
+            width={"40px"}
+            height="20px"
+            borderRadius={"5px"}
+            icon={<Icon as={AddIcon} />}
+            aria-label="newChat"
+          ></IconButton>
         </HStack>
         {props.isLoading ? (
-          <Progress color={"whatsapp.200"} size="xs" isIndeterminate />
+          <Progress colorScheme={"green"} size="xs" isIndeterminate />
         ) : (
           ""
         )}

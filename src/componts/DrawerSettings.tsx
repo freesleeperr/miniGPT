@@ -37,12 +37,12 @@ export default function DrawerSettings(props: any) {
   return (
     <Box className="Card">
       <Button
-        color={"white"}
+        color={"blue.200"}
         variant={"ghost"}
-        bgColor={"messenger.500"}
         height="30px"
-        borderRadius={"3px"}
-        borderColor="gray.700"
+        borderRadius={"4px"}
+        border="2px"
+        borderColor="messenger.300"
         leftIcon={<HamburgerIcon></HamburgerIcon>}
         iconSpacing={"0"}
         onClick={onOpen}
@@ -51,7 +51,9 @@ export default function DrawerSettings(props: any) {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">设置</DrawerHeader>
+          <DrawerHeader borderBottomWidth="1px" color={"green.400"}>
+            设置
+          </DrawerHeader>
 
           <DrawerBody>
             <Stack spacing="24px">

@@ -42,7 +42,7 @@ export default function MyCard(props: any) {
       const { children } = props;
       return (
         <>
-          <Text lineHeight={"27px"} fontSize={"18px"} color="black">
+          <Text lineHeight={"27px"} fontSize={"18px"} color="messenger.300">
             {children}
           </Text>
         </>
@@ -60,7 +60,29 @@ export default function MyCard(props: any) {
       );
     },
   };
-
+  const newTheme2 = {
+    p: (props: any) => {
+      const { children } = props;
+      return (
+        <>
+          <Text lineHeight={"27px"} fontSize={"26px"} color="green.300">
+            {children}
+          </Text>
+        </>
+      );
+    },
+    code: (props: any) => {
+      const { className, children } = props;
+      const language = className?.replace("language-", "") || "";
+      return (
+        <SyntaxHighlighter
+          children={children}
+          language={language}
+          style={dracula}
+        ></SyntaxHighlighter>
+      );
+    },
+  };
   function handleVisable() {
     setVisable(visable ? false : true);
   }
@@ -69,25 +91,22 @@ export default function MyCard(props: any) {
   }
   return (
     <>
-      <Box shadow={"md"} borderColor="gray.100" mb="-2px" bg={"white"}>
+      <Box>
         <Flex
-          bgColor="white"
           direction={"row-reverse"}
           position="relative"
           alignItems={"center"}
-          borderRadius={"5px"}
-          color="white"
           px={"16px"}
           py="15px"
-          borderBottomColor="gray.300"
-          borderBottom={"5px"}
         >
           <Text
             fontWeight={"bold"}
             fontSize={{ base: "29px", md: "29px", lg: "30px" }}
-            color={"messenger.600"}
+            color={"white"}
           >
-            {props.question ? props.question : null}
+            <ReactMarkdown skipHtml components={ChakraUIRenderer(newTheme2)}>
+              {props.question ? props.question : null}
+            </ReactMarkdown>
           </Text>
           <Spacer></Spacer>
           <Flex direction={"column"}>
@@ -103,7 +122,7 @@ export default function MyCard(props: any) {
                 borderRadius={"0"}
                 borderEndRadius={"24px"}
                 aria-label="avoid"
-                color="red.500"
+                color="yellow.200"
                 icon={<CloseIcon />}
                 onClick={deleteItem}
               ></IconButton>
@@ -119,10 +138,7 @@ export default function MyCard(props: any) {
         </Flex>
 
         {visable ? (
-          <Stack
-            p={"16px"}
-            bgColor={props.status === "image" ? "black" : "white"}
-          >
+          <Stack p={"16px"}>
             {props.status === "image" ? (
               <Flex direction={"column"} align="center">
                 <img
