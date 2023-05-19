@@ -331,6 +331,7 @@ export default function Home() {
         chatMode={chatMode}
         isLoading={loding}
         newChat={newChat}
+        chatlogMemoery={chatlogMemoery}
       ></Header>
 
       <Flex

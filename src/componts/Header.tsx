@@ -9,6 +9,7 @@ import {
   IconButton,
   Icon,
 } from "@chakra-ui/react";
+import ChatListItem from "./ChatListItem";
 import DrawerSettings from "./DrawerSettings";
 export default function Header(props: any) {
   return (
@@ -40,7 +41,7 @@ export default function Header(props: any) {
             ✨NeonTalk
           </Text>
           <Spacer></Spacer>
-
+          <ChatListItem chatlogMemoery={props.chatlogMemoery}></ChatListItem>
           <IconButton
             onClick={props.newChat}
             variant={"unstyled"}
