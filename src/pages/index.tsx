@@ -284,7 +284,6 @@ export default function Home() {
     if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
       const memo = JSON.parse(localStorage.getItem("chatlogMemoery")!);
-      memo[0].chatlog = chatlog;
       localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
       setreduceLog(false);
     }
@@ -302,12 +301,9 @@ export default function Home() {
     if (localStorage.getItem("chatlogMemoery") === null) {
       newChat();
     }
-    if (localStorage.getItem("chatlogMemoery") !== null) {
-      const localStorageChat = JSON.parse(
-        localStorage.getItem("chatlogMemoery")!
-      );
-      setChatlogMemory(localStorageChat);
-      setChatlog(localStorageChat[0] ? localStorageChat[0].chatlog : []);
+    if (localStorage.getItem("chatlog") !== null) {
+      const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
+      setChatlog(localStorageChat);
     }
   }, []);
 
