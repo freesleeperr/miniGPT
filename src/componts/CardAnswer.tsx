@@ -108,7 +108,11 @@ export default function MyCard(props: any) {
     <>
       <Box>
         <Flex direction={"row-reverse"} py="15px">
-          <Stack as={"button"} onClick={handleVisable}>
+          <Stack
+            as={"button"}
+            onClick={handleVisable}
+            direction={"row-reverse"}
+          >
             <>
               <ReactMarkdown skipHtml components={ChakraUIRenderer(newTheme2)}>
                 {props.question ? props.question : null}
