@@ -11,10 +11,16 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  HStack,
 } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
-import { ChevronDownIcon, CloseIcon, MinusIcon } from "@chakra-ui/icons";
+import {
+  ChevronDownIcon,
+  CloseIcon,
+  DeleteIcon,
+  MinusIcon,
+} from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useEffect, useState } from "react";
@@ -51,6 +57,16 @@ export default function chatListItem(props: any) {
     setEditStatus(false);
     // 使用unshift()方法将目标元素添加到数组首位
   }
+  function delNUM(index: number) {
+    // 获取目标元素在数组中的索引
+    const memo2 = props.chatlogMemoery;
+    memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
+    props.setChatlogMemory(memo2);
+    setEditStatus(true);
+    setMemo(memo2);
+    setEditStatus(false);
+    // 使用unshift()方法将目标元素添加到数组首位
+  }
   useEffect(() => {
     if (editStatus) {
       localStorage.setItem("chatlogMemoery", memo);
@@ -76,19 +92,32 @@ export default function chatListItem(props: any) {
               {props.chatlogMemoery
                 ? props.chatlogMemoery.map((element: any, index: any) => {
                     return (
-                      <MenuItem
-                        overflow={"hidden"}
-                        bgColor={"black"}
-                        color="wheat"
-                        key={index}
-                        onClick={() => {
-                          changNUM(element, index);
-                        }}
-                      >
-                        {element.chatlog[0]?.question === undefined
-                          ? "NewChat"
-                          : element.chatlog[0].question}
-                      </MenuItem>
+                      <HStack key={index}>
+                        <MenuItem
+                          overflow={"hidden"}
+                          bgColor={"black"}
+                          color="wheat"
+                          onClick={() => {
+                            changNUM(element, index);
+                          }}
+                        >
+                          {element.chatlog[0]?.question === undefined
+                            ? "NewChat"
+                            : element.chatlog[0].question}
+                        </MenuItem>
+                        <IconButton
+                          onClick={() => {
+                            delNUM(index);
+                          }}
+                          color="red.300"
+                          bgColor={"transparent"}
+                          variant="unstyled"
+                          icon={<DeleteIcon />}
+                          position={"absolute"}
+                          right="0"
+                          aria-label="delete"
+                        ></IconButton>
+                      </HStack>
                     );
                   })
                 : "None"}
