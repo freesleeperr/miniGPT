@@ -42,6 +42,7 @@ export default function Header(props: any) {
           </Text>
           <Spacer></Spacer>
           <ChatListItem
+            chatlog={props.chatlog}
             setChatlogMemory={props.setChatlogMemory}
             setChatlog={props.setChatlog}
             chatlogMemoery={props.chatlogMemoery}

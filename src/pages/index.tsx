@@ -372,6 +372,7 @@ export default function Home() {
         chatlogMemoery={chatlogMemoery}
         setChatlogMemory={setChatlogMemory}
         setChatlog={setChatlog}
+        chatlog={chatlog}
       ></Header>
 
       <Flex
