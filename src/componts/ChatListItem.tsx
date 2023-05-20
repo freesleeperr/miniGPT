@@ -62,7 +62,7 @@ export default function chatListItem(props: any) {
         {({ isOpen }) => (
           <>
             <MenuButton
-              _hover={"whatsapp.400"}
+              _hover={{ bgColor: "whatsapp.400", color: "black" }}
               color={"black"}
               bgColor={"whatsapp.400"}
               isActive={isOpen}
