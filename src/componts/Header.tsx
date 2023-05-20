@@ -47,7 +47,10 @@ export default function Header(props: any) {
             chatlogMemoery={props.chatlogMemoery}
           ></ChatListItem>
           <IconButton
-            onClick={props.newChat}
+            onClick={() => {
+              props.newChat();
+              props.setChatlog([]);
+            }}
             variant={"unstyled"}
             color="yellow.300"
             height="40px"

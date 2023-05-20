@@ -69,6 +69,7 @@ export default function Home() {
   }
   function handleLogClean() {
     localStorage.removeItem("chatlog");
+    localStorage.removeItem("chatlogMemoery");
     setChatlog([]);
   }
 
@@ -323,7 +324,19 @@ export default function Home() {
     // }
     if (localStorage.getItem("chatlogMemoery") === null) {
       newChat();
+      if (localStorage.getItem("chatlog") !== null) {
+        const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
+        const localStorageChat2 = JSON.parse(
+          localStorage.getItem("chatlogMemoery")!
+        );
+        localStorageChat2[0].chatlog = localStorageChat;
+        localStorage.setItem(
+          "chatlogMemoery",
+          JSON.stringify(localStorageChat2)
+        );
+      }
     }
+
     if (localStorage.getItem("chatlog") !== null) {
       const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
       setChatlog(localStorageChat);

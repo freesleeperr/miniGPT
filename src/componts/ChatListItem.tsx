@@ -17,7 +17,7 @@ import ReactMarkdown from "react-markdown";
 import { ChevronDownIcon, CloseIcon, MinusIcon } from "@chakra-ui/icons";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { time } from "console";
 // interface IProps {
 //   scrollRef?: any;
@@ -29,6 +29,8 @@ import { time } from "console";
 
 // }
 export default function chatListItem(props: any) {
+  const [editStatus, setEditStatus] = useState(false);
+  const [memo, setMemo] = useState(props.chatlogMemoery);
   function timeDiffCal(time: string) {
     const date1 = new Date(time);
     const date2 = new Date();
@@ -36,19 +38,24 @@ export default function chatListItem(props: any) {
     const hoursDiff = timeDiff / (1000 * 3600);
     return hoursDiff;
   }
-  let memo = props.chatlogMemoery;
+
   function changNUM(target: any, index: number) {
     // 获取目标元素在数组中的索引
-    if (index !== -1) {
-      memo.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
-      memo.unshift(target);
-      props.setChatlogMemory(memo);
-      memo = props.chatlogMemoery;
-      props.setChatlog(target.chatlog);
-      // 使用unshift()方法将目标元素添加到数组首位
-    }
+    const memo2 = props.chatlogMemoery;
+    memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
+    memo2.unshift(target);
+    props.setChatlogMemory(memo2);
+    setEditStatus(true);
+    setMemo(memo2);
+    props.setChatlog(target.chatlog);
+    setEditStatus(false);
+    // 使用unshift()方法将目标元素添加到数组首位
   }
-
+  useEffect(() => {
+    if (editStatus) {
+      localStorage.setItem("chatlogMemoery", memo);
+    }
+  }, [memo]);
   return (
     <Box m={"0"}>
       <Menu>
@@ -65,22 +72,25 @@ export default function chatListItem(props: any) {
               记录
             </MenuButton>
             <MenuList bgColor={"black"}>
-              {memo.map((element: any, index: any) => {
-                return (
-                  <MenuItem
-                    bgColor={"black"}
-                    color="wheat"
-                    key={index}
-                    onClick={() => {
-                      changNUM(element, index);
-                    }}
-                  >
-                    {element.chatlog[0]?.question === undefined
-                      ? "NewChat"
-                      : element.chatlog[0].question}
-                  </MenuItem>
-                );
-              })}
+              {props.chatlogMemoery
+                ? props.chatlogMemoery.map((element: any, index: any) => {
+                    return (
+                      <MenuItem
+                        overflow={"hidden"}
+                        bgColor={"black"}
+                        color="wheat"
+                        key={index}
+                        onClick={() => {
+                          changNUM(element, index);
+                        }}
+                      >
+                        {element.chatlog[0]?.question === undefined
+                          ? "NewChat"
+                          : element.chatlog[0].question}
+                      </MenuItem>
+                    );
+                  })
+                : "None"}
             </MenuList>
           </>
         )}
