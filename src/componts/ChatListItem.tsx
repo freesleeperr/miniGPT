@@ -55,20 +55,22 @@ export default function chatListItem(props: any) {
         {({ isOpen }) => (
           <>
             <MenuButton
-              _hover={{ bgColor: "green.300" }}
-              color={"white"}
-              bgColor={"black"}
+              color={"black"}
+              bgColor={"whatsapp.400"}
               isActive={isOpen}
               as={Button}
               rightIcon={<ChevronDownIcon />}
               height="30px"
             >
-              对话记录
+              记录
             </MenuButton>
-            <MenuList>
+            <MenuList bgColor={"black"}>
               {memo.map((element: any, index: any) => {
                 return (
                   <MenuItem
+                    bgColor={"black"}
+                    color="wheat"
+                    key={index}
                     onClick={() => {
                       changNUM(element, index);
                     }}

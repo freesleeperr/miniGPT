@@ -269,8 +269,11 @@ export default function Home() {
   function newChat() {
     const date = new Date();
     const currentTime = date.toLocaleString();
-    setChatlog([]);
-    chatlogMemoery.unshift({ creatTime: currentTime, chatlog: [] });
+    if (chatlogMemoery.length > 0) {
+      chatlogMemoery.unshift({ creatTime: currentTime, chatlog: [] });
+    } else {
+      chatlogMemoery.push({ creatTime: currentTime, chatlog: [] });
+    }
     setChatlogMemory(chatlogMemoery);
     localStorage.setItem("chatlogMemoery", JSON.stringify(chatlogMemoery));
   }
@@ -284,10 +287,30 @@ export default function Home() {
     if (answer !== "" || reduceLog) {
       localStorage.setItem("chatlog", JSON.stringify(chatlog));
       const memo = JSON.parse(localStorage.getItem("chatlogMemoery")!);
+      if (memo.length > 0) {
+        memo[0].chatlog = chatlog;
+      } else {
+        memo[0].chatlogs = chatlog;
+      }
+      setChatlogMemory(memo);
       localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
       setreduceLog(false);
     }
   }, [chatlog]);
+  // useEffect(() => {
+  //   if (answer !== "" || reduceLog) {
+  //     localStorage.setItem("chatlog", JSON.stringify(chatlog));
+  //     const memo = JSON.parse(localStorage.getItem("chatlogMemoery")!);
+  //     if (memo.length > 0) {
+  //       memo[0] = chatlog;
+  //     } else {
+  //       memo[0] = chatlog;
+  //     }
+  //     setChatlogMemory(chatlogMemoery);
+  //     localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
+  //     setreduceLog(false);
+  //   }
+  // }, [chatlogMemoery]);
   useEffect(() => {
     if (localStorage.getItem("userSettings") !== null || "") {
       setUserSetting(JSON.parse(localStorage.getItem("userSettings")!));
@@ -304,6 +327,12 @@ export default function Home() {
     if (localStorage.getItem("chatlog") !== null) {
       const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
       setChatlog(localStorageChat);
+    }
+    if (localStorage.getItem("chatlogMemoery") !== null) {
+      const localStorageChat = JSON.parse(
+        localStorage.getItem("chatlogMemoery")!
+      );
+      setChatlogMemory(localStorageChat);
     }
   }, []);
 
