@@ -6,6 +6,7 @@ import {
   Box,
   IconButton,
   ButtonGroup,
+  VStack,
 } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
@@ -72,17 +73,15 @@ export default function MyCard(props: any) {
     p: (props: any) => {
       const { children } = props;
       return (
-        <>
-          <Text
-            width={"inherit"}
-            textOverflow={"ellipsis"}
-            lineHeight={"27px"}
-            fontSize={"25px"}
-            fontWeight="semibold"
-            color="whatsapp.200"
-            children={children}
-          ></Text>
-        </>
+        <Text
+          width={"inherit"}
+          textOverflow={"ellipsis"}
+          lineHeight={"27px"}
+          fontSize={"25px"}
+          fontWeight="semibold"
+          color="whatsapp.200"
+          children={children}
+        ></Text>
       );
     },
     code: (props: any) => {
@@ -108,7 +107,8 @@ export default function MyCard(props: any) {
     <>
       <Box>
         <Flex direction={"row-reverse"} py="15px">
-          <Stack
+          <VStack
+            align={"flex-start"}
             as={"button"}
             onClick={handleVisable}
             direction={"row-reverse"}
@@ -118,7 +118,7 @@ export default function MyCard(props: any) {
                 {props.question ? props.question : null}
               </ReactMarkdown>
             </>
-          </Stack>
+          </VStack>
           <Spacer></Spacer>
           <Flex
             direction={"column"}
