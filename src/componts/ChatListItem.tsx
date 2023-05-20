@@ -46,32 +46,43 @@ export default function chatListItem(props: any) {
   }
 
   function changNUM(target: any, index: number) {
-    // 获取目标元素在数组中的索引
-    const memo2 = props.chatlogMemoery;
-    memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
-    memo2.unshift(target);
-    props.setChatlogMemory(memo2);
-    setEditStatus(true);
-    setMemo(memo2);
-    props.setChatlog(target.chatlog);
-    setEditStatus(false);
+    if (props.chatlogMemoery.length > 1) {
+      // 获取目标元素在数组中的索引
+      const memo2 = props.chatlogMemoery;
+      memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
+      memo2.unshift(target);
+      props.setChatlogMemory(memo2);
+      setEditStatus(true);
+      setMemo(memo2);
+      props.setChatlog(target.chatlog);
+    }
+
     // 使用unshift()方法将目标元素添加到数组首位
   }
   function delNUM(index: number) {
     // 获取目标元素在数组中的索引
-    const memo2 = props.chatlogMemoery;
-    memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
-    props.setChatlogMemory(memo2);
-    setEditStatus(true);
-    setMemo(memo2);
-    setEditStatus(false);
+    if (props.chatlogMemoery.length > 1) {
+      const memo2 = props.chatlogMemoery;
+      memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
+      props.setChatlogMemory(memo2);
+      setEditStatus(true);
+      setMemo(memo2);
+      localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
+    }
     // 使用unshift()方法将目标元素添加到数组首位
   }
   useEffect(() => {
     if (editStatus) {
-      localStorage.setItem("chatlogMemoery", memo);
+      localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
+      setEditStatus(false);
     }
   }, [memo]);
+  useEffect(() => {
+    if (localStorage.getItem("chatlogMemoery") !== null) {
+      const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
+      setMemo(localStorageChat);
+    }
+  }, []);
   return (
     <Box m={"0"}>
       <Menu>
