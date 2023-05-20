@@ -37,6 +37,7 @@ import { time } from "console";
 export default function chatListItem(props: any) {
   const [editStatus, setEditStatus] = useState(false);
   const [memo, setMemo] = useState(props.chatlogMemoery);
+  const [vis, setVis] = useState(true);
   function timeDiffCal(time: string) {
     const date1 = new Date(time);
     const date2 = new Date();
@@ -79,7 +80,9 @@ export default function chatListItem(props: any) {
   }, [memo]);
   useEffect(() => {
     if (localStorage.getItem("chatlogMemoery") !== null) {
-      const localStorageChat = JSON.parse(localStorage.getItem("chatlog")!);
+      const localStorageChat = JSON.parse(
+        localStorage.getItem("chatlogMemoery")!
+      );
       setMemo(localStorageChat);
     }
   }, []);
@@ -103,18 +106,23 @@ export default function chatListItem(props: any) {
               {props.chatlogMemoery
                 ? props.chatlogMemoery.map((element: any, index: any) => {
                     return (
-                      <HStack key={index}>
+                      <HStack overflow={"hidden"} key={index}>
                         <MenuItem
-                          overflow={"hidden"}
                           bgColor={"black"}
                           color="wheat"
                           onClick={() => {
                             changNUM(element, index);
                           }}
                         >
-                          {element.chatlog[0]?.question === undefined
-                            ? "NewChat"
-                            : element.chatlog[0].question}
+                          <Text
+                            maxH={"50px"}
+                            overflow={"hidden"}
+                            maxW={"300px"}
+                          >
+                            {element.chatlog[0]?.question === undefined
+                              ? "NewChat"
+                              : element.chatlog[0].question}
+                          </Text>
                         </MenuItem>
                         <IconButton
                           onClick={() => {
