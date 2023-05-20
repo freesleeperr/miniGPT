@@ -75,6 +75,7 @@ export default function chatListItem(props: any) {
   useEffect(() => {
     if (editStatus) {
       localStorage.setItem("chatlogMemoery", JSON.stringify(memo));
+      localStorage.setItem("chatlog", JSON.stringify(props.chatlog));
       setEditStatus(false);
     }
   }, [memo]);

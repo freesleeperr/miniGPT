@@ -7,6 +7,7 @@ import {
   IconButton,
   ButtonGroup,
   VStack,
+  Button,
 } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
@@ -107,9 +108,11 @@ export default function MyCard(props: any) {
     <>
       <Box>
         <Flex direction={"row-reverse"} py="15px">
-          <ReactMarkdown skipHtml components={ChakraUIRenderer(newTheme2)}>
-            {props.question ? props.question : null}
-          </ReactMarkdown>
+          <Box onClick={handleVisable}>
+            <ReactMarkdown skipHtml components={ChakraUIRenderer(newTheme2)}>
+              {props.question ? props.question : null}
+            </ReactMarkdown>
+          </Box>
           <Spacer></Spacer>
           <Flex
             direction={"column"}
@@ -128,7 +131,6 @@ export default function MyCard(props: any) {
             ></IconButton>
           </Flex>
         </Flex>
-
         {visable ? (
           <Stack
             border={"2px"}
