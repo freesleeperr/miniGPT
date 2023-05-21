@@ -395,6 +395,7 @@ export default function Home() {
           borderRadius="5px"
           width={"full"}
           direction={"column"}
+          pt={{ base: "55px", md: "60px", lg: "50px" }}
         >
           {chatlog.length > 0 ? (
             chatlog.map((item, index) => (
