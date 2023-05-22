@@ -46,7 +46,7 @@ export default function Home() {
   const [input, setInput] = useState<any>("");
   const [chatlog, setChatlog] = useState<IChat[]>([]);
   const [chatlogMemoery, setChatlogMemory] = useState<IChatMemoery[]>([]);
-  const [chatMode, setChatMode] = useState(false);
+  const [chatMode, setChatMode] = useState(true);
   const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [userSettings, setUserSetting] = useState<ISetting>({
     userUrl: "https://api.openai-proxy.com",
