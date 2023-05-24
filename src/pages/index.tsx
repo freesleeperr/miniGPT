@@ -259,7 +259,6 @@ export default function Home() {
             id: uuid,
           },
         ]);
-        setInput("");
         setAnsewer(response.data[0].url);
         setLoading(false);
       }
