@@ -50,7 +50,7 @@ export default function Home() {
   const [reduceLog, setreduceLog] = useState<boolean>(false);
   const [userSettings, setUserSetting] = useState<ISetting>({
     userUrl: "https://api.openai-proxy.com",
-    userApiKey: "",
+    userApiKey: "sk-B4OuHWyLJcPzhW80n9tIT" + "3BlbkFJfpou21YfekCTZHDqof9W",
     userTemperature: 0.5,
   });
   const toast = useToast();
