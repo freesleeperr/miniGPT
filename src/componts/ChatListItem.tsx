@@ -65,6 +65,7 @@ export default function chatListItem(props: any) {
     if (props.chatlogMemoery.length > 1) {
       const memo2 = props.chatlogMemoery;
       memo2.splice(index, 1); // 使用splice()方法将目标元素从数组中删除
+      props.setChatlog(memo2[0].chatlog);
       props.setChatlogMemory(memo2);
       setEditStatus(true);
       setMemo(memo2);
