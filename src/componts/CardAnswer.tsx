@@ -36,7 +36,7 @@ export default function MyCard(props: any) {
   const hoursDiff = timeDiff / (1000 * 3600);
 
   const [visable, setVisable] = useState(() => {
-    if (hoursDiff > 48) {
+    if (hoursDiff > 0.5) {
       return false;
     } else {
       return true;

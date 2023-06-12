@@ -179,7 +179,7 @@ export default function Home() {
         const hoursDiff = timeDiff / (1000 * 3600);
 
         //连续对话3
-        if (chatlog.length > 2 && hoursDiff < 0.1) {
+        if (chatlog.length > 2 && hoursDiff < 0.5) {
           for (let i = 1; -1 < i; i--) {
             messages = [
               ...messages,
